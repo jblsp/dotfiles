@@ -1,0 +1,10 @@
+# This is Git's per-user configuration file.
+[user]
+	name = Joe
+	email = 48526917+jblsp@users.noreply.github.com
+[init]
+	defaultBranch = main
+[core]
+	editor = nvim
+[web]
+	browser = firefox
