@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -d "$HOME/.cfggit" ]; then
-	echo "$HOME/.cfggit already exists."
+	rm -rf .cfggit
 fi
 git clone --separate-git-dir=$HOME/.cfggit https://github.com/jblsp/dotfiles $HOME/dotfiles.tmp
 cp -r $HOME/dotfiles.tmp/. $HOME/
