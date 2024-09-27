@@ -10,7 +10,14 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 zstyle ':omz:update' mode auto
-plugins=(git)
+plugins=(
+  git
+  sudo
+  colored-man-pages
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+  you-should-use
+)
 
 source $ZSH/oh-my-zsh.sh
 
