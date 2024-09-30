@@ -14,6 +14,9 @@ plugins=(
   git
   sudo
   colored-man-pages
+  gitignore
+  command-not-found
+  nvm
   zsh-autosuggestions
   zsh-syntax-highlighting
   you-should-use
@@ -35,5 +38,5 @@ alias config='/usr/bin/git --git-dir=$HOME/.cfggit/ --work-tree=$HOME'
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
