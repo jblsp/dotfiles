@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -d "$HOME/.cfggit" ]; then
-	rm -rf .cfggit
+	rm -rf $HOME/.cfggit
 fi
 git clone --separate-git-dir=$HOME/.cfggit https://github.com/jblsp/dotfiles $HOME/dotfiles.tmp
 cp -r $HOME/dotfiles.tmp/. $HOME/
