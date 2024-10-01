@@ -7,3 +7,6 @@
 [submodule "powerlevel10k"]
 	path = .oh-my-zsh/custom/themes/powerlevel10k
 	url = https://github.com/romkatv/powerlevel10k
+[submodule "zsh-you-should-use"]
+	path = .oh-my-zsh/custom/plugins/you-should-use
+	url = https://github.com/MichaelAquilina/zsh-you-should-use
