@@ -12,5 +12,9 @@
 ## Set up repo on $HOME
 
 ```shell
+# Install the repo
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/jblsp/dotfiles/main/install.sh)"
+
+# You may need to give yourself ownership over the repository
+sudo chown -R $(whoami) $HOME/.cfggit
 ```
