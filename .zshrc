@@ -34,6 +34,6 @@ fi
 
 alias zshconfig="mate ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
-alias config='/usr/bin/git --git-dir=$HOME/.cfggit/ --work-tree=$HOME'
+alias config='git --git-dir=$HOME/.cfggit/ --work-tree=$HOME'
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
