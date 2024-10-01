@@ -4,9 +4,8 @@
 if [ -d "$HOME/.cfggit" ]; then
 	rm -rf "$HOME/.cfggit"
 fi
-git clone --separate-git-dir="$HOME/.cfggit" https://github.com/jblsp/dotfiles "$HOME/dotfiles.tmp"
-cp -r "$HOME/dotfiles.tmp/." "$HOME/"
-rm -rf "$HOME/dotfiles.tmp"
+git clone --bare https://github.com/jblsp/dotfiles "$HOME/.cfggit"
+git --git-dir="$HOME/.cfggit" --work-tree="$HOME" checkout -f
 git --git-dir="$HOME/.cfggit/" --work-tree="$HOME" submodule update --init --recursive
 
 # Update git config
