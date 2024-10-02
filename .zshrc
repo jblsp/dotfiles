@@ -1,3 +1,4 @@
+export TERM='alacritty'
 fastfetch
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
@@ -35,5 +36,6 @@ else
 fi
 
 alias config='git --git-dir=$HOME/.cfggit/ --work-tree=$HOME'
+
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
