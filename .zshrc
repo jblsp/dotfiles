@@ -34,6 +34,7 @@ else
   export EDITOR='nvim'
 fi
 
+alias sudo='sudo ' # allow aliases to sudoed
 alias config='git --git-dir=$HOME/.cfggit/ --work-tree=$HOME'
 
 
