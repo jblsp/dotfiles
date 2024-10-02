@@ -10,3 +10,6 @@
 [submodule "zsh-you-should-use"]
 	path = .oh-my-zsh/custom/plugins/you-should-use
 	url = https://github.com/MichaelAquilina/zsh-you-should-use
+[submodule "alacritty-theme"]
+	path = .config/alacritty/themes
+	url = https://github.com/alacritty/alacritty-theme
