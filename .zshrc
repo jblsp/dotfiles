@@ -41,7 +41,7 @@ else
 fi
 
 alias sudo='sudo ' # allow aliases to sudoed
-alias config='git --git-dir=$HOME/.cfggit/ --work-tree=$HOME'
+alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
