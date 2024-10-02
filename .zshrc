@@ -9,10 +9,8 @@ fi
 
 export ZSH="$HOME/.oh-my-zsh"
 
-
-ZSH_THEME="powerlevel10k/powerlevel10k"
-
 zstyle ':omz:update' mode auto
+
 plugins=(
   git
   sudo
@@ -25,6 +23,9 @@ plugins=(
   you-should-use
 )
 
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 source $ZSH/oh-my-zsh.sh
 
 if infocmp alacritty &> /dev/null; then
@@ -42,7 +43,6 @@ fi
 
 alias sudo='sudo ' # allow aliases to sudoed
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-alias dotfilesclean='dotfiles restore update-index --no-assume-unchanged "$HOME/setup.sh" && $HOME/setup.sh --clean-only
+alias dotfilesclean='dotfiles restore "$HOME/setup.sh" && dotfiles update-index --no-assume-unchanged "$HOME/setup.sh" && $HOME/setup.sh --clean-only'
 
 
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
