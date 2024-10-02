@@ -41,8 +41,29 @@ else
   export EDITOR='nvim'
 fi
 
-alias sudo='sudo ' # allow aliases to sudoed
-alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-alias dotfilesclean='dotfiles restore "$HOME/setup.sh" && dotfiles update-index --no-assume-unchanged "$HOME/setup.sh" && $HOME/setup.sh --clean-only'
+alias sudo='sudo '
 
+dotfiles() {
+	clean() {
+		git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME restore $HOME/setup.sh
+		git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME update-index --no-assume-unchanged $HOME/setup.sh
+		$HOME/setup.sh --clean-only
+	}
+	
+	if [ -z "$1" ]; then
+		echo "Usage: dotfiles {clean|update|<git-command>}"
+		return 1
+	fi
 
+	case $1 in
+		"clean")
+			clean
+			;;
+		"update")
+			git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME pull
+			clean
+			;;
+		*)
+			git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME $1
+	esac
+}

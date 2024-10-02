@@ -1,13 +1,13 @@
 #!/bin/bash
 
-git_cmd="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
+git_cmd="git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME"
 
 setup() {
-	if [ -d "$HOME/.dotfiles" ]; then
-		rm -rf "$HOME/.dotfiles"
+	if [ -d "$HOME/.dotfiles.git" ]; then
+		rm -rf "$HOME/.dotfiles.git"
 	fi
 
-	git clone --bare https://github.com/jblsp/dotfiles "$HOME/.dotfiles"
+	git clone --bare https://github.com/jblsp/dotfiles "$HOME/.dotfiles.git"
 	$git_cmd -f
 
 	submodule_paths=$(grep 'path = ' "$HOME/.gitmodules" | sed 's/.*= //')
