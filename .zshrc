@@ -32,8 +32,6 @@ else
   export EDITOR='nvim'
 fi
 
-alias zshconfig="mate ~/.zshrc"
-alias ohmyzsh="mate ~/.oh-my-zsh"
 alias config='git --git-dir=$HOME/.cfggit/ --work-tree=$HOME'
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
