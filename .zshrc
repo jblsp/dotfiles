@@ -9,6 +9,7 @@ fi
 
 export ZSH="$HOME/.oh-my-zsh"
 
+
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 zstyle ':omz:update' mode auto
@@ -26,6 +27,11 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+if infocmp alacritty &> /dev/null; then
+    export TERM="alacritty"
+else
+    export TERM="xterm-256color"
+fi
 export LANG=en_US.UTF-8
 
 if [[ -n $SSH_CONNECTION ]]; then
