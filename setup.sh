@@ -8,7 +8,7 @@ setup() {
 	fi
 
 	git clone --bare https://github.com/jblsp/dotfiles "$HOME/.dotfiles.git"
-	$git_cmd -f
+	$git_cmd checkout -f
 
 	submodule_paths=$(grep 'path = ' "$HOME/.gitmodules" | sed 's/.*= //')
 	for submodule_path in $submodule_paths; do
