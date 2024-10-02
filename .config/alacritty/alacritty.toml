@@ -3,6 +3,7 @@ import = [
 ]
 
 [window]
+dimensions = { columns = 90, lines =  29 }
 padding.x = 10
 padding.y = 10
 
