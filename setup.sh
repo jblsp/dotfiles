@@ -1,6 +1,6 @@
 #!/bin/bash
 
-git_cmd="git --git-dir=\"$HOME/.dotfiles/\" --work-tree=\"$HOME\""
+git_cmd="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 
 setup() {
 	if [ -d "$HOME/.dotfiles" ]; then
