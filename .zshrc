@@ -49,6 +49,7 @@ dotfiles() {
 	
 	if [ -z "$1" ]; then
 		git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME status
+		return 1
 	fi
 
 	case $1 in
