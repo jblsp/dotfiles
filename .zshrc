@@ -1,8 +1,5 @@
 fastfetch
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
@@ -10,9 +7,11 @@ fi
 export ZSH="$HOME/.oh-my-zsh"
 
 zstyle ':omz:update' mode auto
+zstyle ':omz:update' verbosity minimal
 
 plugins=(
   git
+  gh
   sudo
   colored-man-pages
   gitignore
@@ -25,24 +24,20 @@ plugins=(
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 source $ZSH/oh-my-zsh.sh
 
-if infocmp alacritty &> /dev/null; then
-    export TERM="alacritty"
-else
-    export TERM="xterm-256color"
-fi
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Exports
 export LANG=en_US.UTF-8
+export TERM=$(infocmp alacritty &> /dev/null && echo "alacritty" || echo "xterm-256color")
+export EDITOR=$([[ -n $SSH_CONNECTION ]] && echo "vim" || echo "nvim")
 
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='nvim'
-fi
-
+# Aliases
 alias sudo='sudo '
+alias ff='fastfetch'
 
+# Functions
 dotfiles() {
 	clean() {
 		git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME restore $HOME/setup.sh
@@ -64,6 +59,6 @@ dotfiles() {
 			clean
 			;;
 		*)
-			git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME $1
+			git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME $@
 	esac
 }
