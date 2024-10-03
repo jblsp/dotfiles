@@ -25,8 +25,8 @@ clean() {
 	$git_cmd update-index --assume-unchanged "$HOME/setup.sh"
 	rm -f "$HOME/setup.sh"
 	if [[ "$OSTYPE" != "darwin"* ]]; then
-		$git_cmd update-index --assume-unchanged "$HOME/.macos"
-		rm -f "$HOME/.macos"
+		$git_cmd update-index --assume-unchanged "$HOME/.macos.sh"
+		rm -f "$HOME/.macos.sh"
 	fi
 }
 
