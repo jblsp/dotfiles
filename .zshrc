@@ -36,6 +36,8 @@ export EDITOR=$([[ -n $SSH_CONNECTION ]] && echo "vim" || echo "nvim")
 # Aliases
 alias sudo='sudo '
 alias ff='fastfetch'
+alias c='clear'
+alias fuck='sudo !!'
 
 # Functions
 dotfiles() {
@@ -46,8 +48,7 @@ dotfiles() {
 	}
 	
 	if [ -z "$1" ]; then
-		echo "Usage: dotfiles {clean|update|<git-command>}"
-		return 1
+		git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME status
 	fi
 
 	case $1 in
