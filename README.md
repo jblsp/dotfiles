@@ -3,6 +3,6 @@
 ## Setup
 
 ```shell
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/jblsp/dotfiles/main/install.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/jblsp/dotfiles/main/setup.sh)"
 ```
 
