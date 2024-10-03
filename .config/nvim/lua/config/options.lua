@@ -25,5 +25,5 @@ vim.opt.inccommand = "split"
 
 vim.opt.cursorline = false
 vim.opt.scrolloff = 8
-vim.o.termguicolors = true
+vim.opt.termguicolors = true
 

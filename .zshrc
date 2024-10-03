@@ -37,7 +37,7 @@ export EDITOR=$([[ -n $SSH_CONNECTION ]] && echo "vim" || echo "nvim")
 alias sudo='sudo '
 alias ff='fastfetch'
 alias c='clear'
-alias fuck='sudo !!'
+alias fuck='sudo $SHELL -c "$(fc -ln -1)"'
 
 # Functions
 dotfiles() {
