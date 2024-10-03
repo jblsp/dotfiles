@@ -6,6 +6,7 @@
 	defaultBranch = main
 [core]
 	editor = nvim
+	excludesFile = ~/.gitignore
 [web]
 	browser = firefox
 [credential "https://github.com"]
