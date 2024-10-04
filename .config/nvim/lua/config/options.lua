@@ -2,7 +2,6 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.signcolumn = 'yes'
 vim.opt.mouse = "a"
-vim.opt.showmode = false
 vim.opt.breakindent = true
 vim.opt.undofile = true
 vim.opt.ignorecase = true -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
