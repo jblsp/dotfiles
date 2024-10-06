@@ -10,7 +10,7 @@ padding.y = 10
 
 [font]
 size = 15
-normal.family = "MesloLGS NF"
+normal.family = "JetBrainsMonoNL Nerd Font"
 normal.style = "Regular"
 bold.style = "Bold"
 italic.style = "Italic"

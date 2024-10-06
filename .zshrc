@@ -29,12 +29,10 @@ plugins=(
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 source $ZSH/oh-my-zsh.sh
-
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+source ~/.p10k.zsh
 
 # Exports
 export LANG=en_US.UTF-8
-export TERM=$(infocmp alacritty &> /dev/null && echo "alacritty" || echo "xterm-256color")
 export EDITOR=$([[ -n $SSH_CONNECTION ]] && echo "vim" || echo "nvim")
 
 # Aliases
