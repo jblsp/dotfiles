@@ -18,6 +18,9 @@ require("lazy").setup({
 	spec = {
 		{ import = "plugins" },
 	},
+	install = {
+		colorscheme = { vim.g.colorscheme },
+	},
 	checker = { enabled = true },
 	performance = {
 		rtp = {
