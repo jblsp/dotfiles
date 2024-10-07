@@ -1,8 +1,9 @@
 return {
-	"nvim-tree/nvim-tree.lua",
+	"stevearc/oil.nvim",
 	version = "*",
 	opts = {},
 	dependencies = {
+		{ "echasnovski/mini.icons", version = "*" },
 		"nvim-tree/nvim-web-devicons",
 	},
 }
