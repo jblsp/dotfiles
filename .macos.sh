@@ -71,9 +71,6 @@ defaults write -g InitialKeyRepeat -int 10
 # Enable lid wakeup
 sudo pmset -a lidwake 1
 
-# Restart automatically if the computer freezes
-sudo systemsetup -setrestartfreeze on
-
 # Sleep the display after 15 minutes on battery
 sudo pmset -b displaysleep 15
 
@@ -198,9 +195,6 @@ defaults write com.apple.dock showLaunchpadGestureEnabled -int 0
 # Spotlight                                                                   #
 ###############################################################################
 
-# Disable Spotlight indexing for any volume that gets mounted and has not yet
-# been indexed before.
-sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
 # Change indexing order and disable some search results
 defaults write com.apple.spotlight orderedItems -array \
 	'{"enabled" = 1;"name" = "APPLICATIONS";}' \
@@ -225,6 +219,7 @@ defaults write com.apple.spotlight orderedItems -array \
 	'{"enabled" = 0;"name" = "MENU_EXPRESSION";}' \
 	'{"enabled" = 0;"name" = "MENU_WEBSEARCH";}' \
 	'{"enabled" = 0;"name" = "MENU_SPOTLIGHT_SUGGESTIONS";}'
+
 # Load new settings before rebuilding the index
 killall mds > /dev/null 2>&1
 # Make sure indexing is enabled for the main volume
