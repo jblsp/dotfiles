@@ -150,7 +150,7 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict \
 	Privileges -bool true
 
 ###############################################################################
-# Dock, Dashboard, and hot corners                                            #
+# Dock and Mission Control                                                    #
 ###############################################################################
 
 # Change minimize/maximize window effect
@@ -184,12 +184,20 @@ defaults write com.apple.dock autohide -bool true
 # Make Dock icons of hidden applications translucent
 defaults write com.apple.dock showhidden -bool true
 
+# Don’t automatically rearrange Spaces based on most recent use
+defaults write com.apple.dock mru-spaces -bool false
+
 # Don’t show recent applications in Dock
 defaults write com.apple.dock show-recents -bool false
 
 # Disable the Launchpad gesture (pinch with thumb and three fingers)
 defaults write com.apple.dock showLaunchpadGestureEnabled -int 0
 
+# Disable process indicators under dock icons
+defaults write com.apple.dock show-process-indicators -bool false
+
+# Disable "Displays have separate Spaces"
+defaults write com.apple.spaces "Management Mode" -int 1
 
 ###############################################################################
 # Spotlight                                                                   #
