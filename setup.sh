@@ -10,6 +10,7 @@ setup() {
 
 	git clone --bare https://github.com/jblsp/dotfiles "$repo_dir"
 	$git_cmd checkout -f
+	$git_cmd --set-upstream-to=origin/main
 
 	submodule_paths=$(grep 'path = ' "$HOME/.gitmodules" | sed 's/.*= //')
 	for submodule_path in $submodule_paths; do
