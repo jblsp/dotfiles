@@ -6,13 +6,13 @@ zstyle ':omz:update' mode auto
 zstyle ':omz:update' verbosity minimal
 
 plugins=(
+  nvm
   git
   gh
   sudo
   colored-man-pages
   gitignore
   command-not-found
-  nvm
   zsh-autosuggestions
   zsh-syntax-highlighting
   you-should-use
@@ -37,6 +37,7 @@ alias sudo='sudo '
 alias ff='fastfetch'
 alias c='clear'
 alias fuck='sudo $SHELL -c "$(fc -ln -1)"'
+alias waybarrestart='pkill waybar && hyprctl dispatch exec waybar'
 
 # Functions
 dotfiles() {
@@ -63,3 +64,4 @@ dotfiles() {
 			git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME $@
 	esac
 }
+
