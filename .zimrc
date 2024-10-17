@@ -1,0 +1,17 @@
+zmodule git-info
+zmodule duration-info
+zmodule asciiship
+zmodule completion
+zmodule ohmyzsh/ohmyzsh --root plugins/sudo
+zmodule ohmyzsh/ohmyzsh --root plugins/colored-man-pages
+zmodule ohmyzsh/ohmyzsh --root plugins/gitignore
+zmodule ohmyzsh/ohmyzsh --root plugins/command-not-found
+zmodule lukechilds/zsh-nvm
+zmodule joke/zim-github-cli
+zmodule git
+zmodule magic-enter
+zmodule utility
+zmodule zsh-users/zsh-completions --fpath src
+zmodule zsh-users/zsh-syntax-highlighting
+zmodule zsh-users/zsh-autosuggestions
+zmodule MichaelAquilina/zsh-you-should-use

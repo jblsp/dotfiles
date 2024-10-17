@@ -1,27 +1,22 @@
-fastfetch
+# Set up zim
+zstyle ':zim:zmodule' use 'degit'
+ZIM_CONFIG_FILE=~/.zimrc
+ZIM_HOME=~/.local/share/zim
+if [ ! -d "$ZIM_HOME" ]; then
+    mkdir -p "$ZIM_HOME"
+fi
+if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
+  curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
+      https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+fi
 
-export ZSH="$HOME/.oh-my-zsh"
+# Install missing modules and update ${ZIM_HOME}/init.zsh if missing or outdated.
+if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc} ]]; then
+  source ${ZIM_HOME}/zimfw.zsh init -q
+fi
 
-zstyle ':omz:update' mode auto
-zstyle ':omz:update' verbosity minimal
-
-plugins=(
-  nvm
-  git
-  gh
-  sudo
-  colored-man-pages
-  gitignore
-  command-not-found
-  zsh-autosuggestions
-  zsh-syntax-highlighting
-  you-should-use
-)
-
-ZSH_THEME="powerlevel10k/powerlevel10k"
-
-source $ZSH/oh-my-zsh.sh
-source ~/.p10k.zsh
+# Initialize modules.
+source ${ZIM_HOME}/init.zsh
 
 # Brew
 if [[ "$(uname)" == "Darwin" ]]; then
