@@ -31,8 +31,6 @@ export EDITOR=$([[ -n $SSH_CONNECTION ]] && echo "vim" || echo "nvim")
 alias sudo='sudo '
 alias ff='fastfetch'
 alias c='clear'
-alias fuck='sudo $SHELL -c "$(fc -ln -1)"'
-alias waybarrestart='pkill waybar && hyprctl dispatch exec waybar'
 
 # Functions
 dotfiles() {
@@ -59,4 +57,5 @@ dotfiles() {
 			git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME $@
 	esac
 }
+
 
