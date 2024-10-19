@@ -70,6 +70,7 @@ return {
 				},
 			},
 			pyright = {},
+			jdtls = {},
 		}
 
 		local ensure_installed = vim.tbl_keys(servers or {})
