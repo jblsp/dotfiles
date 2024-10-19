@@ -8,6 +8,7 @@ zmodule ohmyzsh/ohmyzsh --root plugins/gitignore
 zmodule ohmyzsh/ohmyzsh --root plugins/command-not-found
 zmodule lukechilds/zsh-nvm
 zmodule joke/zim-github-cli
+zmodule homebrew
 zmodule git
 zmodule magic-enter
 zmodule utility

@@ -18,11 +18,6 @@ fi
 # Initialize modules.
 source ${ZIM_HOME}/init.zsh
 
-# Brew
-if [[ "$(uname)" == "Darwin" ]]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
-
 # Exports
 export LANG=en_US.UTF-8
 export EDITOR=$([[ -n $SSH_CONNECTION ]] && echo "vim" || echo "nvim")
