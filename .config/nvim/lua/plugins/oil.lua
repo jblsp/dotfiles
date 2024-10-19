@@ -5,9 +5,14 @@ return {
 		view_options = {
 			show_hidden = true,
 		},
+		columns = {
+			"icon",
+			"permissions",
+			"size",
+			"mtime",
+		},
 	},
 	dependencies = {
-		{ "echasnovski/mini.icons", version = "*" },
-		"nvim-tree/nvim-web-devicons",
+		{ "echasnovski/mini.icons", version = "*", opts = {} },
 	},
 }
