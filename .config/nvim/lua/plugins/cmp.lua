@@ -1,7 +1,8 @@
 return {
 	"hrsh7th/nvim-cmp",
-	event = "InsertEnter",
+	event = { "InsertEnter", "CmdlineEnter" },
 	dependencies = {
+
 		{
 			"L3MON4D3/LuaSnip",
 			build = (function()
@@ -21,11 +22,19 @@ return {
 		"hrsh7th/cmp-path",
 		"hrsh7th/cmp-buffer",
 		"hrsh7th/cmp-cmdline",
+		"onsails/lspkind.nvim",
 	},
 	config = function()
 		local cmp = require("cmp")
 		local luasnip = require("luasnip")
-		luasnip.config.setup({})
+		luasnip.config.setup()
+
+		vim.keymap.set("n", "<leader>oc", function()
+			cmp.setup.buffer({ enabled = true })
+		end, { desc = "Toggle completion for buffer" })
+		vim.keymap.set("n", "<leader>oC", function()
+			cmp.setup({ enabled = true })
+		end, { desc = "Toggle completion globally" })
 
 		cmp.setup({
 			snippet = {
@@ -34,7 +43,11 @@ return {
 				end,
 			},
 			completion = { completeopt = "menu,menuone,noinsert" },
-
+			formatting = {
+				format = require("lspkind").cmp_format({
+					mode = "symbol_text",
+				}),
+			},
 			mapping = cmp.mapping.preset.insert({
 				["<C-n>"] = cmp.mapping.select_next_item(),
 				["<C-p>"] = cmp.mapping.select_prev_item(),
@@ -60,7 +73,6 @@ return {
 				{ name = "nvim_lsp" },
 				{ name = "luasnip" },
 				{ name = "path" },
-				{ name = "buffer" },
 			},
 		})
 
@@ -68,6 +80,9 @@ return {
 			mapping = cmp.mapping.preset.cmdline(),
 			sources = {
 				{ name = "buffer" },
+			},
+			performance = {
+				max_view_entries = 10,
 			},
 		})
 
@@ -79,6 +94,9 @@ return {
 				{ name = "cmdline" },
 			}),
 			matching = { disallow_symbol_nonprefix_matching = false },
+			performance = {
+				max_view_entries = 20,
+			},
 		})
 	end,
 }
