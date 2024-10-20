@@ -2,7 +2,13 @@ return {
 	"neovim/nvim-lspconfig",
 	version = "*",
 	dependencies = {
-		{ "williamboman/mason.nvim", opts = {} },
+		{
+			"williamboman/mason.nvim",
+			config = function()
+				require("mason").setup()
+				vim.keymap.set("n", "<leader>tm", "<cmd>Mason<cr>", { desc = "Mason" })
+			end,
+		},
 		"williamboman/mason-lspconfig.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		"hrsh7th/cmp-nvim-lsp",
@@ -19,11 +25,11 @@ return {
 				map("gr", require("telescope.builtin").lsp_references, "Go to References")
 				map("gI", require("telescope.builtin").lsp_implementations, "Go to Implementation")
 				map("gD", vim.lsp.buf.declaration, "Go to Declaration")
-				map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type Definition")
-				map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "Document Symbols")
-				map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace Symbols")
-				map("<leader>rn", vim.lsp.buf.rename, "Rename Symbol")
-				map("<leader>ca", vim.lsp.buf.code_action, "Code Action", { "n", "x" })
+				map("<leader>ld", require("telescope.builtin").lsp_type_definitions, "Type Definition")
+				map("<leader>ls", require("telescope.builtin").lsp_document_symbols, "Document Symbols")
+				map("<leader>lw", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace Symbols")
+				map("<leader>lr", vim.lsp.buf.rename, "Rename Symbol")
+				map("<leader>la", vim.lsp.buf.code_action, "Code Action", { "n", "x" })
 				local client = vim.lsp.get_client_by_id(event.data.client_id)
 				if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
 					local highlight_augroup = vim.api.nvim_create_augroup("lsp-highlight", { clear = false })
@@ -49,7 +55,7 @@ return {
 				end
 
 				if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-					map("<leader>th", function()
+					map("<leader>oh", function()
 						vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
 					end, "Toggle Inlay Hints")
 				end

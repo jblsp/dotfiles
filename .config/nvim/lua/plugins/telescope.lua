@@ -15,18 +15,25 @@ return {
 		"nvim-tree/nvim-web-devicons",
 	},
 	config = function()
-		require("telescope").setup({
+		local telescope = require("telescope")
+		local themes = require("telescope.themes")
+		local builtin = require("telescope.builtin")
+		telescope.setup({
+			pickers = {
+				colorscheme = {
+					opts = { enable_prevew = false },
+				},
+			},
 			extensions = {
 				["ui-select"] = {
-					require("telescope.themes").get_dropdown(),
+					themes.get_dropdown(),
 				},
 			},
 		})
 
-		require("telescope").load_extension("fzf")
-		require("telescope").load_extension("ui-select")
+		telescope.load_extension("fzf")
+		telescope.load_extension("ui-select")
 
-		local builtin = require("telescope.builtin")
 		vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "Search Help" })
 		vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "Search Keymaps" })
 		vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "Search Files" })
@@ -36,11 +43,11 @@ return {
 		vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "Search Diagnostics" })
 		vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "Search Resume" })
 		vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = "Search Recent Files" })
-		vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "Search existing buffers" })
+		vim.keymap.set("n", "<leader>sb", builtin.buffers, { desc = "Search Buffers" })
 		vim.keymap.set("n", "<leader>sc", builtin.colorscheme, { desc = "Search Colorschemes" })
 
 		vim.keymap.set("n", "<leader>/", function()
-			builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
+			builtin.current_buffer_fuzzy_find(themes.get_dropdown({
 				winblend = 10,
 				previewer = false,
 			}))
