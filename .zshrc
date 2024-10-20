@@ -1,6 +1,6 @@
 # Set up zim
 zstyle ':zim:zmodule' use 'degit'
-ZIM_CONFIG_FILE=~/.zimrc
+ZIM_CONFIG_FILE=~/.config/zim/.zimrc
 ZIM_HOME=~/.local/share/zim
 if [ ! -d "$ZIM_HOME" ]; then
     mkdir -p "$ZIM_HOME"
