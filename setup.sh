@@ -10,16 +10,19 @@ setup() {
 
 	git clone --bare https://github.com/jblsp/dotfiles "$repo_dir"
 	$git_cmd checkout -f
+	
+	if [ -d "$HOME/.gitmodules" ]; then
+		submodule_paths=$(grep 'path = ' "$HOME/.gitmodules" | sed 's/.*= //')
+		for submodule_path in $submodule_paths; do
+			full_path="$HOME/$submodule_path"
+			if [ -d "$full_path" ]; then
+				rm -rf "$full_path"
+			fi
+		done
+		$git_cmd submodule update --init --recursive
+	fi
+	
 	$git_cmd push --set-upstream origin main
-
-	submodule_paths=$(grep 'path = ' "$HOME/.gitmodules" | sed 's/.*= //')
-	for submodule_path in $submodule_paths; do
-		full_path="$HOME/$submodule_path"
-		if [ -d "$full_path" ]; then
-			rm -rf "$full_path"
-		fi
-	done
-	$git_cmd submodule update --init --recursive
 	$git_cmd config --local status.showUntrackedFiles no
 }
 
