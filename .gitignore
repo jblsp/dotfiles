@@ -1,5 +1,4 @@
-# Bare repo for tracking dotfiles
-.cfggit
+# Global gitignore
 
 # macOS
 .DS_Store
