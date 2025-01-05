@@ -1,0 +1,7 @@
+require("util")
+require("config.options")
+require("config.keymaps")
+require("config.autocmds")
+require("config.lazy")
+
+vim.cmd.colorscheme(vim.g.colorscheme)

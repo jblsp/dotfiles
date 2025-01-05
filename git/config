@@ -1,0 +1,13 @@
+[user]
+	name = Joe
+	email = 48526917+jblsp@users.noreply.github.com
+[init]
+	defaultBranch = main
+[core]
+	editor = nvim
+[credential "https://github.com"]
+	helper = 
+	helper = !/run/current-system/sw/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/run/current-system/sw/bin/gh auth git-credential
