@@ -73,6 +73,11 @@
         "com.apple.trackpad.forceClick" = false;
       };
 
+      system.defaults.controlcenter = {
+        BatteryShowPercentage = true;
+        Sound = true;
+      };
+
       system.defaults.dock = {
         autohide = true;
         autohide-delay = 0.05;
