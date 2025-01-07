@@ -46,6 +46,8 @@
 
   xdg.configFile.git.source = config.lib.file.mkOutOfStoreSymlink /Users/joe/dotfiles/git;
 
+  xdg.configFile.aerospace.source = config.lib.file.mkOutOfStoreSymlink /Users/joe/dotfiles/aerospace;
+
   home.stateVersion = "24.11";
 }
 

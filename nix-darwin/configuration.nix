@@ -25,6 +25,7 @@
           fastfetch
           jdk
           gh
+          aerospace
         ];
 
   environment.pathsToLink = [ "/share/zsh" ];
