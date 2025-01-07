@@ -33,6 +33,7 @@ return {
       markdown = { "prettier" },
       html = { "prettier" },
       javascript = { "prettier" },
+      nix = { "alejandra" },
     },
     notify_on_error = false,
     format_on_save = function(bufnr)

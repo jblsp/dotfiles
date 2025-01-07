@@ -20,6 +20,8 @@
       pylint
       markdownlint-cli2
       jdt-language-server
+      alejandra
+      nixd
     ];
   };
   xdg.configFile.nvim.source = config.lib.file.mkOutOfStoreSymlink /Users/joe/dotfiles/nvim;

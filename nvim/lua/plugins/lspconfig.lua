@@ -22,6 +22,7 @@ return {
         },
       },
       pyright = {},
+      nixd = {},
     }
 
     for server, config in pairs(servers) do
