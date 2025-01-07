@@ -4,12 +4,12 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin = {
-        url = "github:LnL7/nix-darwin";
-        inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-        url = "github:nix-community/home-manager";
-        inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
     homebrew-core = {
@@ -26,14 +26,18 @@
     };
   };
 
-  outputs = inputs@{ self, nix-darwin, home-manager, nix-homebrew, ...  }:
-  let
+  outputs = inputs @ {
+    self,
+    nix-darwin,
+    home-manager,
+    nix-homebrew,
+    ...
+  }: let
     hostName = "JMBP";
-  in
-  {
+  in {
     darwinConfigurations."${hostName}" = nix-darwin.lib.darwinSystem {
-      specialArgs = { inherit inputs; };
-      modules = [ 
+      specialArgs = {inherit inputs;};
+      modules = [
         ./configuration.nix
         {
           networking.hostName = hostName;

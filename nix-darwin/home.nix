@@ -1,4 +1,8 @@
-{ config, pkgs, ... }: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   home = {
     username = "joe";
     homeDirectory = "/Users/joe";
@@ -35,7 +39,7 @@
     enableCompletion = true;
     oh-my-zsh = {
       enable = true;
-      plugins = ["colored-man-pages" "gitignore" ];
+      plugins = ["colored-man-pages" "gitignore"];
     };
     plugins = with pkgs; [
       {
@@ -52,4 +56,3 @@
 
   home.stateVersion = "24.11";
 }
-
