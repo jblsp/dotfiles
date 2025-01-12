@@ -10,7 +10,15 @@
     };
   };
 
-  nix.settings.experimental-features = "nix-command flakes";
+  nix = {
+    settings = {
+      experimental-features = "nix-command flakes";
+    };
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 30d";
+    };
+  };
 
   users.users = {
     "joe" = {
@@ -27,9 +35,10 @@
     fastfetch
     jdk
     gh
-    aerospace
     lazygit
     alejandra
+    python3
+    ghc
   ];
 
   environment.pathsToLink = ["/share/zsh"];
@@ -44,13 +53,13 @@
     pkgs.lib.mkForce ''
       # Set up applications.
       echo "setting up /Applications..." >&2
-      rm -rf /Applications/Nix\ Apps
-      mkdir -p /Applications/Nix\ Apps
+      rm -rf /Applications/Nix
+      mkdir -p /Applications/Nix
       find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
       while read -r src; do
         app_name=$(basename "$src")
         echo "copying $src" >&2
-        ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
+        ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix/$app_name"
       done
     '';
 
@@ -58,6 +67,12 @@
     computerName = "Joe's MacBook Pro";
     knownNetworkServices = ["Wi-Fi"];
     dns = ["8.8.8.8" "8.8.4.4"];
+  };
+
+  services.aerospace = {
+    enable = true;
+    settings = {
+    };
   };
 
   system.defaults.finder = {
@@ -68,14 +83,27 @@
     FXDefaultSearchScope = "SCcf";
   };
 
+  system.defaults.screencapture.show-thumbnail = false;
+  system.defaults.screensaver.askForPasswordDelay = 15;
+
   system.defaults.WindowManager.EnableTiledWindowMargins = false;
 
   system.defaults.NSGlobalDomain = {
     ApplePressAndHoldEnabled = false;
     InitialKeyRepeat = 22;
     KeyRepeat = 3;
+    NSDocumentSaveNewDocumentsToCloud = false;
     AppleShowAllExtensions = true;
     "com.apple.trackpad.forceClick" = false;
+    NSAutomaticCapitalizationEnabled = false;
+    NSAutomaticDashSubstitutionEnabled = false;
+    NSAutomaticInlinePredictionEnabled = false;
+    NSAutomaticPeriodSubstitutionEnabled = false;
+    NSAutomaticQuoteSubstitutionEnabled = false;
+    NSAutomaticSpellingCorrectionEnabled = false;
+  };
+  system.defaults.CustomUserPreferences."com.apple.preference.trackpad" = {
+    ForceClickSavedState = 0;
   };
 
   system.defaults.controlcenter = {
@@ -93,14 +121,31 @@
     showhidden = true;
     tilesize = 52;
     persistent-apps = [
-      "/Applications/Ghostty.app"
-      "/Applications/Zen Browser.app"
+      "/Applications/Homebrew/Ghostty.app"
+      "/Applications/Homebrew/Zen Browser.app"
     ];
     persistent-others = [
       "/Users/joe/Downloads/"
     ];
+    expose-group-apps = true; # mission control group windows by app
+    wvous-bl-corner = 1;
+    wvous-br-corner = 1;
+    wvous-tl-corner = 1;
+    wvous-tr-corner = 1;
   };
   system.defaults.CustomUserPreferences."com.apple.dock"."enterMissionControlByTopWindowDrag" = 0;
+
+  system.defaults.CustomUserPreferences."com.apple.AppleMultitouchTrackpad" = {
+    TrackpadFiveFingerPinchGesture = 0;
+    TrackpadFourFingerHorizSwipeGesture = 0;
+    TrackpadFourFingerPinchGesture = 0;
+    TrackpadFourFingerVertSwipeGesture = 0;
+    TrackpadThreeFingerHorizSwipeGesture = 0;
+    TrackpadThreeFingerTapGesture = 2;
+    TrackpadThreeFingerVertSwipeGesture = 0;
+    TrackpadTwoFingerDoubleTapGesture = 0;
+    TrackpadTwoFingerFromRightEdgeSwipeGesture = 0;
+  };
 
   system.defaults.CustomUserPreferences."com.apple.Spotlight"."orderedItems" = [
     {

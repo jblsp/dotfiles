@@ -1,6 +1,5 @@
 return {
   "mfussenegger/nvim-jdtls",
-  enabled = false,
   ft = "java",
   config = function()
     vim.api.nvim_create_autocmd("FileType", {

@@ -23,11 +23,12 @@ return {
       },
       pyright = {},
       nixd = {},
+      hls = {},
     }
 
-    for server, config in pairs(servers) do
+    for server_name, config in pairs(servers) do
       config.capabilities = vim.tbl_deep_extend("force", {}, capabilities, config.capabilities or {})
-      require("lspconfig")[server].setup(config)
+      require("lspconfig")[server_name].setup(config)
     end
   end,
 }

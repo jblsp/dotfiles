@@ -18,10 +18,13 @@
   homebrew = {
     enable = true;
     taps = builtins.attrNames config.nix-homebrew.taps;
+    caskArgs.appdir = "/Applications/Homebrew";
     casks = [
       "ghostty"
       "bitwarden"
       "zen-browser"
+      "libreoffice"
+      "steam"
     ];
     onActivation = {
       cleanup = "zap";
