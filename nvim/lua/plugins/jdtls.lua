@@ -6,6 +6,7 @@ return {
       pattern = "java",
       group = vim.api.nvim_create_augroup("jdtls", { clear = true }),
       callback = function()
+        local nvim_data = vim.fn.stdpath("data") .. "/jdtls"
         local jdtls_path = vim.fn.fnamemodify(vim.fn.exepath("jdtls"), ":p:h") .. "/../share/java/jdtls"
 
         local root_dir = vim.fs.root(0, { ".git", "mvnw", "gradlew", "pom.xml" })
@@ -27,15 +28,12 @@ return {
           os = "_linux"
         end
 
-        local arch = ""
-        if uname.machine == "arm64" then
-          arch = "_arm"
-        end
+        -- jdtls wants the config path to be mutable so I symlink the config file in a new config directory
+        vim.uv.fs_symlink(jdtls_path .. "/config" .. os .. "/config.ini", nvim_data .. "/config/config.ini")
+        local config_path = nvim_data .. "/config"
 
-        local config_path = jdtls_path .. "/config" .. os .. arch
-        local workspace_path = vim.fn.stdpath("data")
-          .. "/jdtls/workspaces/"
-          .. vim.fn.fnamemodify(root_dir or "", ":p:h:t")
+        -- should probably serialize the whole dirname to avoid collisions
+        local data_path = nvim_data .. vim.fn.fnamemodify(root_dir or "", ":p:h:t")
 
         require("jdtls").start_or_attach({
           -- The command that starts the language server
@@ -58,7 +56,7 @@ return {
             "-configuration",
             config_path,
             "-data",
-            workspace_path,
+            data_path,
           },
 
           root_dir = root_dir,

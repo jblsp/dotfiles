@@ -7,6 +7,7 @@
     hostPlatform = "aarch64-darwin";
     config = {
       allowUnfree = true;
+      # allowBroken = true;
     };
   };
 
@@ -135,6 +136,8 @@
   };
   system.defaults.CustomUserPreferences."com.apple.dock"."enterMissionControlByTopWindowDrag" = 0;
 
+  # I just copied these defaults after setting the touchpad settings that I like,
+  # not sure if writing these actually applies the settings I want
   system.defaults.CustomUserPreferences."com.apple.AppleMultitouchTrackpad" = {
     TrackpadFiveFingerPinchGesture = 0;
     TrackpadFourFingerHorizSwipeGesture = 0;

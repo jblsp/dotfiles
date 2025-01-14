@@ -24,6 +24,9 @@
       url = "github:homebrew/homebrew-bundle";
       flake = false;
     };
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+    };
   };
 
   outputs = inputs @ {
@@ -49,6 +52,7 @@
             useGlobalPkgs = true;
             useUserPackages = true;
             users.joe = import ./home.nix;
+            extraSpecialArgs = {inherit inputs;};
           };
         }
         nix-homebrew.darwinModules.nix-homebrew
