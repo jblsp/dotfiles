@@ -1,8 +1,47 @@
 {
   pkgs,
   config,
+  hostName,
+  flake,
+  root,
+  userName,
   ...
 }: {
+  imports = [
+    flake.inputs.home-manager.darwinModules.home-manager
+    (root + /homebrew.nix)
+  ];
+
+  networking.hostName = hostName;
+  system.configurationRevision = flake.rev or flake.dirtyRev or null;
+
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.${userName} = {...}: {
+      imports = let
+        hm = root + /home-manager;
+      in [
+        (hm + /nvim)
+        (hm + /gh)
+        (hm + /git)
+        (hm + /zsh)
+        (hm + /ghostty)
+      ];
+
+      home = {
+        username = "joe";
+        homeDirectory = "/Users/joe";
+      };
+
+      programs.home-manager.enable = true;
+
+      home.stateVersion = "24.11";
+    };
+
+    extraSpecialArgs = {inherit flake;};
+  };
+
   nixpkgs = {
     hostPlatform = "aarch64-darwin";
     config = {
@@ -22,8 +61,8 @@
   };
 
   users.users = {
-    "joe" = {
-      home = "/Users/joe";
+    "${userName}" = {
+      home = "/Users/${userName}";
       description = "Joe Sparma";
     };
   };
@@ -40,6 +79,8 @@
     alejandra
     python3
     ghc
+    yazi
+    tokei
   ];
 
   environment.pathsToLink = ["/share/zsh"];

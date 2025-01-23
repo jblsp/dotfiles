@@ -24,40 +24,34 @@
       url = "github:homebrew/homebrew-bundle";
       flake = false;
     };
-    ghostty = {
-      url = "github:ghostty-org/ghostty";
-    };
   };
 
-  outputs = inputs @ {
+  outputs = {
     self,
     nix-darwin,
-    home-manager,
-    nix-homebrew,
     ...
   }: let
-    hostName = "JMBP";
+    mkDarwin = {
+      hostName,
+      userName,
+    }:
+      nix-darwin.lib.darwinSystem {
+        specialArgs = {
+          flake = self;
+          inherit hostName;
+          inherit userName;
+          root = ./.;
+        };
+        modules = [
+          ./nixos/hosts/${hostName}
+        ];
+      };
   in {
-    darwinConfigurations."${hostName}" = nix-darwin.lib.darwinSystem {
-      specialArgs = {inherit inputs;};
-      modules = [
-        ./configuration.nix
-        {
-          networking.hostName = hostName;
-          system.configurationRevision = self.rev or self.dirtyRev or null;
-        }
-        home-manager.darwinModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.joe = import ./home.nix;
-            extraSpecialArgs = {inherit inputs;};
-          };
-        }
-        nix-homebrew.darwinModules.nix-homebrew
-        ./homebrew.nix
-      ];
+    darwinConfigurations = {
+      "JMBP" = mkDarwin {
+        hostName = "JMBP";
+        userName = "joe";
+      };
     };
   };
 }

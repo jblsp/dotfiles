@@ -1,16 +1,20 @@
 {
-  inputs,
   config,
+  flake,
   ...
 }: {
+  imports = [
+    flake.inputs.nix-homebrew.darwinModules.nix-homebrew
+  ];
+
   nix-homebrew = {
     enable = true;
     enableRosetta = true;
     user = "joe";
     taps = {
-      "homebrew/homebrew-core" = inputs.homebrew-core;
-      "homebrew/homebrew-cask" = inputs.homebrew-cask;
-      "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
+      "homebrew/homebrew-core" = flake.inputs.homebrew-core;
+      "homebrew/homebrew-cask" = flake.inputs.homebrew-cask;
+      "homebrew/homebrew-bundle" = flake.inputs.homebrew-bundle;
     };
     mutableTaps = false;
   };
