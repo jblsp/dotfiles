@@ -82,11 +82,16 @@ install)
   nix run home-manager/master switch
   ;;
 uninstall)
+  if can_run "home-manager"; then
+    nix run home-manager/master uninstall
+  fi
+
   if [ -d "$DOTFILES/stow" ]; then
     stow --dir="$DOTFILES/stow" -D $(ls "$DOTFILES/stow")
     echo "Deleted packages in $DOTFILES/stow"
   fi
   if [ -d "$DOTFILES/home-manager" ]; then
+    rm -r "$HOME/.config/home-manager"
     stow -d "$DOTFILES" -D "home-manager"
     echo "Deleted home-manager stow package"
   fi
