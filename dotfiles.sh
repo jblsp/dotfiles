@@ -21,12 +21,16 @@ remove_if_exists() {
 }
 
 stow_configs() {
-  stow --dir="$DOTFILES/stow" --target="$HOME" $(ls "$DOTFILES/stow")
+  stow --dir="$DOTFILES/stow" --target="$HOME" "$(ls "$DOTFILES/stow")"
+}
+
+dots_git() {
+  git -C "$EDITOR" "$@"
 }
 
 case "$1" in
 install)
-  echo "installing into $DOTFILES"
+  echo "Installing into $DOTFILES"
   dependencies=("git" "nix" "stow" "curl")
   missing=()
 
@@ -39,7 +43,7 @@ install)
   for dep in "${missing[@]}"; do
     case "$dep" in
     "nix")
-      read -p "Nix is missing, would you like to run the Determinate Nix Installer? [y/N]: " confirm
+      read -r -p "Nix is missing, would you like to run the Determinate Nix Installer? [y/N]: " confirm
       if [[ "$confirm" =~ ^[Yy]$ ]]; then
         curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
       fi
@@ -70,7 +74,7 @@ install)
     echo "Found existing file \`dotfiles\` in ~/.local/bin. Aborting..."
   fi
 
-  git clone https://github.com/jblsp/dotfiles $DOTFILES
+  git clone https://github.com/jblsp/dotfiles "$DOTFILES"
 
   stow_configs
 
@@ -87,13 +91,13 @@ uninstall)
   fi
 
   if [ -d "$DOTFILES/stow" ]; then
-    stow --dir="$DOTFILES/stow" -D $(ls "$DOTFILES/stow")
+    stow --dir="$DOTFILES/stow" -D "$(ls "$DOTFILES/stow")"
     echo "Deleted packages in $DOTFILES/stow"
   fi
   if [ -d "$DOTFILES/home-manager" ]; then
     rm -r "$HOME/.config/home-manager"
     stow -d "$DOTFILES" -D "home-manager"
-    echo "Deleted home-manager stow package"
+    echo "Deleted home-manager stow package at $DOTFILES/home-manager"
   fi
   remove_if_exists "$HOME/.local/bin/dotfiles"
   remove_if_exists "$HOME/.dotfiles"
@@ -101,14 +105,24 @@ uninstall)
 stow)
   stow_configs
   ;;
--t)
-  echo "t"
+edit)
+  if [ -z "$EDITOR" ]; then
+    echo "Error: \$EDITOR is not set."
+    exit 1
+  fi
+
+  "$EDITOR" "$DOTFILES"
+  ;;
+git)
+  dots_git "${@:2}"
   ;;
 *)
   if [ "$1" ]; then
-    echo "Unknown command: \`"$1"\`\n"
+    printf "Unknown command: \`%s %s\`\n\n" "$(basename "$0")" "$1"
+    exit 1
   fi
-  echo -e "Usage: $0 <command>\n\nCommands:\n\ninstall\nuninstall\nstow"
+  dots_git fetch
+  dots_git status
   ;;
 esac
 
