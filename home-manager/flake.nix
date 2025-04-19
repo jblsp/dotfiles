@@ -29,22 +29,25 @@
     homeConfigurations =
       mkHomeConfigs {
         inherit home-manager;
-        pkgs = system:
+        flake = self;
+        mkpkgs = system:
           import nixpkgs {
             inherit system;
-            overlays = [inputs.nur.overlays.default];
+            overlays = [
+              (import ./overlays/mypkgs.nix)
+              inputs.nur.overlays.default
+            ];
           };
-        extraSpecialArgs = {
-          mylib = import ./lib/mylib.nix nixpkgs.lib;
-          flake = self;
-        };
       }
       [
         {
           hostname = "JMBP";
           system = "aarch64-darwin";
-          config = {
+          config = {pkgs, ...}: {
             imports = [inputs.mac-app-util.homeManagerModules.default];
+            home.packages = with pkgs; [
+              nvim
+            ];
             programs.firefox.enable = true;
           };
         }

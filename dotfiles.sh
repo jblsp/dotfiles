@@ -101,6 +101,9 @@ uninstall)
 stow)
   stow_configs
   ;;
+-t)
+  echo "t"
+  ;;
 *)
   if [ "$1" ]; then
     echo "Unknown command: \`"$1"\`\n"
