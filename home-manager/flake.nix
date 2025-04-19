@@ -46,7 +46,7 @@
           config = {pkgs, ...}: {
             imports = [inputs.mac-app-util.homeManagerModules.default];
             home.packages = with pkgs; [
-              nvim
+              mypkgs.nvim
             ];
             programs.firefox.enable = true;
           };
