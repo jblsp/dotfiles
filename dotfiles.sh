@@ -21,7 +21,10 @@ remove_if_exists() {
 }
 
 stow_configs() {
-  stow --dir="$DOTFILES/stow" --target="$HOME" "$(ls "$DOTFILES/stow")"
+  for dir in "$DOTFILES/stow"/*; do
+    stow --dir="$DOTFILES/stow" --target="$HOME" "$(basename "$dir")"
+  done
+
 }
 
 dots_git() {
@@ -81,6 +84,7 @@ install)
   mkdir "$HOME/.config/home-manager"
   stow --dir="$DOTFILES" --target="$HOME/.config/home-manager" "home-manager"
 
+  mkdir -p "$HOME/.local/bin"
   ln -s "$DOTFILES/dotfiles.sh" "$HOME/.local/bin/dotfiles"
 
   nix run home-manager/master switch
