@@ -51,6 +51,17 @@
             programs.firefox.enable = true;
           };
         }
+        {
+          hostname = "JZB";
+          system = "x86_64-linux";
+          config = {pkgs, ...}: {
+            imports = [inputs.mac-app-util.homeManagerModules.default];
+            home.packages = with pkgs; [
+              mypkgs.nvim
+            ];
+            programs.firefox.enable = true;
+          };
+        }
       ];
   };
 }
