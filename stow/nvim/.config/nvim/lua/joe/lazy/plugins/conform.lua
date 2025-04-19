@@ -28,7 +28,7 @@ return {
       cpp = { "clang-format" },
       cs = { lsp_format = "fallback" },
       css = { "prettier" },
-      bash = { "shfmt" },
+      bash = { lsp_format = "fallback" },
       html = { "prettier" },
       java = { lsp_format = "fallback" },
       javascript = { "prettier" },

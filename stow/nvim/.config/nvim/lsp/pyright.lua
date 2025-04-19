@@ -1,11 +1,11 @@
 local function set_python_path(path)
   local clients = vim.lsp.get_clients({
     bufnr = vim.api.nvim_get_current_buf(),
-    name = "basedpyright",
+    name = "pyright",
   })
   for _, client in ipairs(clients) do
     if client.settings then
-      client.settings.python = vim.tbl_deep_extend("force", client.settings.python or {}, { pythonPath = path })
+      client.settings.python = vim.tbl_deep_extend("force", client.settings.python, { pythonPath = path })
     else
       client.config.settings = vim.tbl_deep_extend("force", client.config.settings, { python = { pythonPath = path } })
     end
@@ -13,9 +13,8 @@ local function set_python_path(path)
   end
 end
 
----@type vim.lsp.Config
 return {
-  cmd = { "basedpyright-langserver", "--stdio" },
+  cmd = { "pyright-langserver", "--stdio" },
   filetypes = { "python" },
   root_markers = {
     "pyproject.toml",
@@ -26,18 +25,17 @@ return {
     "pyrightconfig.json",
   },
   settings = {
-    basedpyright = {
+    python = {
       analysis = {
         autoSearchPaths = true,
         useLibraryCodeForTypes = true,
         diagnosticMode = "openFilesOnly",
       },
-      typeCheckingMode = "off",
     },
   },
   on_attach = function()
     vim.api.nvim_buf_create_user_command(0, "PyrightSetPythonPath", set_python_path, {
-      desc = "Reconfigure basedpyright with the provided python path",
+      desc = "Reconfigure pyright with the provided python path",
       nargs = 1,
       complete = "file",
     })
