@@ -35,11 +35,6 @@ pkgs: let
   ];
 in
   pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped {
-    viAlias = false;
-    vimAlias = false;
-    withRuby = true;
-    withNodeJs = true;
-    withPython3 = true;
     wrapRc = false;
     wrapperArgs = ''--prefix PATH : "${pkgs.lib.makeBinPath extraPackages}"'';
   }

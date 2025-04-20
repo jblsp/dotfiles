@@ -1,7 +1,7 @@
 {
+  nixpkgs,
   home-manager,
   flake,
-  mkpkgs,
 }: specs:
 builtins.listToAttrs (builtins.map ({
     hostname,
@@ -11,8 +11,7 @@ builtins.listToAttrs (builtins.map ({
     config ? {},
   }: let
     isDarwin = builtins.match ".*-darwin" system != null;
-    pkgs = mkpkgs system;
-    lib = flake.inputs.nixpkgs.lib;
+    pkgs = import nixpkgs {inherit system;};
   in {
     inherit name;
     value = home-manager.lib.homeManagerConfiguration {

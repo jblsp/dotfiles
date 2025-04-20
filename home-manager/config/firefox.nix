@@ -1,4 +1,9 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: {
   programs.firefox = {
     profiles = {
       "joe" = {
@@ -112,7 +117,7 @@
 
           # Home page
           "browser.newtabpage.activity-stream.feeds.topsites" = false;
-        
+
           # Tab Sidebar
           "sidebar.revamp" = true;
           "sidebar.verticalTabs" = true;
