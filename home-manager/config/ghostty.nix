@@ -1,4 +1,4 @@
-{...}: {
+{lib, ...}: {
   programs.ghostty = {
     settings = {
       auto-update = "off";

@@ -47,7 +47,10 @@
             imports = [
               ./modules/desktop.nix
             ];
-            programs.ghostty.package = null;
+            programs.ghostty = {
+              package = null;
+              settings.font-size = 20;
+            };
           };
         }
         {
