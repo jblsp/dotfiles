@@ -31,7 +31,6 @@
     home-manager,
     ...
   }: let
-    inputs = self.inputs;
     mkHomeConfigs = import ./lib/mkHomeConfigs.nix;
   in {
     homeConfigurations =
@@ -44,25 +43,17 @@
         {
           hostname = "JMBP";
           system = "aarch64-darwin";
-          config = {pkgs, ...}: {
-            imports = [inputs.mac-app-util.homeManagerModules.default];
-            home.packages = with pkgs; [
-              mypkgs.nvim
+          config = {...}: {
+            imports = [
+              ./modules/desktop.nix
             ];
-            programs.firefox.enable = true;
+            programs.ghostty.package = null;
           };
         }
         {
           hostname = "JZB";
           system = "x86_64-linux";
-          config = {
-            pkgs,
-            config,
-            ...
-          }: {
-            nixpkgs.overlays = [
-              (import ./overlays/nixgl.nix {nixGL-wrap = config.lib.nixGL.wrap;})
-            ];
+          config = {pkgs, ...}: {
             targets.genericLinux.enable = true;
             home.packages = with pkgs; [
               mypkgs.nvim

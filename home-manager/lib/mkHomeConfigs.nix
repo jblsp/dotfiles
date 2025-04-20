@@ -27,6 +27,7 @@ builtins.listToAttrs (builtins.map ({
           };
         }
         ../config
+        ../home.nix
         config
       ];
       extraSpecialArgs = {
