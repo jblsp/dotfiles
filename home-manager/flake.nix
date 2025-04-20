@@ -69,7 +69,7 @@
             ];
             programs.firefox.enable = true;
             programs.ghostty.enable = true;
-            programs.discord.enable = true;
+            programs.nixcord.enable = true;
           };
         }
       ];
