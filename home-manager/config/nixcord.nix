@@ -2,8 +2,11 @@
   imports = [flake.inputs.nixcord.homeManagerModules.nixcord];
 
   programs.nixcord = {
+    discord.openASAR.enable = false;
+
     config = {
       themeLinks = [
+        "https://allpurposem.at/disblock/DisblockOrigin.theme.css"
       ];
       plugins = {
         accountPanelServerProfile.enable = true;
@@ -20,7 +23,10 @@
         colorSighted.enable = true;
         copyFileContents.enable = true;
         emoteCloner.enable = true;
-        experiments.enable = true;
+        experiments = {
+          enable = true;
+          toolbarDevMenu = true;
+        };
         fakeNitro = {
           enable = true;
           transformEmojis = false;
@@ -32,6 +38,12 @@
         forceOwnerCrown.enable = true;
         friendsSince.enable = true;
         fullSearchContext.enable = true;
+        fullUserInChatbox.enable = true;
+        voiceDownload.enable = true;
+        userVoiceShow.enable = true;
+        spotifyShareCommands.enable = true;
+        sendTimestamps.enable = true;
+        messageLatency.enable = true;
         gifPaste.enable = true;
         imageZoom.enable = true;
         keepCurrentChannel.enable = true;

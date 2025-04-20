@@ -5,5 +5,6 @@
   programs = {
     ghostty.enable = true;
     firefox.enable = true;
+    nixcord.enable = true;
   };
 }
