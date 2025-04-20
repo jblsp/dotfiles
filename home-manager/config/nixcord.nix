@@ -40,7 +40,6 @@
         fullSearchContext.enable = true;
         fullUserInChatbox.enable = true;
         voiceDownload.enable = true;
-        userVoiceShow.enable = true;
         spotifyShareCommands.enable = true;
         sendTimestamps.enable = true;
         messageLatency.enable = true;
