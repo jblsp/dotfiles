@@ -27,7 +27,7 @@ stow_configs() {
 }
 
 dots_git() {
-  git -C "$EDITOR" "$@"
+  git -C "$DOTFILES" "$@"
 }
 
 case "$1" in
@@ -116,7 +116,7 @@ edit)
     exit 1
   fi
 
-  "$EDITOR" "$DOTFILES"
+  cd "$DOTFILES" && "$EDITOR" .
   ;;
 git)
   dots_git "${@:2}"
