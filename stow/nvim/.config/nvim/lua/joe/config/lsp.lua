@@ -4,7 +4,7 @@ lsp.config("*", {
   root_markers = { ".git" },
 })
 lsp.enable({
-  "basedpyright",
+  "pyright",
   "bashls",
   "clangd",
   "lua_ls",

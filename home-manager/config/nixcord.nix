@@ -42,7 +42,6 @@
         voiceDownload.enable = true;
         spotifyShareCommands.enable = true;
         sendTimestamps.enable = true;
-        messageLatency.enable = true;
         gifPaste.enable = true;
         imageZoom.enable = true;
         keepCurrentChannel.enable = true;
