@@ -51,6 +51,3 @@ map("t", "<esc><esc>", "<c-\\><c-n>")
 
 -- Open explorer
 map("n", "<leader>e", "<cmd>e .<cr>", { desc = "Explore current directory" })
-
--- Write buffer
-map("n", "<leader>w", "<cmd>w<cr>", { desc = "Write" })

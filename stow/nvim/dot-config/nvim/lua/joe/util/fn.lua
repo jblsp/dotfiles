@@ -19,6 +19,11 @@ function M.in_git_project()
   return vim.fn.system(cmd) == "true\n"
 end
 
+function M.at_git_worktree_root()
+  local cmd = "git rev-parse --show-prefix"
+  return vim.fn.system(cmd) == "\n"
+end
+
 function M.anon_to_clip()
   local content = vim.fn.getreg('"')
   if content ~= "" then
