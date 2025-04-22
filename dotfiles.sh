@@ -22,7 +22,7 @@ remove_if_exists() {
 
 stow_configs() {
   for dir in "$DOTFILES/stow"/*; do
-    stow --dir="$DOTFILES/stow" --target="$HOME" "$(basename "$dir")"
+    stow -d "$DOTFILES/stow" -t "$HOME" --dotfiles -R "$(basename "$dir")"
   done
 }
 
