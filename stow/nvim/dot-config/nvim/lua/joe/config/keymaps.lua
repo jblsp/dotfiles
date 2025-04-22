@@ -29,7 +29,6 @@ map("n", "<leader>tn", "<cmd>tabnew<cr>", { desc = "New tab" })
 
 -- Clipboard
 map("n", "<leader>cc", fn.anon_to_clip, { desc = 'Copy anon register (") to system clipboard' })
-
 map({ "n", "x" }, "<leader>cy", '"+y', { desc = "Yank to system clipboard" })
 map("n", "<leader>cp", '"+p', { desc = "Paste from system clipboard" })
 map("x", "<leader>cp", '"+P', { desc = "Paste from system clipboard" })
@@ -49,3 +48,9 @@ map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result
 
 -- Terminal mappings
 map("t", "<esc><esc>", "<c-\\><c-n>")
+
+-- Open explorer
+map("n", "<leader>e", "<cmd>e .<cr>", { desc = "Explore current directory" })
+
+-- Write buffer
+map("n", "<leader>w", "<cmd>w<cr>", { desc = "Write" })

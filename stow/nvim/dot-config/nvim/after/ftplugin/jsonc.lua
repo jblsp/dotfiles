@@ -1,1 +1,1 @@
-vim.cmd.runtime("ftplugin/json.lua")
+vim.cmd("runtime! ftplugin/json.{vim,lua}")

@@ -5,15 +5,6 @@ return {
   dependencies = {
     { "echasnovski/mini.icons", opts = {} },
   },
-  keys = {
-    {
-      "-",
-      function()
-        require("oil").open()
-      end,
-      desc = "Open oil.nvim at directory of current file",
-    },
-  },
   opts = {
     default_file_explorer = true,
     keymaps = {
@@ -25,8 +16,7 @@ return {
     view_options = {
       show_hidden = true,
       is_always_hidden = function(name, _)
-        local always_hidden = { ".DS_Store" }
-        return vim.tbl_contains(always_hidden, name)
+        return vim.tbl_contains({ ".DS_Store" }, name)
       end,
     },
   },
