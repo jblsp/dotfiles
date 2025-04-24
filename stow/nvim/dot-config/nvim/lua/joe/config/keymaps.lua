@@ -50,4 +50,5 @@ map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result
 map("t", "<esc><esc>", "<c-\\><c-n>")
 
 -- Open explorer
-map("n", "<leader>e", "<cmd>e .<cr>", { desc = "Explore current directory" })
+map("n", "<leader>e", "<cmd>e %:h<cr>", { desc = "Edit directory of current buffer" })
+map("n", "<leader>E", "<cmd>e .<cr>", { desc = "Edit current working directory" })
