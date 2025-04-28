@@ -121,6 +121,9 @@ edit)
 git)
   dots_git "${@:2}"
   ;;
+flake)
+  cd "$DOTFILES/home-manager" && nix flake "${@:2}"
+  ;;
 *)
   if [ "$1" ]; then
     printf "Unknown command: \`%s %s\`\n\n" "$(basename "$0")" "$1"
