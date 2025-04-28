@@ -1,5 +1,5 @@
 {flake, ...}: {
-  imports = [flake.inputs.nixcord.homeManagerModules.nixcord];
+  imports = [flake.inputs.nixcord.homeModules.nixcord];
 
   programs.nixcord = {
     discord.openASAR.enable = false;
