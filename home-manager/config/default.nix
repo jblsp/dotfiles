@@ -4,5 +4,6 @@
     ./ghostty.nix
     ./nixcord.nix
     ./nixGL.nix
+    ./git.nix
   ];
 }

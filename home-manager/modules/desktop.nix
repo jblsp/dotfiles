@@ -6,5 +6,6 @@
     ghostty.enable = true;
     firefox.enable = true;
     nixcord.enable = true;
+    git.enable = true;
   };
 }

@@ -50,5 +50,10 @@ map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result
 map("t", "<esc><esc>", "<c-\\><c-n>")
 
 -- Open explorer
-map("n", "<leader>e", "<cmd>e %:h<cr>", { desc = "Edit directory of current buffer" })
-map("n", "<leader>E", "<cmd>e .<cr>", { desc = "Edit current working directory" })
+map(
+  "n",
+  "<leader>e",
+  ":lua vim.cmd('edit ' .. (vim.fn.expand('%') ~= '' and vim.fn.expand('%:h') or '.'))<cr>",
+  { desc = "Explore directory of current buffer", silent = true }
+)
+map("n", "<leader>E", "<cmd>e .<cr>", { desc = "Explore current working directory" })
