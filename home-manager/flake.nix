@@ -16,7 +16,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     mac-app-util = {
-      url = "github:hraban/mac-app-util";
+      url = "github:hraban/mac-app-util/link-contents";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixcord = {
