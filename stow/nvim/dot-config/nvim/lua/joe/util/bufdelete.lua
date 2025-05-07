@@ -11,9 +11,9 @@ function M.delete(opts)
 
   vim.api.nvim_buf_call(buf, function()
     if vim.bo.modified and not opts.force then
-      local ok, choice = vim.fn.confirm(("Save changes to %q?"):format(vim.fn.bufname()), "&Yes\n&No\n&Cancel")
+      local choice = vim.fn.confirm(("Save changes to %q?"):format(vim.fn.bufname()), "&Yes\n&No\n&Cancel")
       local choices = { INTERRUPT = 0, YES = 1, NO = 2, CANCEL = 3 }
-      if not ok or choice == choices.INTERRUPT or choice == choices.CANCEL then
+      if choice == choices.INTERRUPT or choice == choices.CANCEL then
         return
       end
       if choice == choices.YES then

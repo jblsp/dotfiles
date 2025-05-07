@@ -1,5 +1,3 @@
-local reset_group = vim.api.nvim_create_augroup("cmdmode-norelative-reset", { clear = true })
-
 vim.api.nvim_create_autocmd("CmdlineEnter", {
   desc = "Disable relative line numbers in command mode",
   group = vim.api.nvim_create_augroup("cmdmode-norelative", { clear = true }),
@@ -17,6 +15,7 @@ vim.api.nvim_create_autocmd("CmdlineEnter", {
     end
     vim.api.nvim__redraw({ statuscolumn = true })
 
+    local reset_group = vim.api.nvim_create_augroup("cmdmode-norelative-reset", { clear = true })
     vim.api.nvim_create_autocmd("CmdlineLeave", {
       group = reset_group,
       callback = function()
