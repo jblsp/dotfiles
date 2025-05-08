@@ -1,5 +1,9 @@
 {pkgs, ...}: {
   programs.firefox = {
+    policies = {
+      DisableFirefoxStudies = true;
+      DisableTelemetry = true;
+    };
     profiles = {
       "joe" = {
         id = 0;
@@ -12,6 +16,21 @@
             return-youtube-dislikes
             sponsorblock
             ublock-origin
+            unpaywall
+            youtube-recommended-videos # unhook
+            (buildFirefoxXpiAddon {
+              pname = "bypass-paywalls-clean";
+              version = "3.9.6.0";
+              addonId = "magnolia@12.34";
+              url = "https://gitflic.ru/project/magnolia1234/bpc_uploads/blob/raw?file=bypass_paywalls_clean-4.1.2.0.xpi&inline=false&commit=591fb10fb9760e0d23242ea80397f656e37f7744";
+              sha256 = "76c39428071aa085f1f0ed6f2dde3b9a6a7bff27957262030f8c317248b1649f";
+              meta = with pkgs.lib; {
+                homepage = "https://twitter.com/Magnolia1234B";
+                description = "Bypass Paywalls of (custom) news sites";
+                license = licenses.mit;
+                platforms = platforms.all;
+              };
+            })
           ];
         };
         search = {
@@ -129,7 +148,7 @@
           "findbar.highlightAll" = true;
 
           # Tabs
-          "browser.tabs.closeWindowWithLastTab" = false;
+          # "browser.tabs.closeWindowWithLastTab" = false;
         };
       };
     };
