@@ -1,4 +1,5 @@
-local timer = vim.uv.new_timer()
+vim.g.highlight_references = false
+
 local TIMEOUT = 250
 
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -9,19 +10,27 @@ vim.api.nvim_create_autocmd("LspAttach", {
       return
     end
 
+    local timer = vim.uv.new_timer()
+    local highlighted = false
+
     local augroup = vim.api.nvim_create_augroup("highlight-references", { clear = true })
     vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
       buffer = event.buf,
       group = augroup,
       callback = function()
         timer:stop()
-        vim.lsp.buf.clear_references()
+        if highlighted then
+          vim.lsp.buf.clear_references()
+        end
 
-        timer:start(TIMEOUT, 0, function()
-          vim.schedule(function()
-            vim.lsp.buf.document_highlight()
+        if vim.g.highlight_references then
+          timer:start(TIMEOUT, 0, function()
+            vim.schedule(function()
+              vim.lsp.buf.document_highlight()
+              highlighted = true
+            end)
           end)
-        end)
+        end
       end,
     })
 
