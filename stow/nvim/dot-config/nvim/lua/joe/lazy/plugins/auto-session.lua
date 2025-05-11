@@ -1,4 +1,4 @@
-local in_git_project = require("joe.util.fn").in_git_project
+local in_git_project = require("joe.util").in_git_project
 
 return {
   "rmagatti/auto-session",

@@ -39,7 +39,7 @@ local function make_spec(short_url, clrs_spec)
   local lazy_spec = {
     [1] = short_url,
     main = clrs_spec.name,
-    name = "colorschemes." .. clrs_spec.name,
+    name = clrs_spec.name,
     lazy = true,
     opts = clrs_spec.opts or clrs_spec.setup ~= false and {},
   }

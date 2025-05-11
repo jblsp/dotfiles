@@ -1,5 +1,5 @@
-local bufdelete = require("joe.util.bufdelete")
-local fn = require("joe.util.fn")
+local bufdelete = require("joe.bufdelete")
+local fn = require("joe.util")
 
 local map = vim.keymap.set
 
