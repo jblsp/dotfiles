@@ -43,7 +43,6 @@
         spotifyShareCommands.enable = true;
         sendTimestamps.enable = true;
         gifPaste.enable = true;
-        imageZoom.enable = true;
         keepCurrentChannel.enable = true;
         memberCount = {
           enable = true;
