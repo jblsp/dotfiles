@@ -1,10 +1,13 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    mypkgs.nvim
+    (callPackage ../pkgs/nvim.nix {})
   ];
+
   programs = {
-    ghostty.enable = true;
     firefox.enable = true;
+    ghostty.enable = true;
+    zsh.enable = true;
+    oh-my-posh.enable = true;
     nixcord.enable = true;
     git.enable = true;
   };

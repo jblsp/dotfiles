@@ -1,4 +1,4 @@
-{lib, ...}: {
+{...}: {
   programs.ghostty = {
     settings = {
       auto-update = "off";
@@ -6,6 +6,7 @@
       mouse-hide-while-typing = true;
       shell-integration-features = "no-cursor";
       theme = "catppuccin-mocha";
+      command = "zsh -i";
     };
   };
 }

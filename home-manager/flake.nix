@@ -15,10 +15,6 @@
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    mac-app-util = {
-      url = "github:hraban/mac-app-util/link-contents";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nixcord = {
       url = "github:kaylorben/nixcord";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,42 +26,30 @@
     nixpkgs,
     home-manager,
     ...
-  }: let
-    mkHomeConfigs = import ./lib/mkHomeConfigs.nix;
-  in {
-    homeConfigurations =
-      mkHomeConfigs {
-        inherit nixpkgs;
-        inherit home-manager;
-        flake = self;
-      }
-      [
-        {
-          hostname = "JMBP";
-          system = "aarch64-darwin";
-          config = {...}: {
-            imports = [
-              ./modules/desktop.nix
-            ];
-            programs.ghostty = {
-              package = null;
-              settings.font-size = 20;
-            };
+  }: {
+    homeConfigurations = let
+      mkConfig = {
+        system ? "x86_64-linux",
+        config ? {},
+      }:
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {inherit system;};
+          modules = [config ./config];
+          extraSpecialArgs = {flake = self;};
+        };
+    in {
+      "joe@JT1" = mkConfig {
+        config = {...}: {
+          imports = [./presets/desktop.nix];
+
+          home = {
+            username = "joe";
+            homeDirectory = "/home/joe";
           };
-        }
-        {
-          hostname = "JZB";
-          system = "x86_64-linux";
-          config = {pkgs, ...}: {
-            targets.genericLinux.enable = true;
-            home.packages = with pkgs; [
-              mypkgs.nvim
-            ];
-            programs.firefox.enable = true;
-            programs.ghostty.enable = true;
-            programs.nixcord.enable = true;
-          };
-        }
-      ];
+
+          targets.genericLinux.enable = true;
+        };
+      };
+    };
   };
 }

@@ -10,7 +10,6 @@
         value = config.lib.nixGL.wrap prev.${name};
       }) [
         "ghostty"
-        "vesktop"
         "firefox"
       ]);
 in {

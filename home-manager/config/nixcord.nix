@@ -23,10 +23,6 @@
         colorSighted.enable = true;
         copyFileContents.enable = true;
         emoteCloner.enable = true;
-        experiments = {
-          enable = true;
-          toolbarDevMenu = true;
-        };
         fakeNitro = {
           enable = true;
           transformEmojis = false;

@@ -131,6 +131,7 @@
 
           # Home page
           "browser.newtabpage.activity-stream.feeds.topsites" = false;
+          "browser.newtabpage.activity-stream.feeds.system.topstories" = false;
 
           # Tab Sidebar
           "sidebar.revamp" = true;

@@ -1,14 +1,22 @@
-pkgs: let
+{
+  pkgs,
+  wrapNeovimUnstable,
+  neovim-unwrapped,
+  lib,
+}: let
   extraPackages = with pkgs; [
     # Neovim Dependencies
     ripgrep
 
-    # Lazy dependencies
+    # lazy-nvim dependencies
     git
     luarocks
 
-    # Treesitter dependencies
+    # nvim-treesitter dependencies
     gcc
+
+    # fzf-lua depedencies
+    fzf
 
     # Language Servers
     bash-language-server
@@ -34,7 +42,7 @@ pkgs: let
     selene
   ];
 in
-  pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped {
+  wrapNeovimUnstable neovim-unwrapped {
     wrapRc = false;
-    wrapperArgs = ''--prefix PATH : "${pkgs.lib.makeBinPath extraPackages}"'';
+    wrapperArgs = ''--prefix PATH : "${lib.makeBinPath extraPackages}"'';
   }
