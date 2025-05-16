@@ -10,10 +10,6 @@ can_run() {
   fi
 }
 
-dots_stow() {
-  cd "$DOTFILES/stow" && stow "$@"
-}
-
 dots_git() {
   git -C "$DOTFILES" "$@"
 }
@@ -21,27 +17,12 @@ dots_git() {
 case "$1" in
 install)
   echo "Installing into $DOTFILES"
-  dependencies=("git" "nix" "stow" "curl")
+  dependencies=( "git" "nix" "stow" )
   missing=()
 
   for dep in "${dependencies[@]}"; do
     if ! can_run "$dep"; then
       missing+=("$dep")
-    fi
-  done
-
-  for dep in "${missing[@]}"; do
-    case "$dep" in
-    "nix")
-      read -r -p "Nix is missing, would you like to run the Determinate Nix Installer? [y/N]: " confirm
-      if [[ "$confirm" =~ ^[Yy]$ ]]; then
-        curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
-      fi
-      ;;
-    esac
-
-    if can_run "$dep"; then
-      missing=("${missing[@]/$dep/}")
     fi
   done
 
@@ -66,7 +47,7 @@ install)
 
   git clone https://github.com/jblsp/dotfiles "$DOTFILES"
 
-  dots_stow "*"
+  cd "$DOTFILES/stow" && stow *
 
   ln -s "$DOTFILES/home-manager" "$HOME/.config/home-manager"
 
@@ -74,27 +55,13 @@ install)
   ln -s "$DOTFILES/dotfiles.sh" "$HOME/.local/bin/dotfiles"
   ;;
 uninstall)
-  nix run home-manager/master uninstall
-
-  if [ -e "$HOME/.dotfiles" ]; then
-    rm -rf "$HOME/.dotfiles"
-  fi
-  if [ -e "$HOME/.local/bin/dotfiles" ]; then
-    rm -rf "$HOME/.local/bin/dotfiles"
-  fi
-  if [ -d "$DOTFILES/home-manager" ]; then
-    rm -r "$HOME/.config/home-manager"
-  fi
-
-  for item in "$HOME/.config"/* "$HOME/.config"/.*; do
-    if [ -L "$item" ] && [ ! -e "$item" ]; then
-      rm "$item"
-    fi
-  done
-
+  cd "$DOTFILES/stow" && stow --delete * 
+  rm -rf "$HOME/.dotfiles"
+  rm -rf "$HOME/.local/bin/dotfiles"
+  rm -rf "$HOME/.config/home-manager"
   ;;
 stow)
-  dots_stow "${@:2}"
+  cd "$DOTFILES/stow" && stow "${@:2}"
   ;;
 edit)
   if [ -z "$EDITOR" ]; then
