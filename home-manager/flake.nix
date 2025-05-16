@@ -34,13 +34,13 @@
       }:
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {inherit system;};
-          modules = [config ./config];
+          modules = [config ./core];
           extraSpecialArgs = {flake = self;};
         };
     in {
       "joe@JT1" = mkConfig {
         config = {...}: {
-          imports = [./presets/desktop.nix];
+          imports = [./opt/desktop.nix];
 
           home = {
             username = "joe";
