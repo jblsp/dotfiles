@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
-# vim: ft=bash
 
-if [ -z "$DOTFILES" ]; then
-  DOTFILES="$HOME/.dotfiles"
-fi
+DOTFILES="$HOME/.dotfiles"
 
 can_run() {
   if command -v "$1" &>/dev/null; then
@@ -13,17 +10,8 @@ can_run() {
   fi
 }
 
-remove_if_exists() {
-  if [ -e "$1" ]; then
-    rm -rf "$1"
-    echo "Removed $1."
-  fi
-}
-
-stow_configs() {
-  for dir in "$DOTFILES/stow"/*; do
-    stow -d "$DOTFILES/stow" -t "$HOME" --dotfiles -R "$(basename "$dir")"
-  done
+dots_stow() {
+  cd "$DOTFILES/stow" && stow "$@"
 }
 
 dots_git() {
@@ -78,37 +66,35 @@ install)
 
   git clone https://github.com/jblsp/dotfiles "$DOTFILES"
 
-  stow_configs
+  dots_stow "*"
 
-  mkdir "$HOME/.config/home-manager"
-  stow --dir="$DOTFILES" --target="$HOME/.config/home-manager" "home-manager"
+  ln -s "$DOTFILES/home-manager" "$HOME/.config/home-manager"
 
   mkdir -p "$HOME/.local/bin"
   ln -s "$DOTFILES/dotfiles.sh" "$HOME/.local/bin/dotfiles"
-
-  nix run home-manager/master switch
   ;;
 uninstall)
-  if can_run "home-manager"; then
-    nix run home-manager/master uninstall
-  fi
+  nix run home-manager/master uninstall
 
-  if [ -d "$DOTFILES/stow" ]; then
-    for dir in "$DOTFILES/stow"/*; do
-      stow --dir="$DOTFILES/stow" --delete "$(basename "$dir")"
-    done
-    echo "Deleted stow packages in $DOTFILES/stow"
+  if [ -e "$HOME/.dotfiles" ]; then
+    rm -rf "$HOME/.dotfiles"
+  fi
+  if [ -e "$HOME/.local/bin/dotfiles" ]; then
+    rm -rf "$HOME/.local/bin/dotfiles"
   fi
   if [ -d "$DOTFILES/home-manager" ]; then
     rm -r "$HOME/.config/home-manager"
-    stow -d "$DOTFILES" -D "home-manager"
-    echo "Deleted home-manager stow package at $DOTFILES/home-manager"
   fi
-  remove_if_exists "$HOME/.local/bin/dotfiles"
-  remove_if_exists "$HOME/.dotfiles"
+
+  for item in "$HOME/.config"/* "$HOME/.config"/.*; do
+    if [ -L "$item" ] && [ ! -e "$item" ]; then
+      rm "$item"
+    fi
+  done
+
   ;;
 stow)
-  stow_configs
+  dots_stow "${@:2}"
   ;;
 edit)
   if [ -z "$EDITOR" ]; then
@@ -135,3 +121,5 @@ flake)
 esac
 
 exit 0
+
+# vim: ft=bash
