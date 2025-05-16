@@ -47,6 +47,8 @@
             homeDirectory = "/home/joe";
           };
 
+          programs.nixcord.discord.vencord.enable = false;
+
           targets.genericLinux.enable = true;
         };
       };

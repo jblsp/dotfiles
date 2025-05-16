@@ -11,6 +11,8 @@
       }) [
         "ghostty"
         "firefox"
+        "discord"
+        "vesktop"
       ]);
 in {
   nixpkgs.overlays = lib.optional config.targets.genericLinux.enable nixGL-overlay;

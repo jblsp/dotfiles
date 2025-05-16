@@ -3,7 +3,6 @@
 
   programs.nixcord = {
     discord.openASAR.enable = false;
-
     config = {
       themeLinks = [
         "https://allpurposem.at/disblock/DisblockOrigin.theme.css"
