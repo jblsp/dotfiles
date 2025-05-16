@@ -15,6 +15,10 @@
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    mac-app-util = {
+      url = "github:hraban/mac-app-util/link-contents";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixcord = {
       url = "github:kaylorben/nixcord";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -50,6 +54,22 @@
           programs.nixcord.discord.vencord.enable = false;
 
           targets.genericLinux.enable = true;
+        };
+      };
+      "joe@JMBP" = mkConfig {
+        system = "aarch64-darwin";
+        config = {...}: {
+          imports = [
+            ./opt/desktop.nix
+          ];
+          home = {
+            username = "joe";
+            homeDirectory = "/Users/joe";
+          };
+          programs.ghostty = {
+            package = null;
+            settings.font-size = 20;
+          };
         };
       };
     };

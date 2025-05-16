@@ -1,5 +1,6 @@
 {flake, ...}: {
   imports = [
+    flake.inputs.mac-app-util.homeManagerModules.default
     ./firefox.nix
     ./ghostty.nix
     ./nixGL.nix
