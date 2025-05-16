@@ -19,10 +19,12 @@
     };
   };
 
-  home.stateVersion = "24.11";
-
-  programs.home-manager = {
-    enable = true;
-    path = "$DOTFILES/home-manager";
+  home = {
+    sessionPath = [
+      "$HOME/.local/bin"
+    ];
+    stateVersion = "24.11";
   };
+
+  programs.home-manager.enable = true;
 }
