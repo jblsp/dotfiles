@@ -1,4 +1,9 @@
-{flake, ...}: {
+{
+  config,
+  pkgs,
+  flake,
+  ...
+}: {
   imports = [
     flake.inputs.mac-app-util.homeManagerModules.default
     ./firefox.nix
@@ -21,6 +26,11 @@
   };
 
   home = {
+    username = "joe";
+    homeDirectory =
+      if pkgs.stdenv.isDarwin
+      then "/Users/${config.home.username}/"
+      else "/home/${config.home.username}/";
     sessionPath = [
       "$HOME/.local/bin"
     ];

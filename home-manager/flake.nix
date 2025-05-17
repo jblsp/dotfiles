@@ -45,25 +45,13 @@
       "joe@JT1" = mkConfig {
         config = {...}: {
           imports = [./opt/desktop.nix];
-
-          home = {
-            username = "joe";
-            homeDirectory = "/home/joe";
-          };
-
           targets.genericLinux.enable = true;
         };
       };
       "joe@JMBP" = mkConfig {
         system = "aarch64-darwin";
         config = {...}: {
-          imports = [
-            ./opt/desktop.nix
-          ];
-          home = {
-            username = "joe";
-            homeDirectory = "/Users/joe";
-          };
+          imports = [./opt/desktop.nix];
           programs.ghostty = {
             package = null;
             settings.font-size = 20;
