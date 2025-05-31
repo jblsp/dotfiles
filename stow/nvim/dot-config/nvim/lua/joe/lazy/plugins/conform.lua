@@ -39,6 +39,7 @@ return {
       nix = { "alejandra" },
       python = { "black", "isort" },
       typescript = { "prettier" },
+      go = { "gofmt" },
     },
     notify_on_error = true,
     notify_no_formatters = true,

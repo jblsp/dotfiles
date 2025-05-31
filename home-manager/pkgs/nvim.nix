@@ -30,6 +30,7 @@
     typescript-language-server
     vscode-langservers-extracted
     yaml-language-server
+    gopls
 
     # Formatters
     alejandra

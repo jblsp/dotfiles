@@ -49,4 +49,5 @@ lsp.enable({
   "ts_ls",
   "jsonls",
   "yamlls",
+  "gopls",
 })
