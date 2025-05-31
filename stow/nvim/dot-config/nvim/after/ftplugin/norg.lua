@@ -1,6 +1,6 @@
-local opt = vim.opt_local
+local bo = vim.bo
 
-opt.concealcursor = "nv"
-opt.conceallevel = 2
-opt.foldlevel = 99
-opt.textwidth = 100;
+bo.concealcursor = "nv"
+bo.conceallevel = 2
+bo.foldlevel = 99
+bo.textwidth = 100
