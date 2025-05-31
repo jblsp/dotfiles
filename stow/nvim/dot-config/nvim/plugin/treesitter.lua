@@ -1,7 +1,6 @@
 -- Enables treesitter highlighting (:h vim.treesitter.start)
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "<filetype>" },
   callback = function()
-    vim.treesitter.start()
+    pcall(vim.treesitter.start)
   end,
 })

@@ -14,6 +14,8 @@
 
     # nvim-treesitter dependencies
     gcc
+    tree-sitter
+    nodejs
 
     # fzf-lua depedencies
     fzf
