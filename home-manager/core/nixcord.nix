@@ -5,7 +5,7 @@
     discord.openASAR.enable = false;
 
     # Vencord currently breaks
-    discord.vencord.enable = false;
+    # discord.vencord.enable = false;
 
     config = {
       themeLinks = [

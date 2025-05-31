@@ -17,6 +17,7 @@
 
     # fzf-lua depedencies
     fzf
+    fd
 
     # Language Servers
     bash-language-server

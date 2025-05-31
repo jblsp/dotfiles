@@ -1,5 +1,4 @@
 return {
-  "RRethy/nvim-treesitter-endwise",
-  dependencies = { "nvim-treesitter", version = "*" },
+  "brianhuster/treesitter-endwise.nvim",
   event = "VeryLazy",
 }

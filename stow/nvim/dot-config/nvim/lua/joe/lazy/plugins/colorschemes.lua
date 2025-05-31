@@ -57,7 +57,6 @@ return {
   make_spec("sainnhe/everforest", { setup = false }),
   make_spec("sainnhe/gruvbox-material", { setup = false }),
   make_spec("sainnhe/sonokai", { setup = false }),
-  make_spec("scottmckendry/cyberdream.nvim"),
   make_spec("vague2k/vague.nvim"),
   make_spec("bluz71/vim-moonfly-colors", { setup = false }),
   make_spec("bluz71/vim-nightfly-colors", { setup = false }),
