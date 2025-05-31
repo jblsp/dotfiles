@@ -50,4 +50,5 @@ lsp.enable({
   "jsonls",
   "yamlls",
   "gopls",
+  "html",
 })

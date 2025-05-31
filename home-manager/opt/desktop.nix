@@ -10,5 +10,6 @@
     oh-my-posh.enable = true;
     nixcord.enable = true;
     git.enable = true;
+    go.enable = true;
   };
 }
