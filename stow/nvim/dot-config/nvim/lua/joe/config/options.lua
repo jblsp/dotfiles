@@ -3,7 +3,7 @@ local g = vim.g
 local lsp = vim.lsp
 
 -- Globals
-g.startup_colors = "ayu-dark"
+g.colors_name = "ayu-dark"
 g.mapleader = vim.keycode("<space>")
 g.maplocalleader = vim.keycode("\\")
 
@@ -25,6 +25,8 @@ o.number = true -- Line numbers
 o.relativenumber = true
 o.scrolloff = 8
 -- o.shortmess = o.shortmess .. "I" -- Disable startup message
+-- o.showmode = true
+o.showtabline = 2
 o.signcolumn = "yes" -- Always enable sign column
 o.smartcase = true -- Case sensitive searching if \C or one or more capital letters in search
 o.smartindent = true
