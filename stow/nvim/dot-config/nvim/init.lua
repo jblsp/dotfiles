@@ -62,8 +62,12 @@ lsp.enable({
 
 -- Keymaps:
 
--- escape removes search highlights
-map("n", "<Esc>", "<cmd>noh<cr>")
+-- escape removes search highlights, and stops snippets
+map("n", "<Esc>", function()
+  vim.cmd("noh")
+  vim.snippet.stop()
+  return "<esc>"
+end)
 
 -- buffers
 map("n", "<leader>bn", "<cmd>enew<cr>", { desc = "New buffer" })

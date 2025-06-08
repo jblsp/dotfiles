@@ -4,10 +4,7 @@ vim.g.lazy_plugins = "joe.lazy.plugins"
 vim.g.lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 function M.is_installed()
-  if vim.uv.fs_stat(vim.g.lazypath) then
-    return true
-  end
-  return false
+  return vim.uv.fs_stat(vim.g.lazypath) ~= nil
 end
 
 function M.install()
