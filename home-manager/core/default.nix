@@ -13,6 +13,7 @@
     ./oh-my-posh.nix
     ./nixcord.nix
     ./git.nix
+    ./go.nix
   ];
 
   nixpkgs = {
@@ -32,7 +33,7 @@
       then "/Users/${config.home.username}/"
       else "/home/${config.home.username}/";
     sessionPath = [
-      "$HOME/.local/bin"
+      "${config.home.homeDirectory}/.local/bin"
     ];
     stateVersion = "24.11";
   };

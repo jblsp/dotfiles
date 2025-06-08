@@ -1,7 +1,14 @@
-{...}: {
+{
+  config,
+  lib,
+  ...
+}: {
   programs.go = {
-    enable = true;
     goPath = ".local/share/go";
     telemetry.mode = "local";
   };
+
+  home.sessionPath = lib.mkIf config.programs.go.enable [
+    "${config.home.homeDirectory}/${config.programs.go.goPath}/bin"
+  ];
 }
