@@ -14,7 +14,6 @@
       plugins = {
         accountPanelServerProfile.enable = true;
         alwaysTrust.enable = true;
-        betterGifPicker.enable = true;
         betterSettings = {
           enable = true;
           disableFade = false;
