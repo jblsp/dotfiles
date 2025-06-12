@@ -6,7 +6,7 @@
 }: {
   imports = [
     flake.inputs.mac-app-util.homeManagerModules.default
-    ./firefox.nix
+    ./librewolf.nix
     ./ghostty.nix
     ./nixGL.nix
     ./zsh.nix

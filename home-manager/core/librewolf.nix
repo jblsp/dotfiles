@@ -1,16 +1,11 @@
 {pkgs, ...}: {
-  programs.firefox = {
-    policies = {
-      DisableFirefoxStudies = true;
-      DisableTelemetry = true;
-    };
+  programs.librewolf = {
     profiles = {
       "joe" = {
         id = 0;
         isDefault = true;
         extensions = {
           packages = with pkgs.nur.repos.rycee.firefox-addons; [
-            # bypass-paywalls-clean
             bitwarden
             darkreader
             return-youtube-dislikes
@@ -18,9 +13,11 @@
             ublock-origin
             unpaywall
             youtube-recommended-videos # unhook
+            skip-redirect
+            multi-account-containers
             (buildFirefoxXpiAddon {
               pname = "bypass-paywalls-clean";
-              version = "3.9.6.0";
+              version = "4.1.2.0";
               addonId = "magnolia@12.34";
               url = "https://gitflic.ru/project/magnolia1234/bpc_uploads/blob/raw?file=bypass_paywalls_clean-4.1.2.0.xpi&inline=false&commit=591fb10fb9760e0d23242ea80397f656e37f7744";
               sha256 = "76c39428071aa085f1f0ed6f2dde3b9a6a7bff27957262030f8c317248b1649f";
@@ -113,25 +110,8 @@
 
           "browser.toolbars.bookmarks.visibility" = "never";
           "browser.warnOnQuit" = false;
-          "browser.preferences.moreFromMozilla" = false;
           "browser.aboutConfig.showWarning" = false;
           "browser.aboutwelcome.enabled" = false;
-          "browser.formfill.enable" = false;
-
-          # URL Bar
-          "browser.urlbar.suggest.history" = false;
-          "browser.urlbar.suggest.clipboard" = false;
-          "browser.urlbar.suggest.openpage" = false;
-          "browser.urlbar.suggest.engines" = false;
-          "browser.urlbar.suggest.searches" = false;
-
-          # Disable built-in password manager
-          "signon.rememberSignons" = false;
-          "signon.formlessCapture.enabled" = false;
-
-          # Home page
-          "browser.newtabpage.activity-stream.feeds.topsites" = false;
-          "browser.newtabpage.activity-stream.feeds.system.topstories" = false;
 
           # Tab Sidebar
           "sidebar.revamp" = true;
@@ -148,8 +128,19 @@
           # Show all matches in find
           "findbar.highlightAll" = true;
 
-          # Tabs
-          # "browser.tabs.closeWindowWithLastTab" = false;
+          # allow webgl
+          "webgl.disabled" = false;
+
+          # disable some clearonshutdown options
+          "privacy.clearOnShutdown.history" = false;
+          "privacy.clearOnShutdown.downloads" = false;
+          "privacy.clearOnShutdown.cookies" = false;
+          "privacy.clearOnShutdown_v2.browsingHistoryAndDownloads" = false;
+          "privacy.clearOnShutdown_v2.cookiesAndStorage" = false;
+
+          # middle mouse
+          "middlemouse.paste" = false;
+          "general.autoScroll" = true;
         };
       };
     };

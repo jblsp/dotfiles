@@ -4,7 +4,7 @@
   ];
 
   programs = {
-    firefox.enable = true;
+    librewolf.enable = true;
     ghostty.enable = true;
     zsh.enable = true;
     oh-my-posh.enable = true;
