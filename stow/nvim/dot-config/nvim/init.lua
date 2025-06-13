@@ -58,6 +58,7 @@ lsp.enable({
   "yamlls",
   "gopls",
   "html",
+  "templ"
 })
 
 -- Keymaps:
