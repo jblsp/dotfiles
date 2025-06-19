@@ -15,6 +15,7 @@
             youtube-recommended-videos # unhook
             skip-redirect
             multi-account-containers
+            canvasblocker
             (buildFirefoxXpiAddon {
               pname = "bypass-paywalls-clean";
               version = "4.1.2.0";
@@ -117,6 +118,9 @@
           "sidebar.revamp" = true;
           "sidebar.verticalTabs" = true;
 
+          # Tabs
+          "browser.tabs.closeWindowWithLastTab" = false;
+
           # reject cookie banners if one-click option
           "cookiebanners.service.mode" = 1;
           "cookiebanners.service.mode.privateBrowsing" = 1;
@@ -141,6 +145,13 @@
           # middle mouse
           "middlemouse.paste" = false;
           "general.autoScroll" = true;
+
+          # disable https only
+          "dom.security.https_only_mode" = false;
+
+          # fingerprinting
+          "privacy.resistFingerprinting" = false; # Disables RFP, FingerprintingProtection is still enabled
+          "privacy.fingerprintingProtection.overrides" = "+AllTargets,-CSSPrefersColorScheme";
         };
       };
     };

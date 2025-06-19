@@ -52,6 +52,7 @@
         system = "aarch64-darwin";
         config = {...}: {
           imports = [./opt/desktop.nix];
+          programs.librewolf.package = null;
           programs.ghostty = {
             package = null;
             settings.font-size = 20;
