@@ -38,20 +38,20 @@
       }:
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {inherit system;};
-          modules = [config ./core];
+          modules = [config ./home-manager/core];
           extraSpecialArgs = {flake = self;};
         };
     in {
       "joe@JT1" = mkConfig {
         config = {...}: {
-          imports = [./opt/desktop.nix];
+          imports = [./home-manager/opt/desktop.nix];
           targets.genericLinux.enable = true;
         };
       };
       "joe@JMBP" = mkConfig {
         system = "aarch64-darwin";
         config = {...}: {
-          imports = [./opt/desktop.nix];
+          imports = [./home-manager/opt/desktop.nix];
           programs.librewolf.package = null;
           programs.ghostty = {
             package = null;
