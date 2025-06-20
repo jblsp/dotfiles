@@ -44,14 +44,14 @@
     in {
       "joe@JT1" = mkConfig {
         config = {...}: {
-          imports = [./home-manager/opt/desktop.nix];
+          imports = [./home-manager/presets/desktop.nix];
           targets.genericLinux.enable = true;
         };
       };
       "joe@JMBP" = mkConfig {
         system = "aarch64-darwin";
         config = {...}: {
-          imports = [./home-manager/opt/desktop.nix];
+          imports = [./home-manager/presets/desktop.nix];
           programs.librewolf.package = null;
           programs.ghostty = {
             package = null;

@@ -29,7 +29,7 @@ function M.setup()
     },
     lockfile = vim.fn.stdpath("config") .. "/lua/joe/lazy/lockfile.json",
     install = { colorscheme = { vim.g.colors_name } },
-    checker = { enabled = true },
+    checker = { enabled = true, notify = false },
     rocks = {
       hererocks = false,
     },

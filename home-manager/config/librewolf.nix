@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   programs.librewolf = {
+    enable = true;
     profiles = {
       "joe" = {
         id = 0;
@@ -15,7 +16,6 @@
             youtube-recommended-videos # unhook
             skip-redirect
             multi-account-containers
-            canvasblocker
             (buildFirefoxXpiAddon {
               pname = "bypass-paywalls-clean";
               version = "4.1.2.0";
@@ -152,6 +152,11 @@
           # fingerprinting
           "privacy.resistFingerprinting" = false; # Disables RFP, FingerprintingProtection is still enabled
           "privacy.fingerprintingProtection.overrides" = "+AllTargets,-CSSPrefersColorScheme";
+
+          # URL Bar
+          "browser.urlbar.suggest.history" = false;
+          "browser.urlbar.suggest.recentsearches" = false;
+          "browser.urlbar.suggest.engines" = false;
         };
       };
     };

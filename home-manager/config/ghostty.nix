@@ -1,5 +1,6 @@
 {...}: {
   programs.ghostty = {
+    enable = true;
     settings = {
       auto-update = "off";
       font-feature = "-calt";

@@ -2,10 +2,8 @@
   imports = [flake.inputs.nixcord.homeModules.nixcord];
 
   programs.nixcord = {
+    enable = true;
     discord.openASAR.enable = false;
-
-    # Vencord currently breaks
-    # discord.vencord.enable = false;
 
     config = {
       themeLinks = [
