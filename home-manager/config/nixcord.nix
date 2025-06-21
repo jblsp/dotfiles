@@ -59,7 +59,6 @@
         noPendingCount.enable = true;
         noTypingAnimation.enable = true;
         noUnblockToJump.enable = true;
-        openInApp.enable = true;
         pinDMs.enable = true;
         previewMessage.enable = true;
         replyTimestamp.enable = true;

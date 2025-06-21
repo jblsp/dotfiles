@@ -143,7 +143,7 @@
 
           # fingerprinting
           "privacy.resistFingerprinting" = false; # Disables RFP, FingerprintingProtection is still enabled
-          "privacy.fingerprintingProtection.overrides" = "+AllTargets,-CSSPrefersColorScheme,-JSDateTimeUTC";
+          "privacy.fingerprintingProtection.overrides" = "+AllTargets,-CSSPrefersColorScheme,-JSDateTimeUTC,-ReduceTimerPrecision,-FrameRate";
 
           # URL Bar
           "browser.urlbar.suggest.history" = false;
