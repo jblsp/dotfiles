@@ -1,6 +1,6 @@
 local augroup = vim.api.nvim_create_augroup("correct-term-colors", { clear = true })
 vim.api.nvim_create_autocmd({ "UIEnter", "ColorScheme" }, {
-  -- see: https://www.reddit.com/r/neovim/comments/1ehidxy/you_can_remove_padding_around_neovim_instance/"
+  -- see: https://www.reddit.com/r/neovim/comments/1ehidxy/you_can_remove_padding_around_neovim_instance/
   desc = "Corrects terminal background color according to colorscheme",
   group = augroup,
   callback = function()

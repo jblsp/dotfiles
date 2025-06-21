@@ -1,3 +1,3 @@
 return {
-  import = vim.g.lazy_plugins .. ".mini",
+  import = vim.g.lazy_specs .. ".mini",
 }

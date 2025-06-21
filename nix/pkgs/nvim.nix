@@ -40,10 +40,6 @@
     isort
     nodePackages.prettier
     stylua
-
-    # Linters
-    markdownlint-cli2
-    selene
   ];
 in
   wrapNeovimUnstable neovim-unwrapped {

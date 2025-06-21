@@ -3,52 +3,46 @@ return {
   dependencies = { "echasnovski/mini.icons" },
   event = "VeryLazy",
   config = function()
-    local function map(lhs, rhs, opts)
-      if opts.desc then
-        opts.desc = "fzf-lua: " .. opts.desc
-      end
+    local fzf = require("fzf-lua")
+
+    local function map(lhs, rhs, desc, opts)
+      opts = opts or {}
+      opts.desc = "fzf-lua: " .. desc
       vim.keymap.set(opts.mode or "n", lhs, rhs, opts)
     end
 
-    ---@param picker string
-    local function builtin(picker, args)
-      return function()
-        require("fzf-lua")[picker](args)
-      end
-    end
-
-    map("<leader>sh", builtin("help_tags"), { desc = "Search help" })
-    map("<leader>sk", builtin("keymaps"), { desc = "Search keymaps" })
-    map("<leader>sf", builtin("files"), { desc = "Search files" })
-    map(
-      "<leader>sF",
-      builtin("files", {
+    map("<leader>sh", fzf.help_tags, "Search help")
+    map("<leader>sk", fzf.keymaps, "Search keymaps")
+    map("<leader>sf", fzf.files, "Search files")
+    map("<leader>sF", function()
+      fzf.files({
         prompt = "Dirs> ",
         previewer = vim.NIL,
         cmd = "fd --color=never --type d --hidden --follow --exclude .git",
-      }),
-      { desc = "Search directories" }
-    )
-    map("<leader>sn", builtin("files", { cwd = vim.fn.stdpath("config") }), { desc = "Search config files" })
-    map("<leader>sw", builtin("grep_cword"), { desc = "Grep current word" })
-    map("<leader>sg", builtin("live_grep"), { desc = "Grep cwd" })
-    map("<leader>bs", builtin("buffers"), { desc = "Search buffers" })
-    map("<leader>/", builtin("blines"), { desc = "Fuzzily search buffer" })
-    map("<leader>sc", builtin("colorschemes"), { desc = "Search colorschemes" })
-    map("z=", builtin("spell_suggest"), { desc = "Spelling suggestions" })
-    map("<leader>:", builtin("command_history"), { desc = "Command history" })
-    map("<leader>sd", builtin("diagnostics_document"), { desc = "Search document diagnostics" })
-    map("<leader>sD", builtin("diagnostics_workspace"), { desc = "Search workspace diagnostics" })
-    map("<leader>sr", builtin("resume"), { desc = "Resume search" })
+      })
+    end, "Search directories")
+    map("<leader>sn", function()
+      fzf.files({ cwd = vim.fn.stdpath("config") })
+    end, "Search config files")
+    map("<leader>sw", fzf.grep_cword, "Grep current word")
+    map("<leader>sg", fzf.live_grep, "Grep cwd")
+    map("<leader>bs", fzf.buffers, "Search buffers")
+    map("<leader>/", fzf.blines, "Fuzzily search buffer")
+    map("<leader>sc", fzf.colorschemes, "Search colorschemes")
+    map("z=", fzf.spell_suggest, "Spelling suggestions")
+    map("<leader>:", fzf.command_history, "Command history")
+    map("<leader>sd", fzf.diagnostics_document, "Search document diagnostics")
+    map("<leader>sD", fzf.diagnostics_workspace, "Search workspace diagnostics")
+    map("<leader>sr", fzf.resume, "Resume search")
 
     -- LSP mappings
-    map("g0", builtin("lsp_document_symbols"), { desc = "View document symbols" })
-    map("gri", builtin("lsp_implementations"), { desc = "View implementation" })
-    map("grr", builtin("lsp_references"), { desc = "View references" })
-    map("grd", builtin("lsp_definitions"), { desc = "View definitions" })
-    map("grD", builtin("lsp_declarations"), { desc = "View declarations" })
-    map("gW", builtin("lsp_workspace_symbols"), { desc = "View workspace symbols" })
-    map("grt", builtin("lsp_typedefs"), { desc = "View type definitions" })
+    map("g0", fzf.lsp_document_symbols, "View document symbols")
+    map("gri", fzf.lsp_implementations, "View implementation")
+    map("grr", fzf.lsp_references, "View references")
+    map("grd", fzf.lsp_definitions, "View definitions")
+    map("grD", fzf.lsp_declarations, "View declarations")
+    map("gW", fzf.lsp_workspace_symbols, "View workspace symbols")
+    map("grt", fzf.lsp_typedefs, "View type definitions")
 
     require("fzf-lua").register_ui_select(function(_, items)
       local min_h, max_h = 0.15, 0.70

@@ -1,6 +1,6 @@
 local M = {}
 
-vim.g.lazy_plugins = "joe.lazy.plugins"
+vim.g.lazy_specs = "joe.lazy.plugins"
 vim.g.lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 function M.is_installed()
@@ -25,7 +25,7 @@ function M.setup()
   vim.opt.rtp:prepend(vim.g.lazypath)
   require("lazy").setup({
     spec = {
-      { import = vim.g.lazy_plugins },
+      { import = vim.g.lazy_specs },
     },
     lockfile = vim.fn.stdpath("config") .. "/lua/joe/lazy/lockfile.json",
     install = { colorscheme = { vim.g.colors_name } },

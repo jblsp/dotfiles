@@ -2,6 +2,8 @@ return {
   "mfussenegger/nvim-jdtls",
   ft = "java",
   config = function()
+    local jdtls = require("jdtls")
+
     vim.api.nvim_create_autocmd("FileType", {
       pattern = "java",
       group = vim.api.nvim_create_augroup("jdtls", { clear = true }),
@@ -20,7 +22,7 @@ return {
           }
         end
 
-        require("jdtls").start_or_attach({
+        jdtls.start_or_attach({
           cmd = vim.list_extend({ vim.fn.exepath("jdtls") }, proj_args or {}),
 
           settings = {
@@ -32,19 +34,19 @@ return {
           root_dir = root_dir,
 
           on_attach = function(_, bufnr)
-            local function map(mode, lhs, rhs, opts)
+            local function map(lhs, rhs, desc, opts)
               opts = opts or {}
+              local mode = opts.mode
               opts.buffer = bufnr
-              opts.desc = "jdtls: " .. opts.desc
-              vim.keymap.set(mode, lhs, rhs, opts)
+              opts.desc = "jdtls: " .. desc
+              opts.mode = nil
+              vim.keymap.set(mode or "n", lhs, rhs, opts)
             end
 
-              -- stylua: ignore start
-              map("n", "<localleader>ev", function() require("jdtls").extract_variable() end, { desc = "Extract Variable" })
-              map("n", "<localleader>ec", function() require("jdtls").extract_constant() end, { desc = "Extract Constant" })
-              map("n", "<localleader>em", function() require("jdtls").extract_method() end, { desc = "Extract Method" })
-              map("n", "<localleader>o", function() require("jdtls").organize_imports() end, { desc = "Organize imports" })
-            -- stylua: ignore end
+            map("<localleader>ev", jdtls.extract_variable, "Extract Variable")
+            map("<localleader>ec", jdtls.extract_constant, "Extract Constant")
+            map("<localleader>em", jdtls.extract_method, "Extract Method")
+            map("<localleader>o", jdtls.organize_imports, "Organize imports")
           end,
         })
       end,
