@@ -13,8 +13,6 @@
       "${config.home.homeDirectory}.local/bin"
     ];
     sessionVariables = {
-      EDITOR = "nvim";
-      MANPAGER = "nvim +Man!";
       SSH_AUTH_SOCK = "${config.home.homeDirectory}.bitwarden-ssh-agent.sock";
     };
     stateVersion = "24.11";

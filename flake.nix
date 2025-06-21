@@ -48,13 +48,12 @@
           targets.genericLinux.enable = true;
         };
       };
-      "joe@JMBP" = mkConfig {
+      "joe" = mkConfig {
         system = "aarch64-darwin";
         config = {...}: {
           imports = [./home-manager/presets/desktop.nix];
           programs.librewolf.package = null;
           programs.ghostty = {
-            package = null;
             settings.font-size = 20;
           };
         };

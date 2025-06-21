@@ -1,6 +1,11 @@
-{pkgs, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   programs.librewolf = {
     enable = true;
+    package = lib.mkIf pkgs.stdenv.isDarwin null;
     profiles = {
       "joe" = {
         id = 0;
@@ -16,19 +21,6 @@
             youtube-recommended-videos # unhook
             skip-redirect
             multi-account-containers
-            (buildFirefoxXpiAddon {
-              pname = "bypass-paywalls-clean";
-              version = "4.1.2.0";
-              addonId = "magnolia@12.34";
-              url = "https://gitflic.ru/project/magnolia1234/bpc_uploads/blob/raw?file=bypass_paywalls_clean-4.1.2.0.xpi&inline=false&commit=591fb10fb9760e0d23242ea80397f656e37f7744";
-              sha256 = "76c39428071aa085f1f0ed6f2dde3b9a6a7bff27957262030f8c317248b1649f";
-              meta = with pkgs.lib; {
-                homepage = "https://twitter.com/Magnolia1234B";
-                description = "Bypass Paywalls of (custom) news sites";
-                license = licenses.mit;
-                platforms = platforms.all;
-              };
-            })
           ];
         };
         search = {
@@ -151,12 +143,19 @@
 
           # fingerprinting
           "privacy.resistFingerprinting" = false; # Disables RFP, FingerprintingProtection is still enabled
-          "privacy.fingerprintingProtection.overrides" = "+AllTargets,-CSSPrefersColorScheme";
+          "privacy.fingerprintingProtection.overrides" = "+AllTargets,-CSSPrefersColorScheme,-JSDateTimeUTC";
 
           # URL Bar
           "browser.urlbar.suggest.history" = false;
           "browser.urlbar.suggest.recentsearches" = false;
           "browser.urlbar.suggest.engines" = false;
+          "browser.urlbar.suggest.openpage" = false;
+
+          # media
+          "media.videocontrols.picture-in-picture.video-toggle.enabled" = false;
+
+          # firefox sync
+          "identity.fxaccounts.enabled" = true;
         };
       };
     };
