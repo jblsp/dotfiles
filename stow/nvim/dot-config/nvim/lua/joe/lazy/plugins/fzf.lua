@@ -1,6 +1,7 @@
 return {
   "ibhagwan/fzf-lua",
   dependencies = { "echasnovski/mini.icons" },
+  event = "VeryLazy",
   config = function()
     local function map(lhs, rhs, opts)
       if opts.desc then

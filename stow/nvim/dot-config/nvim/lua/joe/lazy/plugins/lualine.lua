@@ -1,5 +1,6 @@
 return {
   "nvim-lualine/lualine.nvim",
+  lazy = false,
   dependencies = { "echasnovski/mini.icons" },
   config = function(_, opts)
     require("mini.icons").mock_nvim_web_devicons()
