@@ -1,6 +1,7 @@
 local bufdelete = require("joe.bufdelete")
-local fn = require("joe.util")
+local clipboard = require("joe.clipboard")
 local lazy = require("joe.lazy")
+local sudowrite = require("joe.sudo-write")
 
 local o = vim.o
 local g = vim.g
@@ -58,7 +59,7 @@ lsp.enable({
   "yamlls",
   "gopls",
   "html",
-  "templ"
+  "templ",
 })
 
 -- Keymaps:
@@ -92,7 +93,7 @@ map("n", "<leader>to", "<cmd>tabonly<cr>", { desc = "Close other tabs" })
 map("n", "<leader>tn", "<cmd>tabnew<cr>", { desc = "New tab" })
 
 -- Clipboard
-map("n", "<leader>cc", fn.anon_to_clip, { desc = 'Copy anon register (") to system clipboard' })
+map("n", "<leader>cc", clipboard.anon_to_clip, { desc = 'Copy anon register (") to system clipboard' })
 map({ "n", "x" }, "<leader>cy", '"+y', { desc = "Yank to system clipboard" })
 map("n", "<leader>cp", '"+p', { desc = "Paste from system clipboard" })
 map("x", "<leader>cp", '"+P', { desc = "Paste from system clipboard" })
@@ -122,8 +123,12 @@ map(
 )
 map("n", "<leader>E", "<cmd>e .<cr>", { desc = "Explore current working directory" })
 
+-- Commands
+vim.api.nvim_create_user_command("Sudowrite", sudowrite.write, {})
+
 -- Load plugins
 if not lazy.is_installed() then
   lazy.install()
 end
 lazy.setup()
+
