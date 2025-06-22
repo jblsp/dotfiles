@@ -7,7 +7,7 @@
 
     config = {
       themeLinks = [
-        "https://allpurposem.at/disblock/DisblockOrigin.theme.css"
+        "https://raw.codeberg.page/AllPurposeMat/Disblock-Origin/DisblockOrigin.theme.css"
       ];
       plugins = {
         accountPanelServerProfile.enable = true;
