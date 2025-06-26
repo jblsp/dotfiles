@@ -1,7 +1,7 @@
 local bufdelete = require("joe.bufdelete")
 local clipboard = require("joe.clipboard")
 local lazy = require("joe.lazy")
-local sudowrite = require("joe.sudo-write")
+local sudowrite = require("joe.sudowrite")
 
 local o = vim.o
 local g = vim.g
@@ -131,4 +131,3 @@ if not lazy.is_installed() then
   lazy.install()
 end
 lazy.setup()
-

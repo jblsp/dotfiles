@@ -1,14 +1,9 @@
 return {
   "mfussenegger/nvim-dap",
-  version = "*",
   event = "VeryLazy",
+  version = "*",
   dependencies = {
-    {
-      "rcarriga/nvim-dap-ui",
-      dependencies = { "nvim-neotest/nvim-nio" },
-      opts = {},
-    },
-    { "igorlfs/nvim-dap-view", opts = {} },
+    { "igorlfs/nvim-dap-view", commit = "fc03150", opts = {} },
     "mfussenegger/nvim-dap-python",
   },
 
