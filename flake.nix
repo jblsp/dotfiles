@@ -1,6 +1,15 @@
 {
   description = "Home Manager configuration of joe";
 
+  nixConfig = {
+    extra-substituters = [
+      "https://nix-community.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
@@ -52,7 +61,6 @@
         system = "aarch64-darwin";
         config = {...}: {
           imports = [./home-manager/presets/desktop.nix];
-          programs.librewolf.package = null;
           programs.ghostty = {
             settings.font-size = 20;
           };
