@@ -26,6 +26,7 @@
             youtube-recommended-videos # unhook
             skip-redirect
             multi-account-containers
+            tampermonkey
           ];
         };
         search = {
@@ -110,6 +111,7 @@
           "browser.warnOnQuit" = false;
           # "identity.fxaccounts.enabled" = false;
           "browser.tabs.closeWindowWithLastTab" = false;
+          "signon.rememberSignons" = false;
 
           # Tab Sidebar
           "sidebar.revamp" = true;
