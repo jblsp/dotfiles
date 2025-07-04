@@ -56,9 +56,15 @@
         };
     in {
       "joe@JT1" = mkConfig {
-        config = {...}: {
-          imports = [./home-manager/presets/desktop.nix];
+        config = {lib, ...}: {
+          imports = [
+            ./home-manager/presets/desktop.nix
+            ./home-manager/presets/linux.nix
+            ./home-manager/programs/kitty.nix
+          ];
           targets.genericLinux.enable = true;
+          programs.nixcord.enable = lib.mkForce false;
+          programs.ghostty.enable = lib.mkForce false;
         };
       };
       "joe" = mkConfig {

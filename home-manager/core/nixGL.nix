@@ -13,6 +13,7 @@
         "firefox"
         "discord"
         "vesktop"
+        "kitty"
       ]);
 in {
   nixpkgs.overlays = lib.optional config.targets.genericLinux.enable nixGL-overlay;

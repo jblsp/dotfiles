@@ -1,12 +1,12 @@
 {...}: {
   imports = [
-    ../config/ghostty.nix
-    ../config/git.nix
-    ../config/go.nix
-    ../config/firefox.nix
-    ../config/nixcord.nix
-    ../config/nvim.nix
-    ../config/oh-my-posh.nix
-    ../config/zsh.nix
+    ../programs/ghostty.nix
+    ../programs/git.nix
+    ../programs/go.nix
+    ../programs/firefox.nix
+    ../programs/nixcord.nix
+    ../programs/nvim.nix
+    ../programs/oh-my-posh.nix
+    ../programs/zsh.nix
   ];
 }
