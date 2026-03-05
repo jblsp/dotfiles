@@ -38,7 +38,7 @@ BEGIN { section=""; matched=0 }
 
 /^\[Profile[0-9]+\]/ {
     section="profile"
-    matched=0          # reset for each profile section
+    matched=0
 }
 
 /^\[Install/ {
