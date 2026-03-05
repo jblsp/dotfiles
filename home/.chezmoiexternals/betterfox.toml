@@ -1,0 +1,4 @@
+[".local/share/betterfox/user.js"]
+type = "file"
+url = "https://raw.githubusercontent.com/yokoffing/Betterfox/refs/heads/main/user.js"
+refreshPeriod = "168h"

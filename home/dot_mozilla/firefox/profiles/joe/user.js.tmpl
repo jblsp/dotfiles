@@ -1,0 +1,50 @@
+{{ include (print (env "HOME") "/.local/share/betterfox/user.js") }}
+
+user_pref("browser.toolbars.bookmarks.visibility", "never");
+user_pref("browser.warnOnQuit", false);
+user_pref("browser.tabs.closeWindowWithLastTab", false);
+user_pref("signon.rememberSignons", false);
+
+// Allow extensions installed in the profile folder to run
+user_pref("extensions.autoDisableScopes", 0);
+// user_pref("extensions.webextensions.ExtensionStorageIDB.enabled", false);
+
+// search engine
+user_pref("browser.search.defaultenginename", "Startpage - English");
+user_pref("browser.search.separatePrivateDefault", false);
+
+// Tab Sidebar
+user_pref("sidebar.revamp", true);
+user_pref("sidebar.verticalTabs", true);
+
+// reject cookie banners if one-click option
+user_pref("cookiebanners.service.mode", 1);
+user_pref("cookiebanners.service.mode.privateBrowsing", 1);
+
+// middle mouse
+user_pref("middlemouse.paste", false);
+user_pref("general.autoScroll", true);
+
+// fingerprinting protection
+user_pref("privacy.fingerprintingProtection", true);
+user_pref("privacy.fingerprintingProtection.overrides", "+AllTargets,-CSSPrefersColorScheme,-JSDateTimeUTC,-ReduceTimerPrecision,-FrameRate");
+
+// new tab page
+user_pref("browser.newtabpage.activity-stream.feeds.topsites", false);
+user_pref("browser.newtabpage.activity-stream.showWeather", false);
+
+// URL Bar
+user_pref("browser.urlbar.suggest.history", false);
+user_pref("browser.urlbar.suggest.openpage", false);
+user_pref("browser.urlbar.suggest.recentsearches", false);
+user_pref("browser.urlbar.suggest.topsites", false);
+
+// media
+user_pref("media.videocontrols.picture-in-picture.video-toggle.enabled", false);
+
+// Scrolling
+user_pref("apz.overscroll.enabled", false);
+
+// Disable :utofill that betterfox does not
+user_pref("extensions.formautofill.addresses.enabled", false);
+user_pref("extensions.formautofill.creditCards.enabled", false);

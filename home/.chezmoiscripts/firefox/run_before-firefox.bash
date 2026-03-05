@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+PROFILENAME=joe
+PROFILEPATH=profiles/joe
+
+# link firefox configuration to ~/.mozilla/firefox on MacOS
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  FF_SRC="$HOME/Library/Application Support/Firefox"
+  FF_DST="$HOME/.mozilla/firefox"
+
+  if [[ -e "$FF_SRC" && ! -L "$FF_SRC" && ! -e "$FF_DST" ]]; then
+    mv "$FF_SRC" "$FF_DST"
+  fi
+
+  mkdir -p "$FF_DST"
+
+  if [[ ! -L "$FF_SRC" || "$(readlink "$FF_SRC")" != "$FF_DST" ]]; then
+    rm -rf "$FF_SRC"
+    ln -s "$FF_DST" "$FF_SRC"
+  fi
+fi
+
+# create profile if it does not exist
+if command -v firefox >/dev/null 2>&1 &&
+  { [[ ! -f "$HOME/.mozilla/firefox/profiles.ini" ]] ||
+    ! grep -q "^Name=${PROFILENAME}-chezmoi$" "$HOME/.mozilla/firefox/profiles.ini"; }; then
+  firefox -CreateProfile "${PROFILENAME}-chezmoi"
+  rm -rf $HOME/.mozilla/firefox/profiles/*.*-chezmoi # actual profile folder is not used
+fi
+
+# set profile dir to $PROFILEPATH and set default profile
+if [[ -f "$HOME/.mozilla/firefox/profiles.ini" ]]; then
+  tmp="$(mktemp "$HOME/.mozilla/firefox/profiles.ini.XXXXXX")" || exit 1
+
+  awk -v profilename="${PROFILENAME}-chezmoi" \
+    -v profilepath="$PROFILEPATH" '
+BEGIN { section=""; matched=0 }
+
+/^\[Profile[0-9]+\]/ {
+    section="profile"
+    matched=0          # reset for each profile section
+}
+
+/^\[Install/ {
+    section="install"
+}
+
+/^\[/ && $0 !~ /^\[Profile[0-9]+\]/ && $0 !~ /^\[Install/ {
+    section=""
+}
+
+section=="profile" && $0 == "Name=" profilename {
+    matched=1
+}
+
+section=="profile" && /^Path=/ && matched {
+    $0="Path=" profilepath
+}
+
+section=="install" && /^Default=/ && matched {
+    $0="Default=" profilepath
+}
+
+{ print }
+' "$HOME/.mozilla/firefox/profiles.ini" >"$tmp" &&
+    mv "$tmp" "$HOME/.mozilla/firefox/profiles.ini"
+fi

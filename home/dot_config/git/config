@@ -1,0 +1,27 @@
+[user]
+	name = Joe
+	email = joe@jblsp.com
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPQFryUkLgK9rtC15uPGxqER/K6FkiLLlDZoI0RAWtVg
+[core]
+	excludesfile = ~/.config/git/ignore
+[diff]
+	renames = true
+[column]
+	ui = auto
+[branch]
+	sort = -committerdate
+[init]
+	defaultBranch = main
+[tag]
+	sort = version:refname
+[fetch]
+	prune = true
+	pruneTags = true
+[alias]
+	root = rev-parse --show-toplevel
+[gpg]
+	format = ssh
+[commit]
+	gpgSign = true
+[gpg "ssh"]
+	allowedSignersFile = ~/.config/git/allowedSigners
