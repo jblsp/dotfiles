@@ -33,8 +33,8 @@ if [[ -f "$HOME/.mozilla/firefox/profiles.ini" ]]; then
   tmp="$(mktemp "$HOME/.mozilla/firefox/profiles.ini.XXXXXX")" || exit 1
 
   awk -v profilename="${PROFILENAME}-chezmoi" \
-    -v profilepath="$PROFILEPATH" '
-BEGIN { section=""; matched=0 }
+      -v profilepath="$PROFILEPATH" '
+BEGIN { section=""; matched=0; found=0 }
 
 /^\[Profile[0-9]+\]/ {
     section="profile"
@@ -51,13 +51,14 @@ BEGIN { section=""; matched=0 }
 
 section=="profile" && $0 == "Name=" profilename {
     matched=1
+    found=1
 }
 
 section=="profile" && /^Path=/ && matched {
     $0="Path=" profilepath
 }
 
-section=="install" && /^Default=/ && matched {
+section=="install" && /^Default=/ && found {
     $0="Default=" profilepath
 }
 
