@@ -170,6 +170,16 @@ vim.filetype.add({
     end,
   },
 })
+vim.filetype.add({
+  extension = {
+    gotmpl = "gotmpl",
+  },
+  pattern = {
+    [".*/templates/.*%.tpl"] = "helm",
+    [".*/templates/.*%.ya?ml"] = "helm",
+    ["helmfile.*%.ya?ml"] = "helm",
+  },
+})
 
 -- Load plugins
 if not lazy.is_installed() then

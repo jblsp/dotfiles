@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-PROFILENAME=joe
-PROFILEPATH=profiles/joe
+PROFILENAME="{{ .firefox.profile_name }}"
+PROFILEPATH=profiles/$PROFILENAME
 
 # link firefox configuration to ~/.mozilla/firefox on MacOS
-if [[ "$(uname -s)" == "Darwin" ]]; then
+if [[ "$CHEZMOI_OS" == "darwin" ]]; then
   FF_SRC="$HOME/Library/Application Support/Firefox"
   FF_DST="$HOME/.mozilla/firefox"
 

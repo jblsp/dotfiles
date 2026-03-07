@@ -14,7 +14,8 @@ if [[ ! " ${disallowed_terms[@]} " == *" $TERM_PROGRAM "* ]] && [[ ! " ${disallo
   eval "$(oh-my-posh init zsh --config "pure")"
 fi
 
-# load plugins
-ZSHPLUGINS=$HOME/.local/share/zsh-plugins
+# plugins
+ZSHPLUGINS=$HOME/{{ .dirs.zsh_plugins }}
 source $ZSHPLUGINS/git-open/git-open.plugin.zsh
 source $ZSHPLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
