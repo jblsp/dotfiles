@@ -1,0 +1,12 @@
+packages:
+  darwin:
+    brews:
+      - "oh-my-posh"
+      - "vivid"
+      - "coreutils"
+      - "fastfetch"
+      - "nvim"
+      - "python"
+      - "lazygit"
+    casks:
+      - "firefox"
