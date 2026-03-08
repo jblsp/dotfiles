@@ -1,5 +1,0 @@
-[dirs]
-zsh_plugins = ".local/share/zsh-plugins"
-
-[firefox]
-profile_name = "joe"

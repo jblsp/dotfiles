@@ -1,6 +1,6 @@
-ZSHPLUGINS=$HOME/{{ .dirs.zsh_plugins }}
+ZSHPLUGINS=$HOME/{{ .paths.zsh_plugins }}
 
-if command -v vivid >/dev/null 2>&1; then
+if (( $+commands[vivid] )); then
   export LS_COLORS="$(vivid generate snazzy)" 
   export ZLS_COLORS="$LS_COLORS"
 fi
@@ -11,22 +11,45 @@ alias lg="lazygit"
 alias cm="chezmoi"
 alias ff="fastfetch"
 alias sudo="sudo "
-if command -v gls >/dev/null 2>&1; then
+if (( $+commands[gls] )); then
   alias ls="gls --color"
 else
   alias ls ="ls --color"
 fi
+{{ if eq .chezmoi.os "darwin" }}
+if [[ -x /opt/homebrew/bin/python3 ]]; then
+  alias python="/opt/homebrew/bin/python3"
+fi
+{{ end }}
 
 # path
 export PATH="$HOME/.local/bin:$PATH"
 
+# emacs style keybinds
+bindkey -e
+
 # load oh-my-posh
-if command -v oh-my-posh >/dev/null 2>&1; then
+if (( $+commands[vivid] )); then
   disallowed_terms=("Apple_Terminal" "xterm")
   if [[ ! " ${disallowed_terms[@]} " == *" $TERM_PROGRAM "* ]] && [[ ! " ${disallowed_terms[@]} " == *" $TERM "* ]]; then
     eval "$(oh-my-posh init zsh --config "pure")"
   fi
 fi
+
+# homebrew
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# extra completions
+mkdir -p "$ZSH_CACHE_DIR/completions"
+
+if [[ ! -f "$ZSH_CACHE_DIR/completions/_chezmoi" ]]; then
+  typeset -g -A _comps
+  autoload -Uz _chezmoi
+  _comps[chezmoi]=_chezmoi
+fi
+chezmoi completion zsh >| "$ZSH_CACHE_DIR/completions/_chezmoi" &|
 
 # git-open
 source $ZSHPLUGINS/git-open/git-open.plugin.zsh
@@ -47,9 +70,6 @@ zstyle ':completion:*:default' list-colors "$ZLS_COLORS"
 zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 autoload -Uz compinit
 compinit
-
-# completions
-source <(chezmoi completion zsh)
 
 # zsh-syntax-highlighting
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
