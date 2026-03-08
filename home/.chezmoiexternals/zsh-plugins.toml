@@ -11,3 +11,10 @@ url = "https://github.com/paulirish/git-open/archive/master.tar.gz"
 exact = true
 stripComponents = 1
 refreshPeriod = "168h"
+
+["{{ .dirs.zsh_plugins }}/zsh-nvm"]
+type = "archive"
+url = "https://github.com/lukechilds/zsh-nvm/archive/master.tar.gz"
+exact = true
+stripComponents = 1
+refreshPeriod = "168h"

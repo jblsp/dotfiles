@@ -1,21 +1,57 @@
+ZSHPLUGINS=$HOME/{{ .dirs.zsh_plugins }}
+
+if command -v vivid >/dev/null 2>&1; then
+  export LS_COLORS="$(vivid generate snazzy)" 
+  export ZLS_COLORS="$LS_COLORS"
+fi
+
 # aliases
 alias vi="nvim"
 alias lg="lazygit"
 alias cm="chezmoi"
 alias ff="fastfetch"
 alias sudo="sudo "
+if command -v gls >/dev/null 2>&1; then
+  alias ls="gls --color"
+else
+  alias ls ="ls --color"
+fi
 
 # path
 export PATH="$HOME/.local/bin:$PATH"
 
 # load oh-my-posh
-disallowed_terms=("Apple_Terminal" "xterm")
-if [[ ! " ${disallowed_terms[@]} " == *" $TERM_PROGRAM "* ]] && [[ ! " ${disallowed_terms[@]} " == *" $TERM "* ]]; then
-  eval "$(oh-my-posh init zsh --config "pure")"
+if command -v oh-my-posh >/dev/null 2>&1; then
+  disallowed_terms=("Apple_Terminal" "xterm")
+  if [[ ! " ${disallowed_terms[@]} " == *" $TERM_PROGRAM "* ]] && [[ ! " ${disallowed_terms[@]} " == *" $TERM "* ]]; then
+    eval "$(oh-my-posh init zsh --config "pure")"
+  fi
 fi
 
-# plugins
-ZSHPLUGINS=$HOME/{{ .dirs.zsh_plugins }}
+# git-open
 source $ZSHPLUGINS/git-open/git-open.plugin.zsh
+
+# nvm
+export NVM_DIR="$HOME/local/share/nvm"
+export NVM_COMPLETION=true
+source $ZSHPLUGINS/zsh-nvm/zsh-nvm.plugin.zsh
+
+# auto-completion
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"
+zstyle ':completion:*' completer _complete _ignored
+zstyle ':completion:*' menu select
+zstyle ':completion:*' squeeze-slashes true
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*:*:*:*:descriptions' format '%F{white}-- %d --%f'
+zstyle ':completion:*:default' list-colors "$ZLS_COLORS"
+zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
+autoload -Uz compinit
+compinit
+
+# completions
+source <(chezmoi completion zsh)
+
+# zsh-syntax-highlighting
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 source $ZSHPLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
