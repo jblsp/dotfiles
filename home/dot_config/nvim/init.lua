@@ -54,20 +54,19 @@ lsp.config("*", {
 lsp.enable({
   "bashls",
   "clangd",
+  "cssls",
   "gdscript",
   "gopls",
   "html",
+  "json",
   "jsonls",
   "lua_ls",
-  "nixd",
   "phpactor",
   "pyright",
-  "ts_ls",
-  "yamlls",
   "tinymist",
   "tombi",
-  -- "copilot",
-  -- "templ",
+  "ts_ls",
+  "yamlls",
 })
 
 -- extui
