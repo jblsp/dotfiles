@@ -8,5 +8,8 @@ packages:
       - "nvim"
       - "python"
       - "lazygit"
+      - "tokei"
+      - "go"
+      - "fzf"
     casks:
       - "firefox"
