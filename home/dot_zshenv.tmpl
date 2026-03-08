@@ -4,6 +4,8 @@ export XDG_CACHE_HOME="$HOME/.cache"
 
 export ZSH_CACHE_DIR="$HOME/.cache/zsh"
 
+export GOPATH="$XDG_DATA_HOME/go"
+
 {{ if eq .chezmoi.os "darwin" }}
 export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
 {{ else }}

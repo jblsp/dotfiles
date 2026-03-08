@@ -23,7 +23,9 @@ fi
 {{ end }}
 
 # path
-export PATH="$HOME/.local/bin:$PATH"
+path+=("$HOME/.local/bin")
+path+=("$GOPATH/bin")
+export path
 
 # emacs style keybinds
 bindkey -e
@@ -51,6 +53,8 @@ if [[ ! -f "$ZSH_CACHE_DIR/completions/_chezmoi" ]]; then
 fi
 chezmoi completion zsh >| "$ZSH_CACHE_DIR/completions/_chezmoi" &|
 
+source $ZSHPLUGINS/zsh-completions/zsh-completions.plugin.zsh
+
 # git-open
 source $ZSHPLUGINS/git-open/git-open.plugin.zsh
 
@@ -68,8 +72,7 @@ zstyle ':completion:*' use-cache on
 zstyle ':completion:*:*:*:*:descriptions' format '%F{white}-- %d --%f'
 zstyle ':completion:*:default' list-colors "$ZLS_COLORS"
 zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
-autoload -Uz compinit
-compinit
+autoload -Uz compinit && compinit
 
 # zsh-syntax-highlighting
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
