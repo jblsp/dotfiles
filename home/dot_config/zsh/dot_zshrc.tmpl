@@ -14,7 +14,7 @@ alias sudo="sudo "
 if (( $+commands[gls] )); then
   alias ls="gls --color"
 else
-  alias ls ="ls --color"
+  alias ls="ls --color"
 fi
 {{ if eq .chezmoi.os "darwin" }}
 if [[ -x /opt/homebrew/bin/python3 ]]; then
@@ -31,7 +31,7 @@ export path
 bindkey -e
 
 # load oh-my-posh
-if (( $+commands[vivid] )); then
+if (( $+commands[oh-my-posh] )); then
   disallowed_terms=("Apple_Terminal" "xterm")
   if [[ ! " ${disallowed_terms[@]} " == *" $TERM_PROGRAM "* ]] && [[ ! " ${disallowed_terms[@]} " == *" $TERM "* ]]; then
     eval "$(oh-my-posh init zsh --config "pure")"
