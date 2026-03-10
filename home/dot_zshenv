@@ -1,2 +1,0 @@
-# this file will only get sourced when ZDOTDIR is not set
-export ZDOTDIR="$XDG_CONFIG_HOME/zsh"

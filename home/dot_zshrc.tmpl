@@ -22,11 +22,6 @@ if [[ -x /opt/homebrew/bin/python3 ]]; then
 fi
 {{ end }}
 
-# path
-path+=("$HOME/.local/bin")
-path+=("$HOME/.scripts")
-path+=("$GOPATH/bin")
-export path
 
 # emacs style keybinds
 bindkey -e
@@ -60,7 +55,7 @@ source $ZSHPLUGINS/zsh-completions/zsh-completions.plugin.zsh
 source $ZSHPLUGINS/git-open/git-open.plugin.zsh
 
 # nvm
-export NVM_DIR="$HOME/local/share/nvm"
+export NVM_DIR="$XDG_DATA_HOME/nvm"
 export NVM_COMPLETION=true
 source $ZSHPLUGINS/zsh-nvm/zsh-nvm.plugin.zsh
 
