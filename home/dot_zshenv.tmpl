@@ -18,6 +18,6 @@ export MANPAGER="nvim +Man!"
 
 # path
 path+=("$HOME/.local/bin")
-path+=("$HOME/.scripts")
+path+=("{{ .chezmoi.workingTree }}/scripts")
 path+=("$GOPATH/bin")
 export path
