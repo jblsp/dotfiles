@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+
+dependencies=(bw jq)
+MISSINGDEPS=0
+for dep in "${dependencies[@]}"; do
+  command -v "$dep" >/dev/null 2>&1 || {
+    echo >&2 "Error: $dep is required but not installed."
+    ((MISSINGDEPS++))
+  }
+done
+if [[ MISSINGDEPS -gt 0 ]]; then
+  exit 1
+fi
+
+echo "Syncing vault with Bitwarden servers..."
+if bw sync 2>&1 | grep -q "You are not logged in"; then
+  echo "Please login with 'bw login'. Exiting."
+  exit 1
+fi
+
+echo -e "\nUnlock vault:"
+until BW_SESSION=$(bw unlock --raw); do
+  if [ $? -eq 130 ]; then
+    exit 130
+  fi
+  echo "Login failed, retrying..."
+  echo -e "Press ctrl+c to exit.\n"
+done
+
+while true; do
+  echo -e "\nEnter a passphrase to apply to the imported keys (leave empty for no passphrase):"
+  read -s -p "Enter passphrase: " PASSPHRASE
+  if [ -z "$PASSPHRASE" ]; then
+    break
+  fi
+  read -s -p $'\nConfirm passphrase: ' CONFIRM
+  if [ "$PASSPHRASE" = "$CONFIRM" ]; then
+    break
+  else
+    echo -e "\nPassphrases do not match. Try again."
+  fi
+done
+echo -e '\n'
+
+BW_SSH_KEYS_JSON=$(bw list items --session $BW_SESSION | jq '.[] | select(.type == 5)')
+
+NUM_KEYS=$(echo "$BW_SSH_KEYS_JSON" | jq -s 'length')
+echo "Found $NUM_KEYS key(s)."
+
+ssh_items=()
+while read -r item; do
+  ssh_items+=("$item")
+done <<<"$(echo "$BW_SSH_KEYS_JSON" | jq -c '.')"
+
+echo "Importing..."
+SSH_KEYS_DIR="$HOME/.ssh/keys"
+mkdir -p "$SSH_KEYS_DIR"
+for item in "${ssh_items[@]}"; do
+
+  NAME=$(echo "$item" | jq -r '.name')
+  PRIVATE_KEY=$(echo "$item" | jq -r '.sshKey.privateKey')
+  PUBLIC_KEY=$(echo "$item" | jq -r '.sshKey.publicKey')
+
+  KEY_FILE="$SSH_KEYS_DIR/$NAME"
+  PUB_FILE="$KEY_FILE.pub"
+
+  echo "$PRIVATE_KEY" >"$KEY_FILE"
+  chmod 600 "$KEY_FILE"
+  echo "$PUBLIC_KEY" >"$PUB_FILE"
+  chmod 644 "$PUB_FILE"
+
+  if [ -n "$PASSPHRASE" ]; then
+    ssh-keygen -p -N "$PASSPHRASE" -f "$KEY_FILE" -q
+  fi
+
+done
