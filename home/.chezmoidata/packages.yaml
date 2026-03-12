@@ -1,15 +1,16 @@
 packages:
   darwin:
     brews:
-      - "oh-my-posh"
-      - "vivid"
+      - "bitwarden-cli"
       - "coreutils"
       - "fastfetch"
-      - "nvim"
-      - "python"
-      - "lazygit"
-      - "tokei"
-      - "go"
       - "fzf"
+      - "go"
+      - "lazygit"
+      - "nvim"
+      - "oh-my-posh"
+      - "python"
+      - "tokei"
+      - "vivid"
     casks:
       - "firefox"
