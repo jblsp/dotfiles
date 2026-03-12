@@ -3,12 +3,12 @@
   "engines": [
     {
       "id": "google",
-      "_isConfigEngine": true
+      "_isConfigEngine": true,
+      "_metaData": { "alias": "@g" }
     },
     {
       "id": "amazondotcom-us",
-      "_isConfigEngine": true,
-      "_metaData": { "hidden": true }
+      "_isConfigEngine": true
     },
     {
       "id": "bing",
@@ -30,7 +30,7 @@
     },
     {
       "id": "ebay",
-      "_name": "eBay"
+      "_isConfigEngine": true
     },
     {
       "id": "github",
@@ -39,8 +39,8 @@
       "_iconMapObj": {
         "32": "https://github.githubassets.com/favicons/favicon.svg"
       },
-      "_metaData": { "alias": "@github" },
-      "_urls": [{ "template": "https://github.com/search?q={searchTerms}" }]
+      "_urls": [{ "template": "https://github.com/search?q={searchTerms}" }],
+      "_definedAliases": ["@github", "@gh"]
     },
     {
       "id": "startpage",
@@ -49,14 +49,68 @@
       "_iconMapObj": {
         "32": "https://www.startpage.com/sp/cdn/favicons/favicon-32x32-gradient.png"
       },
-      "_metaData": {
-        "alias": "@startpage"
-      },
       "_urls": [
         {
           "template": "https://www.startpage.com/do/dsearch?q={searchTerms}&prfe=8c3e76790216baf1b3c0dce598e2eb144b0ae9a2f74fca87bcd4d2f747d3c3263e75416d45fcf5cb441ecaf447f284b56ae24afbe592ce9da4f6876cc9faeefd4f9d88b28e338d65f7a6460a9675263c"
         }
-      ]
+      ],
+      "_definedAliases": ["@startpage"]
+    },
+    {
+      "id": "youtube",
+      "_name": "YouTube",
+      "_loadPath": "[user]",
+      "_iconMapObj": {
+        "32": "https://www.youtube.com/s/desktop/5a20cf88/img/favicon_32x32.png"
+      },
+      "_urls": [
+        {
+          "template": "https://www.youtube.com/results?search_query={searchTerms}"
+        }
+      ],
+      "_definedAliases": ["@youtube", "@yt"]
+    },
+    {
+      "id": "reddit",
+      "_name": "Reddit",
+      "_loadPath": "[user]",
+      "_iconMapObj": {
+        "32": "https://reddit.com/favicon.ico"
+      },
+      "_urls": [
+        {
+          "template": "https://reddit.com/search?q={searchTerms}"
+        }
+      ],
+      "_definedAliases": ["@reddit"]
+    },
+    {
+      "id": "yahoofinance",
+      "_name": "Yahoo Finance",
+      "_loadPath": "[user]",
+      "_iconMapObj": {
+        "32": "https://finance.yahoo.com/favicon.ico"
+      },
+      "_urls": [
+        {
+          "template": "https://finance.yahoo.com/quote/{searchTerms}"
+        }
+      ],
+      "_definedAliases": ["@yahoofinance", "@yf"]
+    },
+    {
+      "id": "chatgpt",
+      "_name": "ChatGPT",
+      "_loadPath": "[user]",
+      "_iconMapObj": {
+        "64": "https://chat.openai.com/favicon.ico"
+      },
+      "_urls": [
+        {
+          "template": "https://chat.openai.com/?q={searchTerms}"
+        }
+      ],
+      "_definedAliases": ["@chatgpt"]
     }
   ],
   "metaData": {
