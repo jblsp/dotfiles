@@ -43,7 +43,7 @@ type = "file"
 url = "https://addons.mozilla.org/firefox/downloads/latest/chameleon-ext/latest.xpi"
 refreshPeriod = "168h"
 
-[".mozilla/firefox/profiles/{{ .firefox.profile_name }}/extensions/{20fc2e06-e3e4-4b2b-812b-ab431220cada}.xpi"]
-type = "file"
-url = "https://addons.mozilla.org/firefox/downloads/latest/startpage-private-search/latest.xpi"
-refreshPeriod = "168h"
+# [".mozilla/firefox/profiles/{{ .firefox.profile_name }}/extensions/{20fc2e06-e3e4-4b2b-812b-ab431220cada}.xpi"]
+# type = "file"
+# url = "https://addons.mozilla.org/firefox/downloads/latest/startpage-private-search/latest.xpi"
+# refreshPeriod = "168h"

@@ -1,0 +1,7 @@
+[".local/bin/mozlz4"]
+type = "archive-file"
+url = "https://github.com/cions/mozlz4/releases/download/v0.1.1/mozlz4-{{ .chezmoi.os }}-{{ .chezmoi.arch }}-0.1.1.tar.gz"
+executable = true
+path = "mozlz4-{{ .chezmoi.os }}-{{ .chezmoi.arch }}-0.1.1/mozlz4"
+refreshPeriod = "168h"
+checksum.sha256 = "{{ index (index .checksums.mozlz4 .chezmoi.os) .chezmoi.arch }}"
