@@ -1,0 +1,66 @@
+{
+  "version": 13,
+  "engines": [
+    {
+      "id": "google",
+      "_isConfigEngine": true
+    },
+    {
+      "id": "amazondotcom-us",
+      "_isConfigEngine": true,
+      "_metaData": { "hidden": true }
+    },
+    {
+      "id": "bing",
+      "_isConfigEngine": true,
+      "_metaData": { "hidden": true }
+    },
+    {
+      "id": "ddg",
+      "_isConfigEngine": true
+    },
+    {
+      "id": "perplexity",
+      "_isConfigEngine": true,
+      "_metaData": { "hidden": true }
+    },
+    {
+      "id": "wikipedia",
+      "_isConfigEngine": true
+    },
+    {
+      "id": "ebay",
+      "_name": "eBay"
+    },
+    {
+      "id": "github",
+      "_name": "GitHub",
+      "_loadPath": "[user]",
+      "_iconMapObj": {
+        "32": "https://github.githubassets.com/favicons/favicon.svg"
+      },
+      "_metaData": { "alias": "@github" },
+      "_urls": [{ "template": "https://github.com/search?q={searchTerms}" }]
+    },
+    {
+      "id": "startpage",
+      "_name": "Startpage",
+      "_loadPath": "[user]",
+      "_iconMapObj": {
+        "32": "https://www.startpage.com/sp/cdn/favicons/favicon-32x32-gradient.png"
+      },
+      "_metaData": {
+        "alias": "@startpage"
+      },
+      "_urls": [
+        {
+          "template": "https://www.startpage.com/do/dsearch?q={searchTerms}&prfe=8c3e76790216baf1b3c0dce598e2eb144b0ae9a2f74fca87bcd4d2f747d3c3263e75416d45fcf5cb441ecaf447f284b56ae24afbe592ce9da4f6876cc9faeefd4f9d88b28e338d65f7a6460a9675263c"
+        }
+      ]
+    }
+  ],
+  "metaData": {
+    "defaultEngineId": "startpage",
+    "defaultEngineIdHash": "W5HMtuHbEwVevJaBTkiWZcpXa9vUK5HOhSv16YhFAlc="
+  }
+}
