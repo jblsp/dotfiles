@@ -1,4 +1,9 @@
 checksums:
   mozlz4:
+    linux:
+      amd64: 5dd6d942d4d0c099a76783f6d187afd1c1bf4101f4c57f6c9e757510d291bf74
     darwin:
+      amd64: 21826cd0e1ccf09556893320c37ba93b20c242fbce439bcfedbaa5912723f50a
       arm64: 706ae768905d00e0459ec2514027d7a8ba5c8ae9536ae46466b4761da37d6db9
+    windows:
+      amd64: 5ffb0c466f6717b08ac4a64bedf9835e4c52a32eafe0d54e07b9235750e287a4
