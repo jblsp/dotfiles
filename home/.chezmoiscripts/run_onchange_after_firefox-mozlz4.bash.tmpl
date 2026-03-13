@@ -8,7 +8,7 @@ function mozlz4_compress() {
   FPATH="$1"
   SRC="$2"
 
-  printf '%s' "$SRC" | mozlz4 -f -z -o "$HOME/.mozilla/firefox/Profiles/{{ .firefox.profile_name }}/$FPATH.mozlz4" -
+  printf '%s' "$SRC" | mozlz4 -f -z -o "$HOME/.mozilla/firefox/profiles/{{ .firefox.profile_name }}/$FPATH.mozlz4" -
 }
 
 mozlz4_compress "search.json" '{{ include (printf "dot_mozilla/firefox/profiles/%s/search.json" .firefox.profile_name) }}'
