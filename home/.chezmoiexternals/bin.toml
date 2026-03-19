@@ -4,4 +4,3 @@ url = "https://github.com/cions/mozlz4/releases/download/v0.1.1/mozlz4-{{ .chezm
 executable = true
 path = "mozlz4-{{ .chezmoi.os }}-{{ .chezmoi.arch }}-0.1.1/mozlz4"
 checksum.sha256 = "{{ index (index .checksums.mozlz4 .chezmoi.os) .chezmoi.arch }}"
-refreshPeriod = "168h"
