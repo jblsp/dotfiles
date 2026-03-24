@@ -8,9 +8,6 @@ return {
           package_uninstalled = "○",
         },
       },
-      -- registries = {
-      --   "file:~/Projects/mason-registry",
-      -- },
     })
 
     local mason_api = require("mason.api.command")
@@ -21,6 +18,7 @@ return {
       "black",
       "clang-format",
       "css-lsp",
+      "gdscript-formatter",
       "gopls",
       "html-lsp",
       "isort",
@@ -33,9 +31,9 @@ return {
       "shfmt",
       "stylua",
       "tinymist",
+      "tombi",
       "typescript-language-server",
       "yaml-language-server",
-      "tombi",
     }
 
     vim.schedule(function()
