@@ -10,7 +10,7 @@ local k = vim.keycode
 local lsp = vim.lsp
 local set = vim.keymap.set
 local o = vim.o
-local filetype = vim.filetype
+local ft = vim.filetype
 
 -- Globals
 g.colors_name = "tokyonight"
@@ -154,7 +154,7 @@ end, { desc = "Open workspace diagnostics in quickfix list" })
 set("n", "<leader>u", "<cmd>Undotree<cr>", { desc = "Toggle Undotree" })
 
 -- Filetypes
-vim.filetype.add({
+ft.add({
   pattern = {
     [".*"] = function(_, bufnr)
       local first = vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)[1]
@@ -169,7 +169,7 @@ vim.filetype.add({
     end,
   },
 })
-vim.filetype.add({
+ft.add({
   extension = {
     gotmpl = "gotmpl",
   },
