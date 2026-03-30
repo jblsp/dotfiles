@@ -1,6 +1,6 @@
 local bufdelete = require("joe.bufdelete")
 local clipboard = require("joe.clipboard")
--- local extui = require("vim._extui")
+local extui = require("vim._core.ui2")
 local lazy = require("joe.lazy")
 local sudowrite = require("joe.sudowrite")
 local util = require("joe.util")
@@ -70,10 +70,10 @@ lsp.enable({
 })
 
 -- extui
--- extui.enable({})
+extui.enable({})
 
 -- Optional plugins
--- vim.cmd([[packadd nvim.undotree]])
+vim.cmd([[packadd nvim.undotree]])
 
 -- Commands:
 
