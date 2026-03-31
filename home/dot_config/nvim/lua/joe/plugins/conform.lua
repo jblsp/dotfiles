@@ -35,6 +35,7 @@ return {
         html = { "prettier" },
         java = { lsp_format = "fallback" },
         javascript = { "prettier" },
+        javascriptreact = { "prettier" },
         json = { "prettier" },
         jsonc = { lsp_format = "fallback" },
         lua = { "stylua" },
