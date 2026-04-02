@@ -5,6 +5,15 @@ exit 0
 {{ end -}}
 
 HOMEBREW_NO_AUTO_UPDATE=1
+
+# Install taps
+brew bundle --file=/dev/stdin --no-upgrade --quiet <<EOF
+{{ range .packages.homebrew.taps -}}
+tap {{ . | quote }}
+{{ end -}}
+EOF
+
+# Install brews/casks
 brew bundle --file=/dev/stdin --no-upgrade --quiet <<EOF
 {{ range .packages.homebrew.brews -}}
 brew {{ . | quote }}

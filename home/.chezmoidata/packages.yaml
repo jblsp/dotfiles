@@ -15,5 +15,8 @@ packages:
       - "python"
       - "tokei"
       - "vivid"
+      - "vivify"
     casks:
       - "firefox"
+    taps:
+      - "jannis-baum/tap"
