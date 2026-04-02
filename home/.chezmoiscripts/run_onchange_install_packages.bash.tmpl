@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+{{ if eq .chezmoi.os "darwin" -}}
+HOMEBREW_NO_AUTO_UPDATE=1
+
+# Install taps
+brew bundle --file=/dev/stdin --no-upgrade --quiet <<EOF
+{{ range .packages.darwin.homebrew.taps -}}
+tap {{ . | quote }}
+{{ end -}}
+EOF
+
+# Install brews/casks
+brew bundle --file=/dev/stdin --no-upgrade --quiet <<EOF
+{{ range .packages.darwin.homebrew.formulae -}}
+brew {{ . | quote }}
+{{ end -}}
+{{ range .packages.darwin.homebrew.casks -}}
+cask {{ . | quote }}
+{{ end -}}
+EOF
+{{ end -}}
+
+{{ if eq .chezmoi.os "linux" -}}
+DISTRO=$(awk -F'[="]+' '/^NAME=/ { print $2 }' /etc/os-release)
+case "$DISTRO" in
+"Fedora Linux")
+  # install npm and dnf packages
+  ;;
+esac
+
+{{ end -}}

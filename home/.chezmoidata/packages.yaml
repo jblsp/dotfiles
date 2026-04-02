@@ -1,22 +1,30 @@
 packages:
-  homebrew:
-    brews:
-      - "bitwarden-cli"
-      - "coreutils"
-      - "fastfetch"
-      - "fd"
-      - "fzf"
-      - "gh"
-      - "go"
-      - "lazygit"
-      - "nvim"
-      - "oh-my-posh"
-      - "opencode"
-      - "python"
-      - "tokei"
-      - "vivid"
-      - "vivify"
-    casks:
-      - "firefox"
-    taps:
-      - "jannis-baum/tap"
+  darwin:
+    homebrew:
+      formulae:
+        - "bitwarden-cli"
+        - "coreutils"
+        - "fastfetch"
+        - "fd"
+        - "fzf"
+        - "gh"
+        - "go"
+        - "lazygit"
+        - "nvim"
+        - "oh-my-posh"
+        - "opencode"
+        - "python"
+        - "tokei"
+        - "vivid"
+        - "vivify"
+      casks:
+        - "firefox"
+      taps:
+        - "jannis-baum/tap"
+  fedora:
+    dnf:
+      packages:
+        - "neovim"
+    npm:
+      packages:
+        - "opencode"
