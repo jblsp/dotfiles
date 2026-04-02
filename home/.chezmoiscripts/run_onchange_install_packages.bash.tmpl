@@ -1,5 +1,53 @@
 #!/usr/bin/env bash
 
+install_title() {
+  local TITLE="$1"
+  local COLOR_CODE="$2"
+
+  echo -e "Installing ${COLOR_CODE}${TITLE}\033[0m packages..."
+  echo "-----------------------------"
+}
+
+function install_dnf_packages() {
+  local pkgs=("$@")
+
+  local MISSING=0
+  for pkg in "${pkgs[@]}"; do
+    if ! rpm -q "$pkg" &>/dev/null; then
+      MISSING=1
+      break
+    fi
+  done
+
+  if [[ "$MISSING" -eq 0 ]]; then
+    return
+  fi
+
+  install_title "dnf" "\033[38;5;33m"
+  sudo dnf install -y -q --skip-unavailable "${pkgs[@]}"
+  echo ""
+}
+
+function install_npm_packages() {
+  local pkgs=("$@")
+
+  local MISSING=0
+  for pkg in "${pkgs[@]}"; do
+    if ! npm list -g --depth=0 "$pkg" &>/dev/null; then
+      MISSING=1
+      break
+    fi
+  done
+
+  if [[ "$MISSING" -eq 0 ]]; then
+    return 0
+  fi
+
+  install_title "npm" "\033[38;5;196m"
+  sudo npm install -g "${pkgs[@]}"
+  echo ""
+}
+
 {{ if eq .chezmoi.os "darwin" -}}
 HOMEBREW_NO_AUTO_UPDATE=1
 
@@ -25,7 +73,11 @@ EOF
 DISTRO=$(awk -F'[="]+' '/^NAME=/ { print $2 }' /etc/os-release)
 case "$DISTRO" in
 "Fedora Linux")
-  # install npm and dnf packages
+  DNF_PACKAGES=({{ join " " .packages.fedora.dnf.packages }})
+  install_dnf_packages "${DNF_PACKAGES[@]}"
+
+  NPM_PACKAGES=({{ join " " .packages.fedora.npm.packages }})
+  install_npm_packages "${NPM_PACKAGES[@]}"
   ;;
 esac
 

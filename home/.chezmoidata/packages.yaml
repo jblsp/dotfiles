@@ -25,6 +25,9 @@ packages:
     dnf:
       packages:
         - "neovim"
+        - "tokei"
+        - "gh"
     npm:
       packages:
-        - "opencode"
+        - "opencode-ai"
+        - "typescript"
