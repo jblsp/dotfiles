@@ -6,10 +6,10 @@ exit 0
 
 HOMEBREW_NO_AUTO_UPDATE=1
 brew bundle --file=/dev/stdin --no-upgrade --quiet <<EOF
-{{ range .packages.darwin.brews -}}
+{{ range .packages.homebrew.brews -}}
 brew {{ . | quote }}
 {{ end -}}
-{{ range .packages.darwin.casks -}}
+{{ range .packages.homebrew.casks -}}
 cask {{ . | quote }}
 {{ end -}}
 EOF

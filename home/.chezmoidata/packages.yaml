@@ -1,5 +1,5 @@
 packages:
-  darwin:
+  homebrew:
     brews:
       - "bitwarden-cli"
       - "coreutils"
