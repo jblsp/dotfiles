@@ -4,5 +4,5 @@ return {
   event = "VeryLazy",
   config = function()
     require("mini.splitjoin").setup()
-  end
+  end,
 }

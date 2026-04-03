@@ -16,7 +16,6 @@ return {
     map("n", "<leader>F", conform.format, { desc = "Format buffer" })
 
     conform.setup({
-
       notify_on_error = true,
       notify_no_formatters = true,
       default_format_opts = {
