@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# check if firefox addon in profile/firefox_profile_name/addons has matching gecko id, if not, download into folder as gecko_id.xpi
+
+
+ADDONS_PATH="$HOME/.mozilla/firefox/profiles/{{ .firefox.profile_name }}/extensions"
+mkdir -p "$ADDONS_PATH"
+
+{{- range $item := .firefox_addons.mozilla }}
+{{- $addon_data := index $item (keys $item | first) }}
+if [ ! -f "$ADDONS_PATH/{{ $addon_data.gecko_id }}.xpi" ]; then
+  echo "Installing {{ (keys $item | first) }}:"
+  curl -#fSL "https://addons.mozilla.org/firefox/downloads/latest/{{ (keys $item | first) }}/latest.xpi" -o "$ADDONS_PATH/{{ $addon_data.gecko_id }}.xpi"
+fi
+{{- end }}
+
+{{- range $item := .firefox_addons.external }}
+{{- $addon_data := index $item (keys $item | first) }}
+if [ ! -f "$ADDONS_PATH/{{ $addon_data.gecko_id }}.xpi" ]; then
+  echo "Installing {{ (keys $item | first) }}:"
+  curl -#fSL "{{ $addon_data.url }}" -o "$ADDONS_PATH/{{ $addon_data.gecko_id }}.xpi"
+fi
+{{- end }}
+
