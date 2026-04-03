@@ -1,13 +1,5 @@
 #!/usr/bin/env bash
 
-install_title() {
-  local TITLE="$1"
-  local COLOR_CODE="$2"
-
-  echo -e "Installing ${COLOR_CODE}${TITLE}\033[0m packages..."
-  echo "-----------------------------"
-}
-
 function install_dnf_packages() {
   local pkgs=("$@")
 
@@ -23,9 +15,7 @@ function install_dnf_packages() {
     return
   fi
 
-  install_title "dnf" "\033[38;5;33m"
   sudo dnf install -y -q --skip-unavailable "${pkgs[@]}"
-  echo ""
 }
 
 function install_npm_packages() {
@@ -43,13 +33,11 @@ function install_npm_packages() {
     return 0
   fi
 
-  install_title "npm" "\033[38;5;196m"
   sudo npm install -g "${pkgs[@]}"
-  echo ""
 }
 
 {{ if eq .chezmoi.os "darwin" -}}
-HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_AUTO_UPDATE=1
 
 # Install taps
 brew bundle --file=/dev/stdin --no-upgrade --quiet <<EOF
