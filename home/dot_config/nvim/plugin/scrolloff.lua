@@ -8,7 +8,7 @@ vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "WinScrolled" }, {
     end
 
     -- Ignore terminal buffers
-    if vim.bo[ev.buf] == "terminal" then
+    if vim.bo[ev.buf].buftype == "terminal" then
       return
     end
 
