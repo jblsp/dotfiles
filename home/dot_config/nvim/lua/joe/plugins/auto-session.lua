@@ -9,7 +9,8 @@ return {
     local AutoSession = require("auto-session")
 
     vim.keymap.set("n", "<leader>ss", "<cmd>AutoSession search<cr>", { desc = "Search sessions" })
-    vim.api.nvim_create_user_command("Restart", function()
+    vim.api.nvim_create_user_command("SmartRestart", function()
+      vim.cmd("AutoSession save")
       vim.cmd.restart("AutoSession restore")
     end, { desc = "Restart and preserve session" })
 
