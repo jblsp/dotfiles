@@ -1,6 +1,6 @@
 return {
   "stevearc/oil.nvim",
-  version = "*",
+  -- version = "*",
   config = function()
     require("oil").setup({
       default_file_explorer = true,
