@@ -1,4 +1,3 @@
--- Detect shell scripts by shebang lines
 vim.filetype.add({
   pattern = {
     [".*"] = function(_, bufnr)

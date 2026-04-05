@@ -9,7 +9,6 @@ local k = vim.keycode
 local lsp = vim.lsp
 local set = vim.keymap.set
 local o = vim.o
-local ft = vim.filetype
 
 -- Globals
 g.colors_name = "tokyonight"
@@ -72,7 +71,9 @@ lsp.config("jdtls", {
 extui.enable({})
 
 -- Optional plugins
-vim.cmd([[packadd nvim.undotree]])
+vim.cmd.packadd("nvim.undotree")
+vim.cmd.packadd("nvim.difftool")
+vim.cmd.packadd("nvim.tohtml")
 
 -- Commands:
 vim.api.nvim_create_user_command("Sudowrite", sudowrite.write, { desc = "Write buffer as sudo" })
@@ -180,18 +181,6 @@ end, { desc = "Open workspace diagnostics in quickfix list" })
 
 -- Undotree
 set("n", "<leader>u", "<cmd>Undotree<cr>", { desc = "Toggle Undotree" })
-
--- Filetypes
-ft.add({
-  extension = {
-    gotmpl = "gotmpl",
-  },
-  pattern = {
-    [".*/templates/.*%.tpl"] = "helm",
-    [".*/templates/.*%.ya?ml"] = "helm",
-    ["helmfile.*%.ya?ml"] = "helm",
-  },
-})
 
 -- Load Plugins
 local plugins = vim.tbl_map(require, util.lsmod("plugins"))
