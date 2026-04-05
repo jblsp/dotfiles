@@ -1,7 +1,6 @@
 local bufdelete = require("joe.bufdelete")
 local clipboard = require("joe.clipboard")
 local extui = require("vim._core.ui2")
-local lazy = require("joe.lazy")
 local sudowrite = require("joe.sudowrite")
 local util = require("joe.util")
 
@@ -16,27 +15,19 @@ local ft = vim.filetype
 g.colors_name = "tokyonight"
 g.mapleader = k("<space>")
 g.maplocalleader = k("\\")
-g.lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 -- Options
 o.confirm = true -- Confirm to save changes when exiting modified buffer
 o.cursorline = true -- Highlight current line
 o.cursorlineopt = "number" -- Only highlight number of current line
 o.foldlevel = 99
-o.foldmethod = "expr"
 o.ignorecase = true -- Case-insensitive searching
-o.inccommand = "split"
-o.infercase = true
--- o.laststatus = 3 -- Global status line
 o.linebreak = true
 o.mouse = "a"
 o.mousemodel = "extend"
 o.number = true -- Line numbers
 o.relativenumber = true
 o.scrolloff = 8
--- o.shortmess = o.shortmess .. "I" -- Disable startup message
--- o.showmode = true
--- o.showtabline = 2
 o.signcolumn = "yes" -- Always enable sign column
 o.smartcase = true -- Case sensitive searching if \C or one or more capital letters in search
 o.smartindent = true
@@ -48,9 +39,6 @@ o.virtualedit = "block" -- Allow cursor to move where there is no text in visual
 o.wrap = false
 
 -- LSP
-lsp.config("*", {
-  root_markers = { ".git" },
-})
 lsp.enable({
   "bashls",
   "clangd",
@@ -58,6 +46,7 @@ lsp.enable({
   "gdscript",
   "gopls",
   "html",
+  "jdtls",
   "json",
   "jsonls",
   "lua_ls",
@@ -68,6 +57,16 @@ lsp.enable({
   "ts_ls",
   "yamlls",
 })
+lsp.config("*", {
+  root_markers = { ".git" },
+})
+lsp.config("jdtls", {
+  settings = {
+    java = {
+      saveActions = { organizeImports = true },
+    },
+  },
+})
 
 -- extui
 extui.enable({})
@@ -76,8 +75,41 @@ extui.enable({})
 vim.cmd([[packadd nvim.undotree]])
 
 -- Commands:
-
 vim.api.nvim_create_user_command("Sudowrite", sudowrite.write, { desc = "Write buffer as sudo" })
+
+vim.api.nvim_create_user_command("PackUpdate", function(args)
+  if args.args == "" then
+    vim.pack.update()
+  else
+    vim.pack.update(vim.split(args.args, " "))
+  end
+end, { desc = "Update vim.pack plugin(s)" })
+
+vim.api.nvim_create_user_command("PackList", function()
+  vim.pack.update(nil, { offline = true })
+end, { desc = "List installed vim.pack plugins" })
+
+vim.api.nvim_create_user_command("PackSync", function(args)
+  if args.args == "" then
+    vim.pack.update(nil, { target = "lockfile" })
+  else
+    vim.pack.update(vim.split(args.args, " "), { target = "lockfile" })
+  end
+end, { desc = "Sync vim.pack plugins to lockfile" })
+
+vim.api.nvim_create_user_command("PackClean", function()
+  local inactive = vim
+    .iter(vim.pack.get())
+    :filter(function(x)
+      return not x.active
+    end)
+    :map(function(x)
+      return x.spec.name
+    end)
+    :totable()
+
+  vim.pack.del(inactive)
+end, { desc = "Delete inactive vim.pack plugins" })
 
 -- Keymaps:
 
@@ -113,8 +145,6 @@ set("n", "<leader>tn", "<cmd>tabnew<cr>", { desc = "New tab" })
 -- Clipboard
 set("n", "<leader>cc", clipboard.anon_to_clip, { desc = 'Copy anon register (") to system clipboard' })
 set({ "n", "x" }, "<leader>cy", '"+y', { desc = "Yank to system clipboard" })
-set("n", "<leader>cp", '"+p', { desc = "Paste from system clipboard" })
-set("x", "<leader>cp", '"+P', { desc = "Paste from system clipboard" })
 
 -- Comments
 set("n", "gcn", "yygccp", { remap = true, desc = "Duplicate line and comment out original" })
@@ -128,9 +158,6 @@ set("o", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next Search Result
 set("n", "N", "'nN'[v:searchforward].'zv'", { expr = true, desc = "Prev Search Result" })
 set("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })
 set("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })
-
--- Terminal mappings
-set("t", "<esc><esc>", "<c-\\><c-n>")
 
 -- Open explorer
 set("n", "<leader>e", function()
@@ -156,21 +183,6 @@ set("n", "<leader>u", "<cmd>Undotree<cr>", { desc = "Toggle Undotree" })
 
 -- Filetypes
 ft.add({
-  pattern = {
-    [".*"] = function(_, bufnr)
-      local first = vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)[1]
-      if not first then
-        return
-      end
-
-      local shell = first:match("^#!.*/env%s+(%S+)") or first:match("^#!.*/(%S+)")
-      if shell == "bash" or shell == "zsh" or shell == "sh" then
-        return shell
-      end
-    end,
-  },
-})
-ft.add({
   extension = {
     gotmpl = "gotmpl",
   },
@@ -181,8 +193,28 @@ ft.add({
   },
 })
 
--- Load plugins
-if not lazy.is_installed() then
-  lazy.install()
+-- Load Plugins
+local plugins = vim.tbl_map(require, util.lsmod("plugins"))
+
+for _, p in ipairs(plugins) do
+  if p.before ~= nil then
+    p.before()
+  end
 end
-lazy.setup()
+
+vim.pack.add(
+  vim.tbl_map(function(p)
+    local pack_spec = vim.deepcopy(p)
+    pack_spec.config = nil
+    pack_spec.src = pack_spec.src:gsub("^gh:", "https://github.com/"):gsub("^cb:", "https://codeberg.org/")
+
+    return pack_spec
+  end, plugins),
+  { confirm = false }
+)
+
+for _, p in ipairs(plugins) do
+  if p.config ~= nil then
+    p.config()
+  end
+end

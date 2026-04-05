@@ -1,6 +1,0 @@
----@class joe.colorschemes.Spec
----@field [1] string
----@field name? string
----@field opts? table
----@field config? function
----@field setup? boolean

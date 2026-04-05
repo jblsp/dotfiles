@@ -1,3 +1,5 @@
+-- This plugin enables treesitter highlighting and folds
+
 local function get_installed()
   local parser_paths = vim.api.nvim_get_runtime_file("parser/*.so", true)
   return vim
