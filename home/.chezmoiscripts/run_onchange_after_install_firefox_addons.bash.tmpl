@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+moz_url() {
+  echo "https://addons.mozilla.org/firefox/downloads/latest/$1/latest.xpi"
+}
+
+{{- range $profile, $profile_data := .firefox_addons }}
+ADDONS_PATH="$HOME/.mozilla/firefox/profiles/{{ $profile }}/extensions"
+mkdir -p "$ADDONS_PATH"
+
+{{- range $item := $profile_data.mozilla }}
+{{- $addon_name := (keys $item | first) }}
+{{- $addon_data := index $item $addon_name }}
+if [ ! -f "$ADDONS_PATH/{{ $addon_data.gecko_id }}.xpi" ]; then
+  echo "Installing {{ $profile }}/{{ $addon_name }}:"
+  curl -#fSL "$(moz_url {{ $addon_name }})" -o "$ADDONS_PATH/{{ $addon_data.gecko_id }}.xpi"
+fi
+{{- end }}
+
+{{- range $item := $profile_data.external }}
+{{- $addon_data := index $item (keys $item | first) }}
+if [ ! -f "$ADDONS_PATH/{{ $addon_data.gecko_id }}.xpi" ]; then
+  echo "Installing {{ $profile }}/{{ (keys $item | first) }}:"
+  curl -#fSL "{{ $addon_data.url }}" -o "$ADDONS_PATH/{{ $addon_data.gecko_id }}.xpi"
+fi
+{{- end }}
+{{- end }}

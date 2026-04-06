@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# Relocates paths for some configurations on macOS to be in the same locations as linux
+
+if [[ ! "$CHEZMOI_OS" == "darwin" ]]; then
+  exit 0
+fi
+
+relocate_config() {
+  local src="$1"
+  local dst="$2"
+
+  if [[ -e "$src" && ! -L "$src" && ! -e "$dst" ]]; then
+    mv "$src" "$dst"
+  fi
+
+  mkdir -p "$dst"
+
+  if [[ ! -L "$src" || "$(readlink "$src")" != "$dst" ]]; then
+    rm -rf "$src"
+    ln -s "$dst" "$src"
+  fi
+}
+
+relocate_config "$HOME/Library/Application Support/Firefox" "$HOME/.mozilla/firefox"

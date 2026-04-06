@@ -1,4 +1,2 @@
-firefox:
-  profile_name: "joe"
 paths:
   zsh_plugins: ".local/share/zsh-plugins"

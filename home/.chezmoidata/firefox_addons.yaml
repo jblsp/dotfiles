@@ -1,25 +1,26 @@
 firefox_addons:
-  mozilla:
-    - ublock-origin:
-        gecko_id: "uBlock0@raymondhill.net"
-    - bitwarden-password-manager:
-        gecko_id: "{446900e4-71c2-419f-a6a7-df9c091e268b}"
-    - darkreader:
-        gecko_id: "addon@darkreader.org"
-    - return-youtube-dislikes:
-        gecko_id: "{762f9885-5a13-4abd-9c77-433dcd38b8fd}"
-    - sponsorblock:
-        gecko_id: "sponsorBlocker@ajay.app"
-    - unpaywall:
-        gecko_id: "{f209234a-76f0-4735-9920-eb62507a54cd}"
-    - private-grammar-checker-harper:
-        gecko_id: "harper@writewithharper.com"
-    - chameleon-ext:
-        gecko_id: "{3579f63b-d8ee-424f-bbb6-6d0ce3285e6a}"
-  external:
-    - bypass-paywalls-clean:
-        url: "https://gitflic.ru/project/magnolia1234/bpc_uploads/blob/raw?file=bypass_paywalls_clean-latest.xpi"
-        gecko_id: "magnolia@12.34"
-    - adguard-extra-beta:
-        url: "https://agrd.io/adguard_extra_firefox_beta"
-        gecko_id: "adguard-extra-beta@adguard.com"
+  joe:
+    mozilla:
+      - ublock-origin:
+          gecko_id: "uBlock0@raymondhill.net"
+      - bitwarden-password-manager:
+          gecko_id: "{446900e4-71c2-419f-a6a7-df9c091e268b}"
+      - darkreader:
+          gecko_id: "addon@darkreader.org"
+      - return-youtube-dislikes:
+          gecko_id: "{762f9885-5a13-4abd-9c77-433dcd38b8fd}"
+      - sponsorblock:
+          gecko_id: "sponsorBlocker@ajay.app"
+      - unpaywall:
+          gecko_id: "{f209234a-76f0-4735-9920-eb62507a54cd}"
+      - private-grammar-checker-harper:
+          gecko_id: "harper@writewithharper.com"
+      - chameleon-ext:
+          gecko_id: "{3579f63b-d8ee-424f-bbb6-6d0ce3285e6a}"
+    external:
+      - bypass-paywalls-clean:
+          url: "https://gitflic.ru/project/magnolia1234/bpc_uploads/blob/raw?file=bypass_paywalls_clean-latest.xpi"
+          gecko_id: "magnolia@12.34"
+      - adguard-extra-beta:
+          url: "https://agrd.io/adguard_extra_firefox_beta"
+          gecko_id: "adguard-extra-beta@adguard.com"

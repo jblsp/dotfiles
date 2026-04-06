@@ -1,0 +1,19 @@
+{{- $firefoxPath := "" }}
+{{- if eq .chezmoi.os "darwin" }}
+{{- $firefoxPath = "/Applications/Firefox.app/Contents/MacOS" }}
+{{- else }}
+{{- $firefoxPath = lookPath "firefox" }}
+{{- end }}
+
+[Install{{- mozillaInstallHash $firefoxPath -}}]
+Default=profiles/joe
+Locked=1
+
+[Profile0]
+Name=joe
+IsRelative=1
+Path=profiles/joe
+
+[General]
+StartWithLastProfile=1
+Version=2
