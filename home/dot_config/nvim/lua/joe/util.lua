@@ -60,14 +60,18 @@ function M.lsmod(mod, max_depth)
   return mods
 end
 
+--- Create a wrapper function for vim.keymap.set
 --- @param name string
-function M.mapper(name)
+function M.mapper(name, buf)
   name = name and name .. ": "
   return function(lhs, rhs, desc, opts)
     opts = opts or {}
     local mode = opts.mode
-    opts.desc = (name or "") .. desc
+    if desc ~= nil and desc ~= "" then
+      opts.desc = (name or "") .. desc
+    end
     opts.mode = nil
+    opts.buffer = buf or nil
     vim.keymap.set(mode or "n", lhs, rhs, opts)
   end
 end

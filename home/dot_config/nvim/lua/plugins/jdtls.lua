@@ -16,7 +16,7 @@ return {
           return
         end
 
-        local map = util.mapper("jdtls")
+        local map = util.mapper("jdtls", ev.buf)
 
         map("<localleader>ev", jdtls.extract_variable, "Extract Variable")
         map("<localleader>ec", jdtls.extract_constant, "Extract Constant")

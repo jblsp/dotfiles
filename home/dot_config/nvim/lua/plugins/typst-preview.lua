@@ -6,13 +6,13 @@ return {
   config = function()
     require("typst-preview").setup()
 
-    local map = util.mapper("typst-preview")
-
     vim.api.nvim_create_autocmd("FileType", {
       pattern = { "typst" },
       group = vim.api.nvim_create_augroup("typst-preview-maps", { clear = true }),
       callback = function(ev)
-        map("<localleader>p", "<cmd>TypstPreviewToggle<cr>", "Preview current file", { buffer = ev.buf })
+        local map = util.mapper("typst-preview", ev.buf)
+
+        map("<localleader>p", "<cmd>TypstPreviewToggle<cr>", "Preview current file")
       end,
     })
   end,

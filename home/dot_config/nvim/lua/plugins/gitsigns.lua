@@ -6,40 +6,55 @@ return {
   config = function()
     local gitsigns = require("gitsigns")
 
-    local function next_hunk()
-      if vim.wo.diff then
-        vim.cmd.normal({ "]h", bang = true })
-      else
-        gitsigns.nav_hunk("next")
-      end
-    end
+    gitsigns.setup({
+      on_attach = function(bufnr)
+        local map = util.mapper("Git", bufnr)
 
-    local function prev_hunk()
-      if vim.wo.diff then
-        vim.cmd.normal({ "[c", bang = true })
-      else
-        gitsigns.nav_hunk("prev")
-      end
-    end
+        map("]c", function()
+          if vim.wo.diff then
+            vim.cmd.normal({ "]c", bang = true })
+          else
+            gitsigns.nav_hunk("next")
+          end
+        end)
 
-    local map = util.mapper("Git")
+        map("[c", function()
+          if vim.wo.diff then
+            vim.cmd.normal({ "[c", bang = true })
+          else
+            gitsigns.nav_hunk("prev")
+          end
+        end)
 
-    map("]h", next_hunk, "Next hunk")
-    map("[h", prev_hunk, "Previous hunk")
-    map("<leader>ga", gitsigns.stage_hunk, "Stage hunk")
-    map("<leader>gr", gitsigns.reset_hunk, "Reset hunk", { mode = "v" })
-    map("<leader>ga", function()
-      gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
-    end, "Stage hunk", { mode = "v" })
-    map("<leader>gr", function()
-      gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
-    end, "Reset hunk", { mode = "v" })
-    map("<leader>gA", gitsigns.stage_buffer, "Stage buffer")
-    map("<leader>gR", gitsigns.reset_buffer, "Reset buffer")
-    map("<leader>gp", gitsigns.preview_hunk, "Preview hunk")
-    map("<leader>gb", function()
-      gitsigns.blame_line({ full = true })
-    end, "Blame line")
-    map("<leader>gd", gitsigns.diffthis, "Vimdiff current file")
+        map("<leader>ga", gitsigns.stage_hunk, "Stage hunk")
+        map("<leader>gr", gitsigns.reset_hunk, "Reset hunk")
+
+        map("<leader>hs", function()
+          gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+        end, nil, { mode = "v" })
+
+        map("<leader>hr", function()
+          gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+        end, nil, { mode = "v" })
+
+        map("<leader>gA", gitsigns.stage_buffer, "Stage buffer")
+        map("<leader>gR", gitsigns.reset_buffer, "Reset buffer")
+        map("<leader>gp", gitsigns.preview_hunk, "Preview hunk")
+
+        map("<leader>gb", function()
+          gitsigns.blame_line({ full = true })
+        end, "Blame line")
+
+        map("<leader>gd", gitsigns.diffthis, "Vimdiff current file")
+
+        map("<leader>hQ", function()
+          gitsigns.setqflist("all")
+        end)
+        map("<leader>hq", gitsigns.setqflist)
+
+        -- Text object
+        map("ih", gitsigns.select_hunk, nil, { mode = { "o", "x" } })
+      end,
+    })
   end,
 }
