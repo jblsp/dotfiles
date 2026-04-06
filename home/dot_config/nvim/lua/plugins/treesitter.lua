@@ -24,7 +24,7 @@ return {
         local parsers = treesitter.get_installed()
         if not vim.list_contains(parsers, lang) and vim.list_contains(all_parsers, lang) then
           if vim.list_contains(all_parsers, lang) then
-            -- :wait makes it synchronous so plugin/treesitter.lua runs after the parser is installed
+            -- :wait makes it synchronous so the autocmd in plugin/treesitter.lua runs after the parser is installed
             treesitter.install(lang):wait(1000 * 60 * 5)
           end
         end
