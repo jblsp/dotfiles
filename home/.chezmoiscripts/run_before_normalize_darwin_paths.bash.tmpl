@@ -2,9 +2,9 @@
 
 # Relocates paths for some configurations on macOS to be in the same locations as linux
 
-if [[ ! "$CHEZMOI_OS" == "darwin" ]]; then
-  exit 0
-fi
+{{ if ne .chezmoi.os "darwin" }}
+exit 0
+{{ end }}
 
 relocate_config() {
   local src="$1"
