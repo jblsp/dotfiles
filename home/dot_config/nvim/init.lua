@@ -134,7 +134,7 @@ set("n", "<leader>bo", bufdelete.other, { desc = "Delete all other buffers" })
 set("n", "<leader>bO", function()
   bufdelete.other({ wipe = true })
 end, { desc = "Wipeout all other buffers" })
-set("n", "<leader>br", "e!", { desc = "Reload buffer" })
+set("n", "<leader>br", "<cmd>e!<cr>", { desc = "Reload buffer" })
 
 -- tabs
 set("n", "[t", "<cmd>tabprev<cr>", { desc = "Previous tab" })
