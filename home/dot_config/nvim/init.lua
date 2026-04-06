@@ -1,6 +1,7 @@
 local bufdelete = require("joe.bufdelete")
 local clipboard = require("joe.clipboard")
 local extui = require("vim._core.ui2")
+local plugins = require("joe.plugins")
 local sudowrite = require("joe.sudowrite")
 local util = require("joe.util")
 
@@ -183,27 +184,4 @@ end, { desc = "Open workspace diagnostics in quickfix list" })
 set("n", "<leader>u", "<cmd>Undotree<cr>", { desc = "Toggle Undotree" })
 
 -- Load Plugins
-local plugins = vim.tbl_map(require, util.lsmod("plugins"))
-
-for _, p in ipairs(plugins) do
-  if p.before ~= nil then
-    p.before()
-  end
-end
-
-vim.pack.add(
-  vim.tbl_map(function(p)
-    local pack_spec = vim.deepcopy(p)
-    pack_spec.config = nil
-    pack_spec.src = pack_spec.src:gsub("^gh:", "https://github.com/"):gsub("^cb:", "https://codeberg.org/")
-
-    return pack_spec
-  end, plugins),
-  { confirm = false }
-)
-
-for _, p in ipairs(plugins) do
-  if p.config ~= nil then
-    p.config()
-  end
-end
+plugins.load(vim.tbl_map(require, util.lsmod("plugins")))
