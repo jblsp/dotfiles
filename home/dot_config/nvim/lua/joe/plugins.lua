@@ -1,29 +1,52 @@
 local M = {}
 
--- TODO: add dependencies field to plugin spec. also add priority field to ensure dependencies are loaded first
+local plugins = {}
 
-function M.load(plugins)
-  for _, p in ipairs(plugins) do
-    if p.before ~= nil then
-      p.before()
+local function add_plugin(s)
+  local spec
+  if type(s) == "string" then
+    spec = { src = s }
+  else
+    spec = s
+  end
+  if not spec.priority then
+    spec.priority = 50
+  end
+  table.insert(plugins, spec)
+  if spec.deps then
+    for _, d in ipairs(spec.deps) do
+      d.priority = d.priority or spec.priority + 1
+      add_plugin(d)
     end
   end
+end
 
-  vim.pack.add(
-    vim.tbl_map(function(p)
-      local pack_spec = vim.deepcopy(p)
-      pack_spec.config = nil
-      pack_spec.src = pack_spec.src:gsub("^gh:", "https://github.com/"):gsub("^cb:", "https://codeberg.org/")
+local function load_plugin(p)
+  if p.before then
+    p.before()
+  end
+  vim.pack.add({
+    {
+      src = p.src:gsub("^gh:", "https://github.com/"):gsub("^cb:", "https://codeberg.org/"),
+      version = p.version,
+    },
+  }, { confirm = false })
+  if p.config then
+    p.config()
+  end
+end
 
-      return pack_spec
-    end, plugins),
-    { confirm = false }
-  )
+function M.setup(specs)
+  for _, s in ipairs(specs) do
+    add_plugin(s)
+  end
+
+  table.sort(plugins, function(a, b)
+    return a.priority < b.priority
+  end)
 
   for _, p in ipairs(plugins) do
-    if p.config ~= nil then
-      p.config()
-    end
+    load_plugin(p)
   end
 end
 
