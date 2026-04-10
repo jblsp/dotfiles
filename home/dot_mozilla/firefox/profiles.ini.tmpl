@@ -2,7 +2,7 @@
 {{- if eq .chezmoi.os "darwin" }}
 {{- $firefoxPath = "/Applications/Firefox.app/Contents/MacOS" }}
 {{- else }}
-{{- $firefoxPath = lookPath "firefox" }}
+{{- $firefoxPath = "/usr/lib64/firefox" }}
 {{- end }}
 
 [Install{{- mozillaInstallHash $firefoxPath -}}]
