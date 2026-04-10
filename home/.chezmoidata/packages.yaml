@@ -14,6 +14,7 @@ packages:
         - "oh-my-posh"
         - "opencode"
         - "python"
+        - "tmux"
         - "tokei"
         - "vivid"
         - "vivify"
