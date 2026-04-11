@@ -16,10 +16,12 @@ export SSH_AUTH_SOCK="$HOME/.var/app/com.bitwarden.desktop/data/.bitwarden-ssh-a
 export EDITOR="nvim"
 export MANPAGER="nvim +Man!"
 
-
 {{ if eq .chezmoi.os "darwin" }}
 export JAVA_HOME=/opt/homebrew/opt/java
 {{ end }}
+
+# skills.sh 
+export DISABLE_TELEMETRY=1
 
 # path
 path+=("$HOME/.local/bin")
