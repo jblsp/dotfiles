@@ -197,7 +197,17 @@ plugins.setup({
     src = "gh:saghen/blink.cmp",
     version = vim.version.range("1.*"),
     config = function()
-      require("blink.cmp").setup()
+      require("blink.cmp").setup({
+        completion = {
+          menu = { draw = { treesitter = { "lsp" } } },
+        },
+        cmdline = {
+          keymap = {
+            ["<Tab>"] = { "show", "accept" },
+          },
+          completion = { menu = { auto_show = true } },
+        },
+      })
     end,
   },
   {
