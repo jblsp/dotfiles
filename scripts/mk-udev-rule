@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+DEVICES=$(lsusb | nl -s ". ")
+printf "%s\n" "$DEVICES"
+
+read -p "Select a device: " device
+
+SELECTION=$(echo "$DEVICES" | awk "NR==$device")
+
+ID=$(grep -oP 'ID \K[0-9a-fA-F]{4}:[0-9a-fA-F]{4}' <<<"$SELECTION")
+VENDOR_ID=${ID%:*}
+PRODUCT_ID=${ID#*:}
+
+if [ -z "$VENDOR_ID" ] || [ -z "$PRODUCT_ID" ]; then
+  echo "Could not find device IDs"
+  exit 1
+fi
+
+read -p "Enter rule name: " rule_name
+
+RULE="KERNEL==\"hidraw*\", ATTRS{idVendor}==\"$VENDOR_ID\", ATTRS{idProduct}==\"$PRODUCT_ID\", TAG+=\"uaccess\""
+
+echo "$RULE" | sudo tee "/etc/udev/rules.d/99-$rule_name.rules"
+
+sudo udevadm control --reload-rules
+sudo udevadm trigger
