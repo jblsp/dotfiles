@@ -1,2 +1,2 @@
 paths:
-  zsh_plugins: ".local/share/zsh-plugins"
+  zsh_plugins: ".local/share/zsh/plugins"
