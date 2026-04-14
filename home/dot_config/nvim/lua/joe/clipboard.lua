@@ -1,7 +1,6 @@
 local M = {}
 
-function M.anon_to_clip()
-  local content = vim.fn.getreg('"')
+function M.copy(content)
   if content ~= "" then
     if vim.fn.setreg("+", content) == 0 then
       local _, lines = content:gsub("\n", "\n")

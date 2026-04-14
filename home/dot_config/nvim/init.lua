@@ -145,8 +145,13 @@ set("n", "<leader>to", "<cmd>tabonly<cr>", { desc = "Close other tabs" })
 set("n", "<leader>tn", "<cmd>tabnew<cr>", { desc = "New tab" })
 
 -- Clipboard
-set("n", "<leader>cc", clipboard.anon_to_clip, { desc = 'Copy anon register (") to system clipboard' })
+set("n", "<leader>cc", function()
+  clipboard.copy(vim.fn.getreg('"'))
+end, { desc = 'Copy anon register (") to system clipboard' })
 set({ "n", "x" }, "<leader>cy", '"+y', { desc = "Yank to system clipboard" })
+set("n", "<leader>cf", function()
+  clipboard.copy(vim.fn.expand("%"))
+end, { desc = "Copy filepath to system clipboard" })
 
 -- Comments
 set("n", "gcn", "yygccp", { remap = true, desc = "Duplicate line and comment out original" })
@@ -610,42 +615,57 @@ plugins.setup({
       })
     end,
   },
-  {
-    src = "gh:nickjvandyke/opencode.nvim",
-    version = vim.version.range("*"),
-    config = function()
-      local opencode = require("opencode")
-
-      vim.g.opencode_opts = {
-        lsp = {
-          enabled = true,
-          handlers = {
-            hover = {
-              enabled = false,
-            },
-          },
-        },
-      }
-
-      local map = util.mapper("Opencode")
-
-      map("<leader>oa", function()
-        opencode.ask("", { submit = true })
-      end, "Ask opencode")
-      map("<leader>oa", function()
-        opencode.select()
-      end, "Execute opencode action")
-      map("<leader>ot", function()
-        opencode.toggle()
-      end, "Toggle opencode")
-      map("<leader>or", function()
-        return opencode.operator("@this ")
-      end, "Add range to opencode", { mode = { "n", "x" }, expr = true })
-      map("<leader>ol", function()
-        return opencode.operator("@this ") .. "_"
-      end, "Add line to opencode", { expr = true })
-    end,
-  },
+  -- {
+  --   src = "gh:nickjvandyke/opencode.nvim",
+  --   version = vim.version.range("*"),
+  --   config = function()
+  --     local opencode = require("opencode")
+  --
+  --     vim.g.opencode_opts = {
+  --       lsp = {
+  --         enabled = true,
+  --         handlers = {
+  --           hover = {
+  --             enabled = false,
+  --           },
+  --         },
+  --       },
+  --     }
+  --
+  --     local map = util.mapper("Opencode")
+  --
+  --     map("<leader>oa", function()
+  --       opencode.ask("", { submit = true })
+  --     end, "Ask")
+  --     map("<leader>ot", function()
+  --       opencode.toggle()
+  --     end, "Toggle")
+  --     map("<leader>or", function()
+  --       return opencode.operator("@this ")
+  --     end, "Add range", { mode = { "n", "x" }, expr = true })
+  --     map("<leader>ol", function()
+  --       return opencode.operator("@this ") .. "_"
+  --     end, "Add line", { expr = true })
+  --     map("<leader>o<tab>", function()
+  --       opencode.command("agent.cycle")
+  --     end, "Cycle agent")
+  --     map("<leader>u<tab>", function()
+  --       opencode.command("session.undo")
+  --     end, "Undo last action")
+  --     map("<leader>U<tab>", function()
+  --       opencode.command("session.redo")
+  --     end, "Redo last undone action")
+  --     map("<leader>os", function()
+  --       opencode.command("session.select")
+  --     end, "Select session")
+  --     map("<leader>on", function()
+  --       opencode.command("session.new")
+  --     end, "New session")
+  --     map("<leader>oi", function()
+  --       opencode.command("session.interrupt")
+  --     end, "Interrupt current session")
+  --   end,
+  -- },
   {
     src = "gh:stevearc/quicker.nvim",
     config = function()
