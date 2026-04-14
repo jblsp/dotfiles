@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+pgrep -x systemd-udevd >/dev/null 2>&1 || pgrep -x udevd >/dev/null 2>&1 || {
+  echo "Error: udev is not running. Does this system use udev?"
+  exit 1
+}
+
 DEVICES=$(lsusb | nl -s ". ")
 printf "%s\n" "$DEVICES"
 
