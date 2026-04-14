@@ -1,27 +1,26 @@
 ["{{ .paths.zsh_plugins }}/zsh-syntax-highlighting"]
-type = "archive"
-url = "https://github.com/zsh-users/zsh-syntax-highlighting/archive/master.tar.gz"
-exact = true
-stripComponents = 1
+type = "git-repo"
+url = "https://github.com/zsh-users/zsh-syntax-highlighting"
 refreshPeriod = "168h"
 
 ["{{ .paths.zsh_plugins }}/git-open"]
-type = "archive"
-url = "https://github.com/paulirish/git-open/archive/master.tar.gz"
-exact = true
-stripComponents = 1
+type = "git-repo"
+url = "https://github.com/paulirish/git-open"
 refreshPeriod = "168h"
 
 ["{{ .paths.zsh_plugins }}/zsh-nvm"]
-type = "archive"
-url = "https://github.com/lukechilds/zsh-nvm/archive/master.tar.gz"
-exact = true
-stripComponents = 1
+type = "git-repo"
+url = "https://github.com/lukechilds/zsh-nvm"
 refreshPeriod = "168h"
 
 ["{{ .paths.zsh_plugins }}/zsh-completions"]
+type = "git-repo"
+url = "https://github.com/zsh-users/zsh-completions"
+refreshPeriod = "168h"
+
+["{{ .paths.zsh_plugins }}/tmux"]
 type = "archive"
-url = "https://github.com/zsh-users/zsh-completions/archive/master.tar.gz"
-exact = true
-stripComponents = 1
+url = "https://github.com/ohmyzsh/ohmyzsh/archive/refs/heads/master.tar.gz"
+stripComponents = 3
+include = ["ohmyzsh-master/plugins/tmux/**"]
 refreshPeriod = "168h"

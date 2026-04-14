@@ -1,2 +1,3 @@
 paths:
   zsh_plugins: ".local/share/zsh/plugins"
+  tmux_plugins: ".local/share/tmux/plugins"

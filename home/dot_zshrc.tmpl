@@ -39,6 +39,7 @@ if [[ -x /opt/homebrew/bin/brew ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+
 # extra completions
 mkdir -p "$ZSH_CACHE_DIR/completions"
 
@@ -51,14 +52,6 @@ chezmoi completion zsh >| "$ZSH_CACHE_DIR/completions/_chezmoi" &|
 
 source $ZSHPLUGINS/zsh-completions/zsh-completions.plugin.zsh
 
-# git-open
-source $ZSHPLUGINS/git-open/git-open.plugin.zsh
-
-# nvm
-export NVM_DIR="$XDG_DATA_HOME/nvm"
-export NVM_COMPLETION=true
-source $ZSHPLUGINS/zsh-nvm/zsh-nvm.plugin.zsh
-
 # auto-completion
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"
 zstyle ':completion:*' completer _complete _ignored
@@ -69,6 +62,15 @@ zstyle ':completion:*:*:*:*:descriptions' format '%F{white}-- %d --%f'
 zstyle ':completion:*:default' list-colors "$LS_COLORS"
 zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 autoload -Uz compinit && compinit
+
+# plugins
+source $ZSHPLUGINS/git-open/git-open.plugin.zsh
+source $ZSHPLUGINS/tmux/tmux.plugin.zsh
+
+# nvm
+export NVM_DIR="$XDG_DATA_HOME/nvm"
+export NVM_COMPLETION=true
+source $ZSHPLUGINS/zsh-nvm/zsh-nvm.plugin.zsh
 
 # zsh-syntax-highlighting
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)

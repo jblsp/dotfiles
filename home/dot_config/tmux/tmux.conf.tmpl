@@ -1,0 +1,62 @@
+# Prefix
+unbind C-b
+set -g prefix C-Space
+bind C-Space send-prefix
+
+# Reload config
+bind R source-file ~/.config/tmux/tmux.conf \; display "Configuration reloaded"
+
+# Vi mode for copy
+setw -g mode-keys vi
+bind -T copy-mode-vi v send -X begin-selection
+bind -T copy-mode-vi y send -X copy-selection-and-cancel
+
+# Options
+set -g mouse on
+set -g base-index 1
+setw -g pane-base-index 1
+set -g renumber-windows on
+set -s escape-time 0
+set -g history-limit 50000
+set -g display-time 2500
+set -g focus-events on
+setw -g aggressive-resize on
+
+# Windows
+bind C-p previous-window
+bind C-n next-window
+bind c new-window -c "#{pane_current_path}"
+
+# Panes
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+bind -r H resize-pane -L 5
+bind -r J resize-pane -D 5
+bind -r K resize-pane -U 5
+bind -r L resize-pane -R 5
+
+# Split window
+bind v split-window -h -c "#{pane_current_path}"
+bind s split-window -v -c "#{pane_current_path}"
+
+# Status bar
+set -g status-position top
+set -g status-left "#[fg=colour245]#S"
+set -g status-right "#[fg=colour245]#H"
+set -g status-justify centre
+set -g status-style fg=default,bg=default
+set -g message-style fg=default,bg=default
+set -g window-status-style "fg=colour240"
+set -g window-status-current-style "fg=default,bold"
+
+# Plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+
+# Run TPM
+set-environment -g TMUX_PLUGIN_MANAGER_PATH '~/{{ .paths.tmux_plugins }}'
+if "test ! -d ~/.tmux/plugins/tpm" \
+   "run 'git clone https://github.com/tmux-plugins/tpm ~/{{ .paths.tmux_plugins }}/tpm && ~/{{ .paths.tmux_plugins }}/tpm/bin/install_plugins'"
+run "~/{{ .paths.tmux_plugins }}/tpm/tpm"
