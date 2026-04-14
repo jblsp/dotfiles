@@ -14,6 +14,10 @@
       "src": "https://github.com/saghen/blink.indent",
       "version": "2.0.0 - 3.0.0"
     },
+    "chezmoi.vim": {
+      "rev": "73b30df35c6b645ebd2e6a440eea8463ef3c3f47",
+      "src": "https://github.com/alker0/chezmoi.vim"
+    },
     "conform.nvim": {
       "rev": "086a40dc7ed8242c03be9f47fbcee68699cc2395",
       "src": "https://github.com/stevearc/conform.nvim"

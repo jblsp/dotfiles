@@ -71,7 +71,7 @@ lsp.config("jdtls", {
 -- extui
 extui.enable({})
 
--- Optional plugins
+-- Optional built-in plugins
 vim.cmd.packadd("nvim.undotree")
 vim.cmd.packadd("nvim.difftool")
 vim.cmd.packadd("nvim.tohtml")
@@ -194,6 +194,7 @@ plugins.setup({
   "gh:rafamadriz/friendly-snippets",
   "gh:tpope/vim-endwise",
   "gh:folke/tokyonight.nvim",
+  "gh:alker0/chezmoi.vim",
   {
     src = "gh:neovim/nvim-lspconfig",
     version = vim.version.range("*"),
