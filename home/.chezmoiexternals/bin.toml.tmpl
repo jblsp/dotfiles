@@ -1,0 +1,19 @@
+[".local/bin/mozlz4"]
+type = "archive-file"
+url = "https://github.com/cions/mozlz4/releases/download/v0.1.1/mozlz4-{{ .chezmoi.os }}-{{ .chezmoi.arch }}-0.1.1.tar.gz"
+executable = true
+path = "mozlz4-{{ .chezmoi.os }}-{{ .chezmoi.arch }}-0.1.1/mozlz4"
+checksum.sha256 = "{{ index (index .checksums.mozlz4 .chezmoi.os) .chezmoi.arch }}"
+
+[".local/bin/chezmoi_modify_manager"]
+type = "archive-file"
+executable = true
+path = "chezmoi_modify_manager"
+{{- $arch := "x86_64" }}
+{{- if eq .chezmoi.arch "arm64" }}{{ $arch = "aarch64" }}{{ end }}
+{{- $os := .chezmoi.os }}
+{{- if eq .chezmoi.os "linux" }}{{ $os = "unknown-linux-gnu" }}{{ end }}
+{{- if eq .chezmoi.os "darwin" }}{{ $os = "apple-darwin" }}{{ end }}
+{{- if eq .chezmoi.os "windows" }}{{ $os = "pc-windows-msvc" }}{{ end }}
+url = "https://github.com/VorpalBlade/chezmoi_modify_manager/releases/download/v3.7.0/chezmoi_modify_manager-v3.7.0-{{ $arch }}-{{ $os }}.tar.gz"
+checksum.sha256 = "{{ index (index .checksums.chezmoi_modify_manager .chezmoi.os) .chezmoi.arch }}"
