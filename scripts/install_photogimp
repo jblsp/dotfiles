@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -e
+
+echo "Installing PhotoGIMP..."
+
+OS="$(uname)"
+CONFIG_DIR="$HOME/.config/GIMP"
+
+if [[ "$OS" == "Darwin" ]]; then
+  CONFIG_DIR="$HOME/Library/Application Support/GIMP"
+fi
+
+mkdir -p "$CONFIG_DIR"
+
+if [[ -d "$CONFIG_DIR/3.0" ]]; then
+  BACKUP="$CONFIG_DIR/3.0.backup.$(date +%s)"
+  mv "$CONFIG_DIR/3.0" "$BACKUP"
+  echo "Backup created at $BACKUP"
+fi
+
+TMP_DIR=$(mktemp -d)
+cd "$TMP_DIR"
+curl -L -o photogimp.zip https://github.com/Diolinux/PhotoGIMP/releases/latest/download/PhotoGIMP.zip
+unzip -q photogimp.zip
+cp -r 3.0 "$CONFIG_DIR/"
