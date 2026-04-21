@@ -22,6 +22,21 @@ if [[ -x /opt/homebrew/bin/python3 ]]; then
 fi
 {{ end }}
 
+# main opts
+setopt append_history inc_append_history share_history
+setopt auto_menu menu_complete
+setopt auto_param_slash
+setopt no_case_glob no_case_match
+setopt globdots
+setopt extended_glob
+setopt interactive_comments
+unsetopt prompt_sp
+
+# history opts
+HISTSIZE=1000000
+SAVEHIST=1000000
+HISTFILE="$XDG_CACHE_HOME/zsh/zsh_history"
+HISTCONTROL=ignoreboth # consecutive duplicates & commands starting with space are not saved
 
 # emacs style keybinds
 bindkey -e
@@ -39,6 +54,12 @@ if [[ -x /opt/homebrew/bin/brew ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+# fzf integration
+# CTRL-T: complete file, CTRL-R: hist, or ALT-C: cd to dir
+if (( $+commands[fzf] )); then
+  source <(fzf --zsh)
+fi
+
 
 # extra completions
 mkdir -p "$ZSH_CACHE_DIR/completions"
@@ -53,12 +74,12 @@ chezmoi completion zsh >| "$ZSH_CACHE_DIR/completions/_chezmoi" &|
 source $ZSHPLUGINS/zsh-completions/zsh-completions.plugin.zsh
 
 # auto-completion
-zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
 zstyle ':completion:*' completer _complete _ignored
 zstyle ':completion:*' menu select
 zstyle ':completion:*' squeeze-slashes true
 zstyle ':completion:*' use-cache on
-zstyle ':completion:*:*:*:*:descriptions' format '%F{white}-- %d --%f'
+# zstyle ':completion:*:*:*:*:descriptions' format '%F{white}-- %d --%f'
 zstyle ':completion:*:default' list-colors "$LS_COLORS"
 zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 autoload -Uz compinit && compinit
