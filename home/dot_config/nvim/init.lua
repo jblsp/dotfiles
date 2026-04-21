@@ -412,6 +412,7 @@ plugins.setup({
           toml = { "tombi" },
           typescript = { "prettier" },
           yaml = { "prettier" },
+          zsh = { "shfmt" },
         },
       })
     end,

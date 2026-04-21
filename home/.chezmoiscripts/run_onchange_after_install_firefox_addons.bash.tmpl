@@ -5,7 +5,7 @@ moz_url() {
 }
 
 {{- range $profile, $profile_data := .firefox_addons }}
-ADDONS_PATH="$HOME/.mozilla/firefox/profiles/{{ $profile }}/extensions"
+ADDONS_PATH="$HOME/.config/mozilla/firefox/profiles/{{ $profile }}/extensions"
 mkdir -p "$ADDONS_PATH"
 
 {{- range $item := $profile_data.mozilla }}
