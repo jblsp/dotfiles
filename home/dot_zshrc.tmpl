@@ -16,11 +16,10 @@ if (( $+commands[gls] )); then
 else
   alias ls="ls --color"
 fi
-{{ if eq .chezmoi.os "darwin" }}
-if [[ -x /opt/homebrew/bin/python3 ]]; then
+if [[ "$(uname)" == "Darwin" && -x /opt/homebrew/bin/python3 ]]; then
   alias python="/opt/homebrew/bin/python3"
 fi
-{{ end }}
+
 
 # main opts
 setopt append_history inc_append_history share_history
