@@ -1,36 +1,100 @@
 packages:
-  darwin:
-    homebrew:
-      formulae:
-        - "bash"
-        - "bitwarden-cli"
-        - "coreutils"
-        - "fastfetch"
-        - "fd"
-        - "fzf"
-        - "gh"
-        - "go"
-        - "lazygit"
-        - "nvim"
-        - "oh-my-posh"
-        - "opencode"
-        - "python"
-        - "tmux"
-        - "tokei"
-        - "vivid"
-        - "vivify"
-      casks:
-        - "firefox"
-      taps:
-        - "jannis-baum/tap"
-  fedora:
+  # Groups of package that can be installed
+  groups:
+    example:
+      - fzf
+
+  # Packages to install by hostname
+  hosts:
+    JMBP:
+      groups:
+        - example
+      packages:
+        - fzf
+        - cowsay
+        - opencode
+        - coreutils
+        - fastfetch
+        - fd
+        - go
+        - lazygit
+        - neovim
+        - oh-my-posh
+        - python
+        - tmux
+        - tokei
+        - vivid
+        - vivify
+        - firefox
+        - calibre
+        - skills
+        - btop
+    JT1:
+      groups:
+        - required
+      packages:
+        - fzf
+
+  # Extra sources for package managers (e.g. brew taps)
+  sources:
+    brew:
+      - "jannis-baum/tap"
     dnf:
-      packages:
-        - "neovim"
-        - "tokei"
-        - "gh"
-    npm:
-      packages:
-        - "opencode-ai"
-        - "typescript"
-        - "skills"
+      - ""
+
+  # Packages that can be installed
+  registry:
+    fzf:
+      macos: "brew:fzf"
+      fedora: "dnf:fzf"
+    opencode:
+      macos: "brew:opencode"
+      fedora: "npm:opencode-ai"
+    coreutils:
+      macos: "brew:coreutils"
+      fedora: "ignore"
+    fastfetch:
+      macos: "brew:fastfetch"
+    fd:
+      macos: "brew:fd"
+    go:
+      macos: "brew:go"
+    lazygit:
+      macos: "brew:lazygit"
+    neovim:
+      macos: "brew:nvim"
+    oh-my-posh:
+      macos: "brew:oh-my-posh"
+    python:
+      macos: "brew:opencode"
+      fedora: "ignore"
+    tmux:
+      macos: "brew:tmux"
+    tokei:
+      macos: "brew:tokei"
+    vivid:
+      macos: "brew:vivid"
+    vivify:
+      macos: "brew:vivify"
+    firefox:
+      macos: "brew:cask:firefox"
+    calibre:
+      macos: "brew:cask:calibre"
+    skills:
+      macos: "brew:skills"
+    cowsay:
+      macos: "npm:cowsay"
+    bitwarden:
+      macos: "brew:cask:bitwarden"
+    spotify:
+      macos: "brew:cask:spotify"
+    vesktop:
+      macos: "brew:cask:vesktop"
+    ghostty:
+      macos: "brew:cask:ghostty"
+    bruno:
+      macos: "brew:cask:bruno"
+    libreoffice:
+      macos: "brew:cask:libreoffice"
+    btop:
+      macos: "brew:btop"

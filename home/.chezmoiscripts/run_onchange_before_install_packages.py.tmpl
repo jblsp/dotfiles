@@ -1,0 +1,144 @@
+#!/usr/bin/env python3
+
+import json
+import os
+import subprocess
+from abc import ABC, abstractmethod
+from itertools import chain
+
+"""
+{{- $osid := "" -}}
+{{- if eq .chezmoi.os "darwin" -}}
+{{-   $osid = "macos" -}}
+{{- else -}}
+{{-   $osid = .chezmoi.osRelease.id -}}
+{{- end -}}
+"""
+
+HOSTNAME = "{{ .chezmoi.hostname }}"
+OS_ID = "{{ $osid }}"
+PACKAGES = json.loads("""{{ .packages | toJson }}""")
+
+
+class PackageManager(ABC):
+    def __init__(self, env=None):
+        self.sources = set()
+        self.packages = set()
+        self.env = env or {}
+
+    @abstractmethod
+    def run(self):
+        pass
+
+    def run_cmd_sudo(self, cmd, **kwargs):
+        return self.run_cmd(["sudo", "-E"] + cmd, **kwargs)
+
+    def run_cmd(self, cmd, **kwargs):
+        env_override = kwargs.pop("env", None)
+        env = os.environ.copy()
+        env.update(self.env)
+        if env_override:
+            env.update(env_override)
+
+        return subprocess.run(cmd, env=env, **kwargs)
+
+
+class Brew(PackageManager):
+    def __init__(self):
+        super().__init__(
+            env={"HOMEBREW_NO_AUTO_UPDATE": "1", "HOMEBREW_NO_ENV_HINTS": "1"},
+        )
+
+    def run(self):
+        # Install taps
+        result = self.run_cmd(["brew", "tap"], capture_output=True, text=True)
+        installed_taps = set(result.stdout.strip().split("\n"))
+        new_taps = self.sources - installed_taps
+        if new_taps:
+            self.run_cmd(["brew", "tap", "-q"] + list(new_taps))
+
+        # Split packages into formulae and casks
+        formulae = {p for p in self.packages if not p.startswith("cask:")}
+        casks = {
+            p.removeprefix("cask:") for p in self.packages if p.startswith("cask:")
+        }
+
+        # Install formulae
+        result = self.run_cmd(
+            ["brew", "list", "--formulae", "-v"], capture_output=True, text=True
+        )
+        installed_formulae = set(result.stdout.strip().split("\n"))
+        new_formulae = formulae - installed_formulae
+        if new_formulae:
+            self.run_cmd(["brew", "install", "-q"] + list(new_formulae))
+
+        # Install Casks
+        result = self.run_cmd(
+            ["brew", "list", "--cask", "-v"], capture_output=True, text=True
+        )
+        existing_casks = set(result.stdout.strip().split("\n"))
+        new_casks = casks - existing_casks
+        if new_casks:
+            self.run_cmd(["brew", "install", "--cask", "-q"] + list(new_casks))
+
+
+class Npm(PackageManager):
+    def run(self):
+        result = self.run_cmd(
+            ["npm", "list", "-g", "--depth=0", "--parseable"],
+            capture_output=True,
+            text=True,
+        )
+        lines = result.stdout.strip().split("\n")
+        installed_packages = {os.path.basename(line) for line in lines[1:]}
+        new_packages = self.packages - installed_packages
+        if new_packages:
+            self.run_cmd(["npm", "install", "--global", *list(new_packages)])
+
+
+class Dnf(PackageManager):
+    def run(self):
+        pass
+
+
+class Flatpak(PackageManager):
+    def run(self):
+        pass
+
+
+class Pacman(PackageManager):
+    def run(self):
+        pass
+
+
+package_managers = {
+    "brew": Brew(),
+    "npm": Npm(),
+    "dnf": Dnf(),
+    "flatpak": Flatpak(),
+    "pacman": Pacman(),
+}
+
+
+for package in list(
+    chain.from_iterable(
+        [
+            PACKAGES["hosts"][HOSTNAME]["packages"],
+            *[
+                PACKAGES["groups"][group]
+                for group in PACKAGES["hosts"][HOSTNAME]["groups"]
+            ],
+        ]
+    )
+):
+    pstring = PACKAGES["registry"][package][OS_ID]
+    if pstring == "ignore":
+        continue
+    pm, pname = pstring.split(":", 1)
+    package_managers[pm].packages.add(pname)
+
+for pm, sources in PACKAGES["sources"].items():
+    package_managers[pm].sources.update(sources)
+
+for pm in package_managers.values():
+    pm.run()
