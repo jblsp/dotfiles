@@ -1,0 +1,3 @@
+[flags]
+battery = true
+show_table_scroll_position = true
