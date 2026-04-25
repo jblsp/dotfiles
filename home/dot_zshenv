@@ -41,4 +41,5 @@ export DISABLE_TELEMETRY=1
 path+=("$HOME/.local/bin")
 path+=("{{ .chezmoi.workingTree }}/scripts")
 path+=("$GOPATH/bin")
+path+=("$HOME/.local/share/npm/bin")
 export path
