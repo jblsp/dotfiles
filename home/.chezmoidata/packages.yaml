@@ -96,5 +96,6 @@ packages:
       macos: "brew:cask:bruno"
     libreoffice:
       macos: "brew:cask:libreoffice"
-    btop:
-      macos: "brew:btop"
+    bottom:
+      macos: "brew:bottom"
+      fedora: "dnf:bottom"

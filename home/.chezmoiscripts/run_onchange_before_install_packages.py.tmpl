@@ -98,7 +98,24 @@ class Npm(PackageManager):
 
 class Dnf(PackageManager):
     def run(self):
-        pass
+        # Enable copr
+        result = self.run_cmd(["dnf", "copr", "list"], capture_output=True, text=True)
+        lines = result.stdout.strip().split("\n")
+        enabled_copr = {s.removeprefix("copr.fedorainfracloud.org/") for s in lines}
+        new_copr = self.sources - enabled_copr
+        for copr in new_copr:
+            self.run_cmd_sudo(["dnf", "copr", "enable", copr, "-y"])
+
+        # Install packages
+        result = self.run_cmd(
+            ["dnf", "repoquery", "--installed", "--qf", "%{name}\\n"],
+            capture_output=True,
+            text=True,
+        )
+        installed_packages = set(result.stdout.splitlines())
+        new_packages = self.packages - installed_packages
+        if new_packages:
+            self.run_cmd_sudo(["dnf", "install", *list(new_packages), "-y"])
 
 
 class Flatpak(PackageManager):
