@@ -141,4 +141,5 @@ for pm, sources in PACKAGES["sources"].items():
     package_managers[pm].sources.update(sources)
 
 for pm in package_managers.values():
-    pm.run()
+    if pm.packages:
+        pm.run()

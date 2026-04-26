@@ -31,16 +31,16 @@ packages:
         - btop
     JT1:
       groups:
-        - required
+        - example
       packages:
-        - fzf
+        - bottom
 
   # Extra sources for package managers (e.g. brew taps)
   sources:
     brew:
       - "jannis-baum/tap"
     dnf:
-      - ""
+      - "atim/bottom"
 
   # Packages that can be installed
   registry:
