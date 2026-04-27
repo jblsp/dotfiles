@@ -1,0 +1,49 @@
+#!/usr/bin/env python3
+
+import json
+import os
+import shutil
+import tempfile
+import urllib.request
+from pathlib import Path
+
+DATA = json.loads("""{{ .firefox_addons | toJson }}""")
+PROFILES = DATA["profiles"]
+REGISTRY = DATA["registry"]
+
+xpis = dict()
+
+for profile in PROFILES:
+    for aname in PROFILES[profile]:
+        addon = REGISTRY[aname]
+        extensions_path = (
+            Path.home()
+            / ".config"
+            / "mozilla"
+            / "firefox"
+            / "profiles"
+            / profile
+            / "extensions"
+        )
+        apath = extensions_path / f'{addon["gecko_id"]}.xpi'
+        if not apath.is_file():
+            if aname not in xpis:
+                # Download addon if needed
+                print(f"Downloading Firefox addon: {aname}")
+                if "url" in addon:
+                    url = addon["url"]
+                else:
+                    url = f"https://addons.mozilla.org/firefox/downloads/latest/{aname}/latest.xpi"
+                with urllib.request.urlopen(url) as response:
+                    with tempfile.NamedTemporaryFile(delete=False) as tmp:
+                        shutil.copyfileobj(response, tmp)
+                        xpis[aname] = tmp.name
+
+            # Copy addon to extensions_path
+            extensions_path.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(xpis[aname], extensions_path / f"{addon["gecko_id"]}.xpi")
+
+# Clean up
+for path in list(xpis.values()):
+    if os.path.exists(path):
+        os.remove(path)
