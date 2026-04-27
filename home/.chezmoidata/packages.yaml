@@ -28,7 +28,8 @@ packages:
         - firefox
         - calibre
         - skills
-        - btop
+        - bottom
+
     JT1:
       groups:
         - example
@@ -62,7 +63,7 @@ packages:
     lazygit:
       macos: "brew:lazygit"
     neovim:
-      macos: "brew:nvim"
+      macos: "brew:neovim"
     oh-my-posh:
       macos: "brew:oh-my-posh"
     python:
