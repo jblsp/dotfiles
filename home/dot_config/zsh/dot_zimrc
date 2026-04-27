@@ -1,0 +1,7 @@
+zmodule lukechilds/zsh-nvm
+zmodule paulirish/git-open
+zmodule zsh-users/zsh-completions
+zmodule zsh-users/zsh-syntax-highlighting
+zmodule completion
+
+# vim: ft=zsh

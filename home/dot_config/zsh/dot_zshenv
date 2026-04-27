@@ -1,0 +1,44 @@
+# Default programs
+export EDITOR="nvim"
+export MANPAGER="nvim +Man!"
+
+# fix java on mac
+if [[ "$(uname)" == "Darwin" ]]; then
+  export JAVA_HOME=/opt/homebrew/opt/java
+fi
+
+# go
+export GOPATH="$XDG_DATA_HOME/go"
+
+# npm
+export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
+
+# bitwarden
+export BITWARDEN_SSH_AUTH_SOCK="$XDG_RUNTIME_DIR"
+
+# docker
+export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
+
+# skills.sh
+export DISABLE_TELEMETRY=1
+
+# nvm
+export NVM_DIR="$XDG_DATA_HOME/nvm"
+export NVM_LAZY_LOAD=true
+
+# ssh
+case $(uname) in
+Linux)
+  export SSH_AUTH_SOCK="$HOME/.var/app/com.bitwarden.desktop/data/.bitwarden-ssh-agent.sock"
+  ;;
+Darwin)
+  export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
+  ;;
+esac
+
+# path
+path+=("$HOME/.local/bin")
+path+=("{{ .chezmoi.workingTree }}/scripts")
+path+=("$GOPATH/bin")
+path+=("$HOME/.local/share/npm/bin")
+export path

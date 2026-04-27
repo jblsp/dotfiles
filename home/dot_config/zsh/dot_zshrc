@@ -1,5 +1,20 @@
-ZSHPLUGINS=$HOME/{{ .paths.zsh_plugins }}
+# Download zimfw plugin manager if missing.
+ZIM_CONFIG_FILE=$XDG_CONFIG_HOME/zsh/.zimrc
+ZIM_HOME=$XDG_DATA_HOME/zim
+if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
+  curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
+      https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+fi
 
+# Install missing modules and update ${ZIM_HOME}/init.zsh if missing or outdated.
+if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc} ]]; then
+  source ${ZIM_HOME}/zimfw.zsh init
+fi
+
+# Initialize modules.
+source ${ZIM_HOME}/init.zsh
+
+# colors
 if (( $+commands[vivid] )); then
   export LS_COLORS="$(vivid generate snazzy)" 
   export ZLS_COLORS="$LS_COLORS"
@@ -70,27 +85,6 @@ if [[ ! -f "$ZSH_CACHE_DIR/completions/_chezmoi" ]]; then
 fi
 chezmoi completion zsh >| "$ZSH_CACHE_DIR/completions/_chezmoi" &|
 
-source $ZSHPLUGINS/zsh-completions/zsh-completions.plugin.zsh
+# auto-completion opts (mostly handled by zimfw/completion)
+zstyle ':completion::complete:*' cache-path ${XDG_CACHE_HOME}/zsh/zcompcache
 
-# auto-completion
-zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
-zstyle ':completion:*' completer _complete _ignored
-zstyle ':completion:*' menu select
-zstyle ':completion:*' squeeze-slashes true
-zstyle ':completion:*' use-cache on
-# zstyle ':completion:*:*:*:*:descriptions' format '%F{white}-- %d --%f'
-zstyle ':completion:*:default' list-colors "$LS_COLORS"
-zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
-autoload -Uz compinit && compinit
-
-# plugins
-source $ZSHPLUGINS/git-open/git-open.plugin.zsh
-
-# nvm
-export NVM_DIR="$XDG_DATA_HOME/nvm"
-export NVM_COMPLETION=true
-source $ZSHPLUGINS/zsh-nvm/zsh-nvm.plugin.zsh
-
-# zsh-syntax-highlighting
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
-source $ZSHPLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
