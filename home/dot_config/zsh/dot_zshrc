@@ -69,7 +69,8 @@ if [[ -x /opt/homebrew/bin/brew ]]; then
 fi
 
 # fzf integration
-# CTRL-T: complete file, CTRL-R: hist, or ALT-C: cd to dir
+# CTRL-T: complete file, CTRL-R: hist, ALT-C: cd to dir
+# type **<tab> to search completions
 if (( $+commands[fzf] )); then
   source <(fzf --zsh)
 fi

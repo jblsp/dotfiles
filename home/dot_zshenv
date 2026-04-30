@@ -1,18 +1,3 @@
-# XDG base dirs
-export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
-export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
-export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
-export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
-export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
-case $(uname) in
-Linux)
-  XDG_RUNTIME_DIR=/run/user/$(id -u)
-  ;;
-Darwin)
-  XDG_RUNTIME_DIR=$(getconf DARWIN_USER_TEMP_DIR)
-  ;;
-esac
-
 # Set ZDOTDIR
-ZDOTDIR=$XDG_CONFIG_HOME/zsh
+ZDOTDIR=$HOME/.config/zsh
 source $ZDOTDIR/.zshenv
