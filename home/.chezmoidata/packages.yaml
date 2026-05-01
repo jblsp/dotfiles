@@ -7,8 +7,7 @@ packages:
   # Packages to install by hostname
   hosts:
     JMBP:
-      groups:
-        - example
+      groups: []
       packages:
         - fzf
         - cowsay
@@ -38,9 +37,9 @@ packages:
 
   # Extra sources for package managers (e.g. brew taps)
   sources:
-    brew:
+    brew: # taps
       - "jannis-baum/tap"
-    dnf:
+    dnf: # copr
       - "atim/bottom"
 
   # Packages that can be installed

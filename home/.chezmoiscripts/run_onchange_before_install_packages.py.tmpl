@@ -21,14 +21,21 @@ PACKAGES = json.loads("""{{ .packages | toJson }}""")
 
 
 class PackageManager(ABC):
-    def __init__(self, env=None):
+    def __init__(self, env=None, color="0m"):
         self.sources = set()
         self.packages = set()
+        self.color = color
         self.env = env or {}
 
     @abstractmethod
-    def run(self):
+    def install_packages(self):
         pass
+
+    def run(self):
+        pm_name = self.__class__.__name__.lower()
+        print(f"  \033[{self.color};4m{pm_name}\033[0m")
+        self.install_packages()
+        print()
 
     def run_cmd_sudo(self, cmd, **kwargs):
         return self.run_cmd(["sudo", "-E"] + cmd, **kwargs)
@@ -40,6 +47,7 @@ class PackageManager(ABC):
         if env_override:
             env.update(env_override)
 
+        print(f"❯ {" ".join(cmd)}")
         return subprocess.run(cmd, env=env, **kwargs)
 
 
@@ -47,9 +55,10 @@ class Brew(PackageManager):
     def __init__(self):
         super().__init__(
             env={"HOMEBREW_NO_AUTO_UPDATE": "1", "HOMEBREW_NO_ENV_HINTS": "1"},
+            color="38;5;214",
         )
 
-    def run(self):
+    def install_packages(self):
         # Install taps
         result = self.run_cmd(["brew", "tap"], capture_output=True, text=True)
         installed_taps = set(result.stdout.strip().split("\n"))
@@ -83,7 +92,12 @@ class Brew(PackageManager):
 
 
 class Npm(PackageManager):
-    def run(self):
+    def __init__(self):
+        super().__init__(
+            color="38;5;196",
+        )
+
+    def install_packages(self):
         result = self.run_cmd(
             ["npm", "list", "-g", "--depth=0", "--parseable"],
             capture_output=True,
@@ -97,7 +111,7 @@ class Npm(PackageManager):
 
 
 class Dnf(PackageManager):
-    def run(self):
+    def install_packages(self):
         # Enable copr
         result = self.run_cmd(["dnf", "copr", "list"], capture_output=True, text=True)
         lines = result.stdout.strip().split("\n")
@@ -119,14 +133,16 @@ class Dnf(PackageManager):
 
 
 class Flatpak(PackageManager):
-    def run(self):
+    def install_packages(self):
         pass
 
 
 class Pacman(PackageManager):
-    def run(self):
+    def install_packages(self):
         pass
 
+
+print("Running package installation script...\n")
 
 package_managers = {
     "brew": Brew(),

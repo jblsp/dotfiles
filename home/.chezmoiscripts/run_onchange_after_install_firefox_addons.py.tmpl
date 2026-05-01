@@ -11,6 +11,8 @@ DATA = json.loads("""{{ .firefox_addons | toJson }}""")
 PROFILES = DATA["profiles"]
 REGISTRY = DATA["registry"]
 
+print("Running Firefox addon installation script...\n")
+
 xpis = dict()
 
 for profile in PROFILES:
