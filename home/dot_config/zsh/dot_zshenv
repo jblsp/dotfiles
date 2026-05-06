@@ -29,7 +29,11 @@ export GOPATH="$XDG_DATA_HOME/go"
 export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
 
 # bitwarden
-export BITWARDEN_SSH_AUTH_SOCK="$XDG_RUNTIME_DIR"
+if (($+commands[flatpak])) && flatpak info com.bitwarden.desktop &>/dev/null; then
+  export BITWARDEN_SSH_AUTH_SOCK="$HOME/.var/app/com.bitwarden.desktop/data/.bitwarden-ssh-agent.sock"
+else
+  export BITWARDEN_SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/bitwarden-ssh-agent.sock"
+fi
 
 # docker
 export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
@@ -44,7 +48,7 @@ export NVM_LAZY_LOAD=true
 # ssh
 case $(uname) in
 Linux)
-  export SSH_AUTH_SOCK="$HOME/.var/app/com.bitwarden.desktop/data/.bitwarden-ssh-agent.sock"
+  export SSH_AUTH_SOCK="$BITWARDEN_SSH_AUTH_SOCK"
   ;;
 Darwin)
   export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
