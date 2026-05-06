@@ -382,6 +382,19 @@ plugins.setup({
       end, { desc = "Format and write buffer" })
       map("n", "<leader>F", conform.format, { desc = "Format buffer" })
 
+      -- manually set filetype for some filetypes on shfmt
+      conform.formatters.shfmt = {
+        append_args = function(self, ctx)
+          local lang = "auto"
+          if vim.bo[ctx.buf].filetype == "bash" then
+            lang = "bash"
+          elseif vim.bo[ctx.buf].filetype == "zsh" then
+            lang = "zsh"
+          end
+          return { "-ln", lang }
+        end,
+      }
+
       conform.setup({
         notify_on_error = true,
         notify_no_formatters = true,
