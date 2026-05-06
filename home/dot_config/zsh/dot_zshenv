@@ -31,6 +31,8 @@ export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
 # bitwarden
 if (($+commands[flatpak])) && flatpak info com.bitwarden.desktop &>/dev/null; then
   export BITWARDEN_SSH_AUTH_SOCK="$HOME/.var/app/com.bitwarden.desktop/data/.bitwarden-ssh-agent.sock"
+elif [[ $(uname) == "Darwin" ]]; then
+  export BITWARDEN_SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
 else
   export BITWARDEN_SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/bitwarden-ssh-agent.sock"
 fi
@@ -51,14 +53,7 @@ export PYTHONPYCACHEPREFIX=$XDG_CACHE_HOME/python
 export PYTHONUSERBASE=$XDG_DATA_HOME/python
 
 # ssh
-case $(uname) in
-Linux)
-  export SSH_AUTH_SOCK="$BITWARDEN_SSH_AUTH_SOCK"
-  ;;
-Darwin)
-  export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
-  ;;
-esac
+export SSH_AUTH_SOCK="$BITWARDEN_SSH_AUTH_SOCK"
 
 # path
 path+=("$HOME/.local/bin")
