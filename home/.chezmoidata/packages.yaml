@@ -30,10 +30,13 @@ packages:
         - bottom
 
     JT1:
-      groups:
-        - example
+      groups: []
       packages:
         - bottom
+        - opencode
+        - skills
+        - fzf
+        - bitwarden
 
   # Extra sources for package managers (e.g. brew taps)
   sources:
@@ -82,10 +85,12 @@ packages:
       macos: "brew:cask:calibre"
     skills:
       macos: "brew:skills"
+      fedora: "npm:skills"
     cowsay:
       macos: "npm:cowsay"
     bitwarden:
       macos: "brew:cask:bitwarden"
+      fedora: "flatpak:com.bitwarden.desktop"
     spotify:
       macos: "brew:cask:spotify"
     vesktop:

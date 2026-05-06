@@ -21,7 +21,7 @@ PACKAGES = json.loads("""{{ .packages | toJson }}""")
 
 
 class PackageManager(ABC):
-    def __init__(self, env=None, color="0m"):
+    def __init__(self, env=None, color="0"):
         self.sources = set()
         self.packages = set()
         self.color = color
@@ -111,6 +111,9 @@ class Npm(PackageManager):
 
 
 class Dnf(PackageManager):
+    def __init__(self):
+        super().__init__(color="38;5;40")
+
     def install_packages(self):
         # Enable copr
         result = self.run_cmd(["dnf", "copr", "list"], capture_output=True, text=True)
@@ -133,8 +136,20 @@ class Dnf(PackageManager):
 
 
 class Flatpak(PackageManager):
+    def __init__(self):
+        super().__init__(color="38;5;33")
+
     def install_packages(self):
-        pass
+        result = self.run_cmd(
+            ["flatpak", "list", "--app", "--columns=application"],
+            capture_output=True,
+            text=True,
+        )
+        lines = result.stdout.strip().split("\n")
+        installed_packages = set(lines[1:])
+        new_packages = self.packages - installed_packages
+        if new_packages:
+            self.run_cmd_sudo(["flatpak", "install", "-y"] + list(new_packages))
 
 
 class Pacman(PackageManager):
