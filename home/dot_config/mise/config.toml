@@ -1,0 +1,11 @@
+[tools]
+bottom = "0"
+fastfetch = "2"
+fd = "10"
+fzf = "0"
+node = "26"
+oh-my-posh = "29"
+ripgrep = "15"
+rust = "1"
+tmux = "3"
+tokei = "14"

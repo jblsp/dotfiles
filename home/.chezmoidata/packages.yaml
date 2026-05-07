@@ -1,82 +1,46 @@
 packages:
   # Groups of package that can be installed
   groups:
-    example:
-      - fzf
+    example: []
 
   # Packages to install by hostname
   hosts:
     JMBP:
       groups: []
       packages:
-        - fzf
-        - cowsay
         - opencode
         - coreutils
-        - fastfetch
-        - fd
-        - go
         - lazygit
         - neovim
         - oh-my-posh
-        - python
-        - tmux
-        - tokei
-        - vivid
         - vivify
         - firefox
         - calibre
         - skills
-        - bottom
 
     JT1:
       groups: []
       packages:
-        - bottom
         - opencode
         - skills
-        - fzf
         - bitwarden
 
   # Extra sources for package managers (e.g. brew taps)
   sources:
     brew: # taps
       - "jannis-baum/tap"
-    dnf: # copr
-      - "atim/bottom"
+    dnf: [] # copr
 
   # Packages that can be installed
   registry:
-    fzf:
-      macos: "brew:fzf"
-      fedora: "dnf:fzf"
     opencode:
       macos: "brew:opencode"
       fedora: "npm:opencode-ai"
     coreutils:
       macos: "brew:coreutils"
       fedora: "ignore"
-    fastfetch:
-      macos: "brew:fastfetch"
-    fd:
-      macos: "brew:fd"
-    go:
-      macos: "brew:go"
-    lazygit:
-      macos: "brew:lazygit"
     neovim:
       macos: "brew:neovim"
-    oh-my-posh:
-      macos: "brew:oh-my-posh"
-    python:
-      macos: "brew:opencode"
-      fedora: "ignore"
-    tmux:
-      macos: "brew:tmux"
-    tokei:
-      macos: "brew:tokei"
-    vivid:
-      macos: "brew:vivid"
     vivify:
       macos: "brew:vivify"
     firefox:
@@ -86,8 +50,6 @@ packages:
     skills:
       macos: "brew:skills"
       fedora: "npm:skills"
-    cowsay:
-      macos: "npm:cowsay"
     bitwarden:
       macos: "brew:cask:bitwarden"
       fedora: "flatpak:com.bitwarden.desktop"
@@ -101,6 +63,3 @@ packages:
       macos: "brew:cask:bruno"
     libreoffice:
       macos: "brew:cask:libreoffice"
-    bottom:
-      macos: "brew:bottom"
-      fedora: "dnf:bottom"

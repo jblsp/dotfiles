@@ -1,24 +1,14 @@
-# Download zimfw plugin manager if missing.
+# zimfw
 ZIM_CONFIG_FILE=$XDG_CONFIG_HOME/zsh/.zimrc
 ZIM_HOME=$XDG_DATA_HOME/zim
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
   curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
     https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
 fi
-
-# Install missing modules and update ${ZIM_HOME}/init.zsh if missing or outdated.
 if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc} ]]; then
   source ${ZIM_HOME}/zimfw.zsh init
 fi
-
-# Initialize modules.
 source ${ZIM_HOME}/init.zsh
-
-# colors
-if (($+commands[vivid])); then
-  export LS_COLORS="$(vivid generate snazzy)"
-  export ZLS_COLORS="$LS_COLORS"
-fi
 
 # aliases
 alias vi="nvim"
@@ -26,11 +16,6 @@ alias lg="lazygit"
 alias cz="chezmoi"
 alias ff="fastfetch"
 alias sudo="sudo "
-if (($+commands[gls])); then
-  alias ls="gls --color"
-else
-  alias ls="ls --color"
-fi
 if [[ "$(uname)" == "Darwin" && -x /opt/homebrew/bin/python3 ]]; then
   alias python="/opt/homebrew/bin/python3"
 fi
@@ -51,35 +36,24 @@ SAVEHIST=1000000
 HISTFILE="$XDG_CACHE_HOME/zsh/zsh_history"
 HISTCONTROL=ignoreboth # consecutive duplicates & commands starting with space are not saved
 
+# mise
+eval "$(mise activate zsh)"
+
 # emacs style keybinds
 bindkey -e
 
+# fzf integration
+# CTRL-T: complete file, CTRL-R: hist, ALT-C: cd to dir
+# type **<tab> to search completions
+command -v fzf >/dev/null 2>&1 && source <(fzf --zsh)
+
 # load oh-my-posh
-if command -v oh-my-posh >/dev/null 2>&1; then
-  eval "$(oh-my-posh init zsh --config pure)"
-fi
+eval "$(oh-my-posh init zsh --config pure)"
 
 # homebrew
 if [[ -x /opt/homebrew/bin/brew ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
-
-# fzf integration
-# CTRL-T: complete file, CTRL-R: hist, ALT-C: cd to dir
-# type **<tab> to search completions
-if (($+commands[fzf])); then
-  source <(fzf --zsh)
-fi
-
-# extra completions
-mkdir -p "$ZSH_CACHE_DIR/completions"
-
-if [[ ! -f "$ZSH_CACHE_DIR/completions/_chezmoi" ]]; then
-  typeset -g -A _comps
-  autoload -Uz _chezmoi
-  _comps[chezmoi]=_chezmoi
-fi
-chezmoi completion zsh >|"$ZSH_CACHE_DIR/completions/_chezmoi" &|
 
 # auto-completion opts (mostly handled by zimfw/completion)
 zstyle ':completion::complete:*' cache-path ${XDG_CACHE_HOME}/zsh/zcompcache

@@ -1,7 +1,11 @@
-zmodule lukechilds/zsh-nvm
-zmodule paulirish/git-open
-zmodule zsh-users/zsh-completions
-zmodule zsh-users/zsh-syntax-highlighting
 zmodule completion
+zmodule utility
+zmodule fzf
+zmodule input
+
+zmodule paulirish/git-open
+zmodule zsh-users/zsh-completions --fpath src
+zmodule zdharma-continuum/fast-syntax-highlighting --on-pull "fast-theme base16"
+zmodule joke/zim-chezmoi
 
 # vim: ft=zsh
