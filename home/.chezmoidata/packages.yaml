@@ -11,7 +11,6 @@ packages:
         - opencode
         - coreutils
         - lazygit
-        - neovim
         - oh-my-posh
         - vivify
         - firefox
@@ -39,8 +38,6 @@ packages:
     coreutils:
       macos: "brew:coreutils"
       fedora: "ignore"
-    neovim:
-      macos: "brew:neovim"
     vivify:
       macos: "brew:vivify"
     firefox:
