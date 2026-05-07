@@ -1,5 +1,5 @@
--- This plugin enables treesitter highlighting and folds
 vim.api.nvim_create_autocmd("FileType", {
+  desc = "Enable treesitter highlighting and folds",
   callback = function(ev)
     local buf, filetype = ev.buf, ev.match
 
