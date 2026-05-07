@@ -10,8 +10,6 @@ packages:
       packages:
         - opencode
         - coreutils
-        - lazygit
-        - oh-my-posh
         - vivify
         - firefox
         - calibre
