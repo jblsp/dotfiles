@@ -18,15 +18,10 @@ xpis = dict()
 for profile in PROFILES:
     for aname in PROFILES[profile]:
         addon = REGISTRY[aname]
-        extensions_path = (
-            Path.home()
-            / ".config"
-            / "mozilla"
-            / "firefox"
-            / "profiles"
-            / profile
-            / "extensions"
+        profile_path = (
+            Path.home() / ".config" / "mozilla" / "firefox" / "profiles" / profile
         )
+        extensions_path = profile_path / "extensions"
         apath = extensions_path / f'{addon["gecko_id"]}.xpi'
         if not apath.is_file():
             if aname not in xpis:
@@ -49,3 +44,7 @@ for profile in PROFILES:
 for path in list(xpis.values()):
     if os.path.exists(path):
         os.remove(path)
+
+# removing these files fixes startup bugs
+os.remove(profile_path / "extensions.json")
+os.remove(profile_path / "addonStartup.json.lz4")
