@@ -11,7 +11,7 @@ chmod 700 "$HOME/.ssh" "$destination"
 stage=$(mktemp -d "$destination/.install.XXXXXXXX")
 trap 'rm -rf -- "$stage"' EXIT
 
-store=$(SOPS_AGE_KEY_CMD="keyring get dotfiles age-identity" sops decrypt --output-type json \
+store=$(sops decrypt --output-type json \
   "$root/secrets/ssh-keys.enc.json")
 jq_store() { printf '%s' "$store" | jq "$@"; }
 jq_store -e 'type == "object" and length > 0 and all(to_entries[];

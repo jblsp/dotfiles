@@ -4,7 +4,8 @@
 include = ["./options.toml", "./config/macos/defaults.toml"]
 
 [tools]
-"pipx:keyring" = "25"
+"pypi:keyring" = "25"
+uv = "latest"
 "age" = "1"
 "sops" = "3.13"
 "jq" = "1"
@@ -13,9 +14,12 @@ include = ["./options.toml", "./config/macos/defaults.toml"]
 dotfiles_root = "{{ config_source | canonicalize | dirname }}"
 dotfiles_secret = 'mise -C "{{ vars.dotfiles_root }}" exec -- "{{ vars.dotfiles_root }}/scripts/template-secrets.bash" get '
 
+[env]
+SOPS_AGE_KEY_CMD = 'bash "{{ vars.dotfiles_root }}/scripts/age-key.bash" --print'
+
 [bootstrap.hooks]
 pre-dotfiles = '''
-mise -C "{{ vars.dotfiles_root }}" exec -- "{{ vars.dotfiles_root }}/scripts/template-secrets.bash" import-key --if-missing
+mise -C "{{ vars.dotfiles_root }}" exec -- "{{ vars.dotfiles_root }}/scripts/age-key.bash"
 '''
 post-dotfiles = '''
 mise -C "{{ vars.dotfiles_root }}" exec -- "{{ vars.dotfiles_root }}/scripts/ssh-keys.bash"
@@ -72,5 +76,5 @@ variants = [
 [tasks."secrets:edit"]
 description = "Edit a SOPS file using the age identity in the keychain"
 usage = 'arg "<file>" help="SOPS-encrypted file to edit"'
-run = 'SOPS_AGE_KEY_CMD="keyring get dotfiles age-identity" sops edit "${usage_file?}"'
+run = 'sops edit "${usage_file?}"'
 raw = true
