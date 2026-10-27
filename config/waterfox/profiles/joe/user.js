@@ -16,6 +16,7 @@ user_pref("extensions.autoDisableScopes", 0);
 
 // search engine
 user_pref("browser.search.separatePrivateDefault", false);
+user_pref("browser.search.suggest.enabled", false);
 
 // Tab Sidebar
 user_pref("sidebar.verticalTabs", true);
