@@ -1,0 +1,76 @@
+# dotfiles repository mise configuration
+# https://github.com/jblsp/dotfiles
+
+include = ["./options.toml", "./config/macos/defaults.toml"]
+
+[tools]
+"pipx:keyring" = "25"
+"age" = "1"
+"sops" = "3.13"
+"jq" = "1"
+
+[vars]
+dotfiles_root = "{{ config_source | canonicalize | dirname }}"
+dotfiles_secret = 'mise -C "{{ vars.dotfiles_root }}" exec -- "{{ vars.dotfiles_root }}/scripts/template-secrets.bash" get '
+
+[bootstrap.hooks]
+pre-dotfiles = '''
+mise -C "{{ vars.dotfiles_root }}" exec -- "{{ vars.dotfiles_root }}/scripts/template-secrets.bash" import-key --if-missing
+'''
+post-dotfiles = '''
+mise -C "{{ vars.dotfiles_root }}" exec -- "{{ vars.dotfiles_root }}/scripts/ssh-keys.bash"
+{% if vars.gecko_addons == "true" %}
+python3 "{{ vars.dotfiles_root }}/scripts/gecko-addons.py"
+{% endif %}
+'''
+
+[dotfiles]
+# configuration
+"~/.config/bottom" = { source = "config/bottom" }
+"~/.config/ghostty" = { source = "config/ghostty" }
+"~/.config/git" = { source = "config/git", mode = "symlink-each", exclude = ["*.tera"] }
+"~/.config/git/config" = { source = "config/git/config.tera", mode = "template" }
+"~/.config/git/identities/alt1" = { source = "config/git/identities/alt1.tera", mode = "template", permissions = "600" }
+"~/.config/git/identities/work" = { source = "config/git/identities/work.tera", mode = "template", permissions = "600" }
+"~/.config/herdr" = { source = "config/herdr", mode = "symlink-each" }
+"~/.config/lazydocker" = { source = "config/lazydocker" }
+"~/.config/lazygit" = { source = "config/lazygit" }
+"~/.config/mise/" = { source = "config/mise", mode = "symlink-each" }
+"~/.config/mise/conf.d/dotfiles.toml" = { source = "mise.global.toml" }
+"~/.config/npm" = { source = "config/npm" }
+"~/.config/nvim" = { source = "config/nvim" }
+"~/.config/opencode" = { source = "config/opencode", mode = "symlink-each" }
+"~/.config/tmux" = { source = "config/tmux" }
+"~/.config/yazi" = { source = "config/yazi", mode = "symlink-each" }
+"~/.config/zsh" = { source = "config/zsh" }
+"~/.ssh/" = { source = "config/ssh", mode = "symlink-each", exclude = ["*.tera"] }
+"~/.ssh/config" = { source = "config/ssh/config.tera", mode = "template" }
+
+# set ZDOTDIR to ~/.config/zsh
+"~/.zshenv" = { content = '''ZDOTDIR="$HOME/.config/zsh" && source "$ZDOTDIR/.zshenv"''' }
+
+# absent
+"~/.zshrc" = { mode = "absent" }
+
+[dotfiles.waterfox]
+source = "config/waterfox"
+mode = "symlink-each"
+exclude = ["*.tera", "profiles/*/addons.txt"]
+variants = [
+  { os = "macos", target = "~/Library/Application Support/Waterfox" },
+  { os = "linux", target = "~/.waterfox" },
+]
+
+[dotfiles."waterfox/profiles.ini"]
+source = "config/waterfox/profiles.ini.tera"
+mode = "template"
+variants = [
+  { os = "macos", target = "~/Library/Application Support/Waterfox/profiles.ini" },
+  { os = "linux", target = "~/.waterfox/profiles.ini" },
+]
+
+[tasks."secrets:edit"]
+description = "Edit a SOPS file using the age identity in the keychain"
+usage = 'arg "<file>" help="SOPS-encrypted file to edit"'
+run = 'SOPS_AGE_KEY_CMD="keyring get dotfiles age-identity" sops edit "${usage_file?}"'
+raw = true

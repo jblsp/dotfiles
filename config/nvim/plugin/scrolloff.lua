@@ -1,0 +1,24 @@
+vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "WinScrolled" }, {
+  desc = "Maintain scrolloff at the EOF",
+  group = vim.api.nvim_create_augroup("joe/scrolloff-fix", { clear = true }),
+  callback = function(ev)
+    -- Ignore floating windows
+    if vim.api.nvim_win_get_config(0).relative ~= "" then
+      return
+    end
+
+    -- Ignore terminal buffers
+    if vim.bo[ev.buf].buftype == "terminal" then
+      return
+    end
+
+    local win_height = vim.fn.winheight(0)
+    local scrolloff = math.min(vim.o.scrolloff, math.floor(win_height / 2))
+    local visual_distance_to_eof = win_height - vim.fn.winline()
+
+    if visual_distance_to_eof < scrolloff then
+      local win_view = vim.fn.winsaveview()
+      vim.fn.winrestview({ topline = win_view.topline + scrolloff - visual_distance_to_eof })
+    end
+  end,
+})

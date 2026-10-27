@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+# darwin defaults diff script
+# modified diff.sh script from: https://github.com/yannbertrand/macos-defaults
+
+if [[ "$(uname)" != "Darwin" ]]; then
+  echo "dddiff only runs on macOS." >&2
+  exit 1
+fi
+
+echo -n -e "\033[1m❓ Insert diff name (to store it for future usage)\033[0m "
+read name
+name=${name:-default}
+state_dir="${XDG_CACHE_HOME:-$HOME/.cache}/dddiff/${name}"
+echo -e "\033[1mSaving plist files to '${state_dir}' folder.\033[0m"
+
+snapshot_preferences() {
+  local target_dir=$1
+  local plists
+
+  rm -rf "$target_dir"
+  mkdir -p "$target_dir"
+
+  shopt -s nullglob
+  plists=("$HOME"/Library/Preferences/*.plist)
+  shopt -u nullglob
+
+  ((${#plists[@]})) && cp "${plists[@]}" "$target_dir"/
+}
+
+mkdir -p "$state_dir"
+defaults read >"$state_dir/old.plist"
+defaults -currentHost read >"$state_dir/host-old.plist"
+snapshot_preferences "$state_dir/preferences-old"
+
+echo -e "\n\033[1m⏳ Change settings and press any key to continue\033[0m"
+
+read -n 1 -s -r
+defaults read >"$state_dir/new.plist"
+defaults -currentHost read >"$state_dir/host-new.plist"
+snapshot_preferences "$state_dir/preferences-new"
+
+echo -e "\033[1m➡️ Here is your diff\033[0m\n\n"
+git --no-pager diff --no-index "$state_dir/old.plist" "$state_dir/new.plist"
+echo -e '\n\n\033[1m➡️ and here with the `-currentHost` option\n\n'
+git --no-pager diff --no-index "$state_dir/host-old.plist" "$state_dir/host-new.plist"
+echo -e '\n\n\033[1m➡️ and here are changed preference plist files\n\n'
+git --no-pager diff --no-index "$state_dir/preferences-old" "$state_dir/preferences-new"
+
+echo -e "\n\n\033[1m🔮 Commands to print the diffs again\033[0m"
+echo -e "$ git --no-pager diff --no-index '${state_dir}/old.plist' '${state_dir}/new.plist'"
+echo -e "$ git --no-pager diff --no-index '${state_dir}/host-old.plist' '${state_dir}/host-new.plist'"
+echo -e "$ git --no-pager diff --no-index '${state_dir}/preferences-old' '${state_dir}/preferences-new'"

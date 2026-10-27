@@ -1,0 +1,14 @@
+[user]
+	name = Joe Sparma
+	email = {{ exec(command=vars.dotfiles_secret ~ "work_email") }}
+	signingkey = ~/.ssh/keys/work.pub
+
+[core]
+	sshCommand = ssh -F /dev/null \
+		-i $HOME/.ssh/keys/work \
+		-o IdentitiesOnly=yes \
+		-o AddKeysToAgent=yes \
+		-o IgnoreUnknown=UseKeychain \
+		-o UseKeychain=yes
+
+# vim: ft=gitconfig

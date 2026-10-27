@@ -1,0 +1,146 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+usage() {
+  echo "Usage: $(basename "$0") [private-key-path]" >&2
+}
+
+clipboard_backend=""
+clipboard_read=false
+temporary_key=""
+temporary_public_key=""
+temporary_askpass=""
+private_key=""
+
+detect_clipboard() {
+  if command -v pbpaste >/dev/null 2>&1 && command -v pbcopy >/dev/null 2>&1; then
+    clipboard_backend="macos"
+  elif command -v wl-paste >/dev/null 2>&1 && command -v wl-copy >/dev/null 2>&1; then
+    clipboard_backend="wayland"
+  elif command -v xclip >/dev/null 2>&1; then
+    clipboard_backend="xclip"
+  elif command -v xsel >/dev/null 2>&1; then
+    clipboard_backend="xsel"
+  elif command -v powershell.exe >/dev/null 2>&1; then
+    clipboard_backend="powershell"
+  else
+    echo "Error: no supported clipboard utility was found." >&2
+    echo "Install pbcopy/pbpaste, wl-clipboard, xclip, xsel, or PowerShell." >&2
+    exit 1
+  fi
+}
+
+read_clipboard() {
+  case "$clipboard_backend" in
+    macos) pbpaste ;;
+    wayland) wl-paste --no-newline ;;
+    xclip) xclip -selection clipboard -o ;;
+    xsel) xsel --clipboard --output ;;
+    powershell) powershell.exe -NoProfile -NonInteractive -Command 'Get-Clipboard -Raw' ;;
+  esac
+}
+
+clear_clipboard() {
+  case "$clipboard_backend" in
+    macos) pbcopy </dev/null ;;
+    wayland) wl-copy --clear ;;
+    xclip) printf '' | xclip -selection clipboard ;;
+    xsel) printf '' | xsel --clipboard --input ;;
+    powershell) powershell.exe -NoProfile -NonInteractive -Command 'Set-Clipboard -Value $null' ;;
+  esac
+}
+
+cleanup() {
+  local status=$?
+
+  [[ -n "$temporary_key" && -e "$temporary_key" ]] && rm -f "$temporary_key"
+  [[ -n "$temporary_public_key" && -e "$temporary_public_key" ]] && rm -f "$temporary_public_key"
+  [[ -n "$temporary_askpass" && -e "$temporary_askpass" ]] && rm -f "$temporary_askpass"
+  private_key=""
+  if [[ "$clipboard_read" == true ]]; then
+    if clear_clipboard; then
+      echo "Clipboard cleared."
+    else
+      echo "Warning: unable to clear the clipboard." >&2
+    fi
+  fi
+  exit "$status"
+}
+
+if [[ $# -gt 1 ]]; then
+  usage
+  exit 1
+fi
+
+if ! command -v ssh-keygen >/dev/null 2>&1; then
+  echo "Error: ssh-keygen is required but not installed." >&2
+  exit 1
+fi
+
+key_file="${1:-$HOME/.ssh/id_ed25519}"
+key_directory="$(dirname "$key_file")"
+public_key_file="$key_file.pub"
+
+if [[ -e "$key_file" || -e "$public_key_file" ]]; then
+  echo "Error: refusing to overwrite $key_file or $public_key_file." >&2
+  exit 1
+fi
+
+read -r -p "Copy the desired private SSH key to your clipboard, then press Enter to continue. "
+
+detect_clipboard
+trap cleanup EXIT HUP INT TERM
+
+private_key="$(read_clipboard)"
+clipboard_read=true
+if [[ -z "$private_key" ]]; then
+  echo "Error: the clipboard is empty." >&2
+  exit 1
+fi
+
+mkdir -p "$key_directory"
+chmod 700 "$key_directory"
+umask 077
+temporary_key="$(mktemp "${key_file}.tmp.XXXXXX")"
+printf '%s\n' "$private_key" >"$temporary_key"
+private_key=""
+
+read -r -s -p "Current key passphrase (leave empty if none): " current_passphrase
+printf '\n'
+read -r -s -p "New passphrase (leave empty to keep the current passphrase): " new_passphrase
+printf '\n'
+if [[ -n "$new_passphrase" ]]; then
+  read -r -s -p "Confirm new passphrase: " confirmation
+  printf '\n'
+  if [[ "$new_passphrase" != "$confirmation" ]]; then
+    echo "Error: passphrases do not match." >&2
+    exit 1
+  fi
+else
+  new_passphrase="$current_passphrase"
+fi
+
+temporary_public_key="${temporary_key}.pub"
+temporary_askpass="$(mktemp "${key_file}.askpass.XXXXXX")"
+printf '%s\n' '#!/bin/sh' 'printf "%s\n" "$SSH_KEY_PASSPHRASE"' >"$temporary_askpass"
+chmod 700 "$temporary_askpass"
+
+# SSH_ASKPASS supplies the existing passphrase without another terminal prompt.
+SSH_ASKPASS="$temporary_askpass" SSH_ASKPASS_REQUIRE=force SSH_KEY_PASSPHRASE="$current_passphrase" \
+  ssh-keygen -y -f "$temporary_key" >"$temporary_public_key"
+rm -f "$temporary_askpass"
+temporary_askpass=""
+
+# ssh-keygen validates the existing passphrase before changing it.
+ssh-keygen -p -q -P "$current_passphrase" -N "$new_passphrase" -f "$temporary_key"
+unset current_passphrase new_passphrase confirmation
+
+mv "$temporary_key" "$key_file"
+temporary_key=""
+chmod 600 "$key_file"
+mv "$temporary_public_key" "$public_key_file"
+temporary_public_key=""
+chmod 644 "$public_key_file"
+
+echo "Imported SSH key to $key_file"

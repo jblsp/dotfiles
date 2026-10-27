@@ -1,0 +1,5 @@
+# mise config symlink
+conf.d/config
+
+# Unencrypted age identity
+/key.txt

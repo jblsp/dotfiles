@@ -1,0 +1,11 @@
+# dotfiles global mise configuration
+# https://github.com/jblsp/dotfiles
+
+[vars]
+dotfiles_root = "{{ config_source | canonicalize | dirname }}"
+
+[env]
+_.path = ["{{ config_source | canonicalize | dirname }}/bin"]
+DOTFILES_SSH_ASKPASS_FALLBACK = "{% if env.SSH_ASKPASS | default(value='') == vars.dotfiles_root ~ '/scripts/ssh-askpass.bash' %}{{ env.DOTFILES_SSH_ASKPASS_FALLBACK | default(value='') }}{% else %}{{ env.SSH_ASKPASS | default(value='') }}{% endif %}"
+SSH_ASKPASS = "{{ vars.dotfiles_root }}/scripts/ssh-askpass.bash"
+SSH_ASKPASS_REQUIRE = "force"

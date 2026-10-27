@@ -1,0 +1,54 @@
+#!/usr/bin/env sh
+
+set -eu
+
+usage() {
+  echo "Usage: $(basename "$0") AGE_KEY AGE_FILE" >&2
+  exit 2
+}
+
+[ "$#" -eq 2 ] || usage
+
+age_key_path="$1"
+encrypted_file_path="$2"
+
+if ! command -v age >/dev/null 2>&1; then
+  echo "Error: age is required but not installed." >&2
+  exit 1
+fi
+
+if ! command -v age-keygen >/dev/null 2>&1; then
+  echo "Error: age-keygen is required but not installed." >&2
+  exit 1
+fi
+
+if [ ! -f "$age_key_path" ]; then
+  echo "Error: age key not found at $age_key_path." >&2
+  exit 1
+fi
+
+if [ ! -f "$encrypted_file_path" ]; then
+  echo "Error: age file not found at $encrypted_file_path." >&2
+  exit 1
+fi
+
+umask 077
+temporary_dir="$(mktemp -d)"
+trap 'rm -rf "$temporary_dir"' 0 HUP INT TERM
+identity_path="$temporary_dir/identity"
+recipients_path="$temporary_dir/recipients"
+plaintext_path="$temporary_dir/plaintext"
+replacement_path="$temporary_dir/encrypted"
+
+if ! age-keygen -y "$age_key_path" >"$recipients_path" 2>/dev/null; then
+  echo "Enter the passphrase for the encrypted age identity."
+  age --decrypt --output "$identity_path" "$age_key_path"
+  age-keygen -y "$identity_path" >"$recipients_path"
+else
+  identity_path="$age_key_path"
+fi
+
+age --decrypt --identity "$identity_path" --output "$plaintext_path" "$encrypted_file_path"
+"${EDITOR:-vi}" "$plaintext_path"
+age --encrypt --recipients-file "$recipients_path" --output "$replacement_path" "$plaintext_path"
+mv "$replacement_path" "$encrypted_file_path"

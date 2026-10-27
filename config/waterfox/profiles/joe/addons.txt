@@ -1,0 +1,15 @@
+# mozilla addons
+moz:bitwarden-password-manager
+moz:single-file
+moz:chameleon-ext
+moz:darkreader
+moz:multi-account-containers
+moz:private-grammar-checker-harper
+moz:qwacky
+moz:sponsorblock
+moz:ublock-origin
+moz:unpaywall
+
+# external addons
+https://agrd.io/adguard_extra_firefox_beta
+https://gitflic.ru/project/magnolia1234/bpc_uploads/blob/raw?file=bypass_paywalls_clean-latest.xpi

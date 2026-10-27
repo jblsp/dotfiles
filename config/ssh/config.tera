@@ -1,0 +1,6 @@
+Host *
+    IdentityFile ~/.ssh/keys/{% if vars.work_machine == "true" %}work{% else %}jblsp{% endif %}
+    IdentitiesOnly yes
+    AddKeysToAgent yes
+    IgnoreUnknown UseKeychain
+    UseKeychain yes

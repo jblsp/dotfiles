@@ -1,0 +1,14 @@
+[user]
+	name = Joe Sparma
+	email = joe@jblsp.com
+	signingkey = ~/.ssh/keys/jblsp.pub
+
+[core]
+	sshCommand = ssh -F /dev/null \
+		-i $HOME/.ssh/keys/jblsp \
+		-o IdentitiesOnly=yes \
+		-o AddKeysToAgent=yes \
+		-o IgnoreUnknown=UseKeychain \
+		-o UseKeychain=yes
+
+# vim: ft=gitconfig

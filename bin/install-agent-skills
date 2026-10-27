@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+set -e
+
+install_skill() {
+  npx skills add "$@" --global --yes --agent codex opencode
+}
+
+install_skill JuliusBrussee/caveman
+install_skill DietrichGebert/ponytail
+install_skill mattpocock/skills

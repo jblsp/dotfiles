@@ -1,0 +1,63 @@
+[bootstrap.hooks]
+pre-defaults = '''
+if [ "$(uname)" = Darwin ]; then
+  mkdir -p "$HOME/Pictures/Screenshots"
+fi
+'''
+post-defaults = '''
+if [ "$(uname)" = Darwin ]; then
+  for app in Dock Finder WindowManager ControlCenter SystemUIServer; do
+    killall "$app" >/dev/null 2>&1 || true
+  done
+fi
+'''
+
+[bootstrap.macos.defaults."com.apple.dock"]
+autohide = true
+autohide-delay = 0
+persistent-apps = []
+wvous-br-corner = 1
+mineffect = "scale"
+mru-spaces = false
+
+[bootstrap.macos.defaults."NSGlobalDomain"]
+NSAutomaticPeriodSubstitutionEnabled = false
+ApplePressAndHoldEnabled = false
+InitialKeyRepeat = 13
+KeyRepeat = 3
+NSDocumentSaveNewDocumentsToCloud = false
+NSWindowShouldDragOnGesture = true
+
+[bootstrap.macos.defaults."com.apple.finder"]
+ShowPathbar = true
+FXPreferredViewStyle = "Nlsv"
+_FXSortFoldersFirst = true
+FXEnableExtensionChangeWarning = false
+FXDefaultSearchScope = "SCcf"
+WarnOnEmptyTrash = false
+
+[bootstrap.macos.defaults."com.apple.universalaccess"]
+showWindowTitlebarIcons = true
+
+[bootstrap.macos.defaults."com.apple.WindowManager"]
+EnableStandardClickToShowDesktop = false
+
+[bootstrap.macos.defaults."com.apple.controlcenter"]
+BatteryShowPercentage = 1
+
+[bootstrap.macos.defaults."com.apple.screencapture"]
+location = "~/Pictures/Screenshots"
+show-thumbnail = 0
+
+[bootstrap.macos.defaults."com.apple.desktopservices"]
+DSDontWriteNetworkStores = true
+DSDontWriteUSBStores = true
+
+[bootstrap.macos.defaults."com.apple.LaunchServices"]
+LSQuarantine = false
+
+[bootstrap.macos.defaults."com.lujjjh.linearmouse"]
+SUAutomaticallyUpdate = false
+SUEnableAutomaticChecks = false
+menuBarVisibilityMode = "\"never\""
+showInMenuBar = false
