@@ -17,6 +17,9 @@ dotfiles_secret = 'mise -C "{{ vars.dotfiles_root }}" exec -- "{{ vars.dotfiles_
 [env]
 SOPS_AGE_KEY_CMD = 'bash "{{ vars.dotfiles_root }}/scripts/age-key.bash" --print'
 
+[bootstrap.user]
+login_shell = "/bin/zsh"
+
 [bootstrap.hooks]
 pre-dotfiles = '''
 mise -C "{{ vars.dotfiles_root }}" exec -- "{{ vars.dotfiles_root }}/scripts/age-key.bash"
@@ -46,7 +49,7 @@ python3 "{{ vars.dotfiles_root }}/scripts/gecko-addons.py"
 "~/.config/opencode" = { source = "config/opencode", mode = "symlink-each" }
 "~/.config/tmux" = { source = "config/tmux" }
 "~/.config/yazi" = { source = "config/yazi", mode = "symlink-each" }
-"~/.config/zsh" = { source = "config/zsh" }
+"~/.config/zsh" = { source = "config/zsh", mode = "symlink-each", exclude = [".zsh_plugins.zsh*"] }
 "~/.ssh/" = { source = "config/ssh", mode = "symlink-each", exclude = ["*.tera"] }
 "~/.ssh/config" = { source = "config/ssh/config.tera", mode = "template" }
 
