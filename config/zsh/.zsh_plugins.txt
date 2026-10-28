@@ -1,28 +1,36 @@
-# oh-my-zsh
+# oh-my-zsh support
 getantidote/use-omz        # handle OMZ dependencies
 ohmyzsh/ohmyzsh path:lib   # load OMZ's library
-ohmyzsh/ohmyzsh path:plugins/chezmoi kind:defer
-ohmyzsh/ohmyzsh path:plugins/extract
-ohmyzsh/ohmyzsh path:plugins/fzf kind:defer
-ohmyzsh/ohmyzsh path:plugins/herdr
-ohmyzsh/ohmyzsh path:plugins/mise
-ohmyzsh/ohmyzsh path:plugins/ssh kind:defer
-ohmyzsh/ohmyzsh path:plugins/ssh-agent
-ohmyzsh/ohmyzsh path:plugins/tmux
 
-# zephyr
-mattmc3/zephyr path:plugins/color
-mattmc3/zephyr path:plugins/completion
-mattmc3/zephyr path:plugins/compstyle
-mattmc3/zephyr path:plugins/editor
+# environment
 mattmc3/zephyr path:plugins/environment
-mattmc3/zephyr path:plugins/history
 mattmc3/zephyr path:plugins/homebrew
+ohmyzsh/ohmyzsh path:plugins/mise
+
+# completion
+zsh-users/zsh-completions kind:fpath path:src
+mattmc3/zephyr path:plugins/compstyle
+mattmc3/zephyr path:plugins/completion
+
+# interactive shell setup
+mattmc3/zephyr path:plugins/color
+mattmc3/zephyr path:plugins/editor
+mattmc3/zephyr path:plugins/history
 mattmc3/zephyr path:plugins/macos
 mattmc3/zephyr path:plugins/utility
 mattmc3/zephyr path:plugins/zfunctions
 
-# other plugins
+# tool integrations
+ohmyzsh/ohmyzsh path:plugins/extract
+ohmyzsh/ohmyzsh path:plugins/herdr
+ohmyzsh/ohmyzsh path:plugins/ssh-agent
+ohmyzsh/ohmyzsh path:plugins/tmux
 paulirish/git-open
+
+# deferred integrations
+ohmyzsh/ohmyzsh path:plugins/chezmoi kind:defer
+ohmyzsh/ohmyzsh path:plugins/fzf kind:defer
+ohmyzsh/ohmyzsh path:plugins/ssh kind:defer
+
+# syntax highlighting (last)
 zdharma-continuum/fast-syntax-highlighting kind:defer
-zsh-users/zsh-completions kind:fpath path:src
