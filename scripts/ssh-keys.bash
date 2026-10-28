@@ -35,8 +35,11 @@ done < <(jq_store -r 'keys[]')
 
 while IFS= read -r name; do
   if jq_store -e --arg name "$name" '.[$name] | has("passphrase")' >/dev/null; then
-    jq_store -r --arg name "$name" '.[$name].passphrase' |
-      keyring set dotfiles-ssh "$name" >/dev/null
+    passphrase=$(jq_store -r --arg name "$name" '.[$name].passphrase')
+    if existing=$(keyring get dotfiles-ssh "$name" 2>/dev/null) && [[ "$existing" == "$passphrase" ]]; then
+      continue
+    fi
+    printf '%s\n' "$passphrase" | keyring set dotfiles-ssh "$name" >/dev/null
   elif keyring get dotfiles-ssh "$name" >/dev/null 2>&1; then
     keyring del dotfiles-ssh "$name" >/dev/null
   fi
