@@ -5,10 +5,13 @@ set -euo pipefail
 root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
 prompt=${1:-}
 ssh_prompt="^Enter passphrase for key '(.+)': ?$"
+sign_prompt='^Enter passphrase for "(.+)": ?$'
 add_prompt='^Enter passphrase for (.+): ?$'
 key=''
 if [[ ${SSH_ASKPASS_PROMPT:-} == '' ]]; then
   if [[ "$prompt" =~ $ssh_prompt ]]; then
+    key=${BASH_REMATCH[1]}
+  elif [[ "$prompt" =~ $sign_prompt ]]; then
     key=${BASH_REMATCH[1]}
   elif [[ "$prompt" =~ $add_prompt ]]; then
     key=${BASH_REMATCH[1]}
