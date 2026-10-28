@@ -26,6 +26,7 @@ fzf_opts=(
 export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS }${(j: :)fzf_opts}"
 
 # antidote
+zstyle ':antidote:static' file "${ZDOTDIR:-$HOME}/.zsh_plugins.zsh"
 ANTIDOTE_HOME=${XDG_DATA_HOME}/antidote
 if [[ ! -e ${ANTIDOTE_HOME}/antidote.zsh ]]; then
   command git clone --depth=1 https://github.com/mattmc3/antidote.git ${ANTIDOTE_HOME}
