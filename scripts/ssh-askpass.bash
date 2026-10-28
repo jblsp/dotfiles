@@ -30,10 +30,6 @@ if [[ -n "$key" && -f "$key" && ! -L "$key" ]]; then
   fi
 fi
 
-if [[ -n ${DOTFILES_SSH_ASKPASS_FALLBACK:-} && ! ${DOTFILES_SSH_ASKPASS_FALLBACK} -ef ${BASH_SOURCE[0]} ]]; then
-  exec "$DOTFILES_SSH_ASKPASS_FALLBACK" "$@"
-fi
-
 exec 3<> /dev/tty
 if [[ ${SSH_ASKPASS_PROMPT:-} == none ]]; then
   printf '%s\n' "$prompt" >&3
