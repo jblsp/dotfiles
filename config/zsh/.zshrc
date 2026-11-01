@@ -1,3 +1,5 @@
+zstyle ':omz:update' mode disabled
+
 # ohmyzsh/ssh-agent
 zstyle :omz:plugins:ssh-agent agent-forwarding yes
 zstyle :omz:plugins:ssh-agent lazy yes
