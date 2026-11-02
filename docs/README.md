@@ -2,6 +2,8 @@
 
 ## About
 
+My personal dotfiles, compatible with MacOS/Linux, managed by [mise](https://mise.jdx.dev).
+
 ```
 ├── bin         # general purpose utilities, added to PATH
 ├── config      # configuration files
