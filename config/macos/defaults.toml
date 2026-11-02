@@ -1,3 +1,5 @@
+# MacOS defaults, managed by mise
+
 [bootstrap.hooks]
 pre-defaults = '''
 if [ "$(uname)" = Darwin ]; then

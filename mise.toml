@@ -1,4 +1,4 @@
-# dotfiles repository mise configuration
+# Dotfiles repository mise configuration
 # https://github.com/jblsp/dotfiles
 
 include = ["./options.toml", "./config/macos/defaults.toml"]

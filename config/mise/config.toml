@@ -1,3 +1,5 @@
+# Personal mise configuration
+
 [tools]
 # Language runtimes
 go = "latest"

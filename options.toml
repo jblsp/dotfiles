@@ -1,4 +1,5 @@
-# dotfiles configuration options. can be overridden locally in mise.local.toml
+# Configuration options for dotfiles. can be overridden locally in mise.local.toml
+
 [vars]
 work_machine = "false"
 gecko_addons = "true"

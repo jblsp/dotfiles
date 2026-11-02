@@ -1,5 +1,6 @@
-# dotfiles global mise configuration
-# https://github.com/jblsp/dotfiles
+# Dotfiles-specific mise configuration applied globally.
+# Keep global settings required by this repo here.
+# config/mise/config.toml is for independent personal configuration.
 
 [env]
 _.path = ["{{ config_source | canonicalize | dirname }}/bin"]
