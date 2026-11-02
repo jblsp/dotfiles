@@ -1,7 +1,11 @@
-# general mise configuration
-
 [tools]
-"github:GDQuest/GDScript-formatter" = "latest"
+# Language runtimes
+go = "latest"
+java = "21"
+node = "latest"
+python = "latest"
+
+# Language servers and tooling
 "github:clangd/clangd" = "latest"
 "go:golang.org/x/tools/gopls" = "latest"
 "npm:bash-language-server" = "latest"
@@ -10,22 +14,28 @@
 "npm:typescript-language-server" = "latest"
 "npm:vscode-langservers-extracted" = "latest"
 "npm:yaml-language-server" = "latest"
-"pipx:isort" = "latest"
-black = "latest"
-clang-format = "latest"
-go = "latest"
-godot = "latest"
-java = "21"
 lua-language-server = "latest"
-node = "latest"
-prettier = "latest"
-python = "latest"
-shfmt = "latest"
-stylua = "latest"
 tinymist = "latest"
 tombi = "latest"
 "vfox:tinnet/vfox-jdtls" = "1.63.0"
-herdr = "latest"
-lazygit = "latest"
-oh-my-posh = "31"
+
+# Formatters
+"github:GDQuest/GDScript-formatter" = "latest"
+"pipx:isort" = "latest"
+black = "latest"
+clang-format = "latest"
+prettier = "latest"
+shfmt = "latest"
+stylua = "latest"
+
+# Game development
+godot = "latest"
+
+# Git tools
 delta = "latest"
+lazygit = "latest"
+
+# Terminal tools
+herdr = "latest"
+oh-my-posh = "31"
+zmx = "latest"
