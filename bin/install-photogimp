@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Install the latest PhotoGIMP configuration for the detected GIMP version,
+# backing up any existing configuration first.
+
 set -e
 
 echo "Installing PhotoGIMP..."

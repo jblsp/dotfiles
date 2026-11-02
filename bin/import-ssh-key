@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Import a private SSH key from the clipboard, optionally change its
+# passphrase, and save its public key before clearing the clipboard.
+
 set -euo pipefail
 
 usage() {
@@ -33,21 +36,21 @@ detect_clipboard() {
 
 read_clipboard() {
   case "$clipboard_backend" in
-    macos) pbpaste ;;
-    wayland) wl-paste --no-newline ;;
-    xclip) xclip -selection clipboard -o ;;
-    xsel) xsel --clipboard --output ;;
-    powershell) powershell.exe -NoProfile -NonInteractive -Command 'Get-Clipboard -Raw' ;;
+  macos) pbpaste ;;
+  wayland) wl-paste --no-newline ;;
+  xclip) xclip -selection clipboard -o ;;
+  xsel) xsel --clipboard --output ;;
+  powershell) powershell.exe -NoProfile -NonInteractive -Command 'Get-Clipboard -Raw' ;;
   esac
 }
 
 clear_clipboard() {
   case "$clipboard_backend" in
-    macos) pbcopy </dev/null ;;
-    wayland) wl-copy --clear ;;
-    xclip) printf '' | xclip -selection clipboard ;;
-    xsel) printf '' | xsel --clipboard --input ;;
-    powershell) powershell.exe -NoProfile -NonInteractive -Command 'Set-Clipboard -Value $null' ;;
+  macos) pbcopy </dev/null ;;
+  wayland) wl-copy --clear ;;
+  xclip) printf '' | xclip -selection clipboard ;;
+  xsel) printf '' | xsel --clipboard --input ;;
+  powershell) powershell.exe -NoProfile -NonInteractive -Command 'Set-Clipboard -Value $null' ;;
   esac
 }
 

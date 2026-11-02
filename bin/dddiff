@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-# darwin defaults diff script
+# Snapshot and compare macOS defaults and preference files around
+# an interactive settings change.
 # modified diff.sh script from: https://github.com/yannbertrand/macos-defaults
 
 if [[ "$(uname)" != "Darwin" ]]; then

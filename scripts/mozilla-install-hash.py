@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+"""Compute Mozilla's installation path hash using CityHash64 v1.
+
+Also read the joe profile's StoreID from profiles.ini with --store-id.
+"""
+
 import configparser
 import sys
 

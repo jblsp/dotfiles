@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# Answer SSH passphrase prompts for managed keys from the system keyring,
+# falling back to terminal input for other prompts.
+
 set +x
 set -euo pipefail
 

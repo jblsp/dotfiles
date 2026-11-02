@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# Import the dotfiles age identity into the system keyring if needed,
+# then verify secret stores can be decrypted or print the identity with --print.
+
 set +x
 set -euo pipefail
 

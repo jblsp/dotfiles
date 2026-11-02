@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
+# Decrypt an age file for editing, then encrypt the updated contents
+# using the supplied age identity.
+
 set -eu
 
 usage() {

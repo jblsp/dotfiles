@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# Install SSH keys from the encrypted dotfiles secret store into ~/.ssh/keys
+# and synchronize their passphrases with the system keyring.
+
 set +x
 set -euo pipefail
 umask 077

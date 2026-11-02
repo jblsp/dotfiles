@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+"""Install configured Waterfox profile add-ons from Mozilla or XPI URLs.
+
+Cache add-on IDs and reuse downloaded archives across profiles.
+"""
+
 import json
 from pathlib import Path
 import re
