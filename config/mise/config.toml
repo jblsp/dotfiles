@@ -34,9 +34,6 @@ prettier = "latest"
 shfmt = "latest"
 stylua = "latest"
 
-# Game development
-godot = "latest"
-
 # Git tools
 delta = "latest"
 lazygit = "latest"
