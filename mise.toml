@@ -57,7 +57,14 @@ python3 "{{ vars.dotfiles_root }}/scripts/gecko-addons.py"
 "~/.zshenv" = { content = '''ZDOTDIR="$HOME/.config/zsh" && source "$ZDOTDIR/.zshenv"''' }
 
 # absent
+"~/.zcompdump" = { mode = "absent" }
+"~/.zcompdump.dat" = { mode = "absent" }
+"~/.zcompdump.zwc" = { mode = "absent" }
+"~/.zprofile" = { mode = "absent" }
 "~/.zshrc" = { mode = "absent" }
+"~/.zsh_history" = { mode = "absent" }
+"~/.zlogin" = { mode = "absent" }
+"~/.zlogout" = { mode = "absent" }
 
 [dotfiles.waterfox]
 source = "config/waterfox"
