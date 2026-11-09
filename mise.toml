@@ -50,9 +50,8 @@ python3 "{{ vars.dotfiles_root }}/scripts/gecko-addons.py"
 "~/.config/zsh/.zsh_plugins.txt" = { source = "config/zsh/zsh_plugins.txt", mode = "symlink" }
 "~/.config/zsh/.zshenv" = { source = "config/zsh/zshenv", mode = "symlink" }
 "~/.config/zsh/.zshrc" = { source = "config/zsh/zshrc", mode = "symlink" }
-"~/.ssh/" = { source = "config/ssh", mode = "symlink-each", exclude = ["*.tera", "keys"] }
+"~/.ssh/" = { source = "config/ssh", mode = "symlink-each", exclude = ["*.tera"] }
 "~/.ssh/config" = { source = "config/ssh/config.tera", mode = "template" }
-"~/.ssh/keys/" = { source = "config/ssh/keys", mode = "symlink-each" }
 
 # set ZDOTDIR to ~/.config/zsh
 "~/.zshenv" = { content = '''ZDOTDIR="$HOME/.config/zsh" && source "$ZDOTDIR/.zshenv"''' }
