@@ -1,0 +1,6 @@
+[flavor]
+use = "tokyo-night"
+dark = "tokyo-night"
+
+[indicator]
+padding = { open = "▐", close = "▌" }

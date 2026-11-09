@@ -1,0 +1,11 @@
+[user]
+	name = {{ exec(command=vars.dotfiles_secret ~ "alt1_name") }}
+	email = {{ exec(command=vars.dotfiles_secret ~ "alt1_email") }}
+	signingkey = ~/.ssh/keys/alt1.pub
+
+[core]
+	sshCommand = ssh -F /dev/null \
+		-i $HOME/.ssh/keys/alt1.pub \
+		-o IdentitiesOnly=yes
+
+# vim: ft=gitconfig

@@ -1,0 +1,15 @@
+[opener]
+extract = [
+  { run = "ya pub extract --list %s", desc = "Extract here" },
+]
+
+# Git plugin
+[[plugin.prepend_fetchers]]
+url = "*"
+run = "git"
+group = "git"
+
+[[plugin.prepend_fetchers]]
+url = "*/"
+run = "git"
+group = "git"

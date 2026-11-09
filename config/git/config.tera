@@ -1,0 +1,31 @@
+[include]
+	path = ./identities/{% if vars.work_machine == "true" %}work{% else %}jblsp{% endif %}
+[core]
+	excludesfile = ~/.config/git/ignore
+[diff]
+	renames = true
+[column]
+	ui = auto
+[branch]
+	sort = -committerdate
+[init]
+	defaultBranch = main
+[tag]
+	sort = version:refname
+[fetch]
+	prune = true
+	pruneTags = true
+[alias]
+	root = rev-parse --show-toplevel
+[gpg]
+	format = ssh
+[commit]
+	gpgSign = true
+[gpg "ssh"]
+	allowedSignersFile = ~/.config/git/allowedSigners
+[diff]
+	tool = nvim_difftool
+[difftool "nvim_difftool"]
+	cmd = nvim -c \"packadd nvim.difftool\" -c \"DiffTool $LOCAL $REMOTE\"
+
+# vim: ft=gitconfig

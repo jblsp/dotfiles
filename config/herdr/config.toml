@@ -1,0 +1,46 @@
+onboarding = false
+
+[keys]
+prefix = "ctrl+space"
+navigate_workspace_up = "k"
+navigate_workspace_down = "j"
+switch_workspace = "prefix+shift+1..9"
+
+[[keys.command]]
+key = "prefix+shift+e"
+description = "focus or open $EDITOR tab"
+type = "shell"
+command = '''
+tab="$(herdr tab list --workspace "$HERDR_ACTIVE_WORKSPACE_ID" | jq -r --arg editor "${EDITOR:-vi}" '[.result.tabs[] | select(.label == $editor or .label == "vi")][0].tab_id // empty')" || exit 1
+if [ -n "$tab" ]; then herdr tab focus "$tab"; exit; fi
+pane="$(herdr tab create --workspace "$HERDR_ACTIVE_WORKSPACE_ID" --label "${EDITOR:-vi}" --focus | jq -er '.result.root_pane.pane_id')" || exit 1
+herdr pane run "$pane" 'exec ${EDITOR:-vi}'
+'''
+
+[[keys.command]]
+key = "prefix+shift+l"
+description = "lazygit popup"
+type = "popup"
+command = 'cd "${HERDR_ACTIVE_PANE_CWD:-$PWD}" && exec lazygit'
+width = "98%"
+height = "95%"
+
+[experimental]
+kitty_graphics = true
+
+[theme]
+name = "terminal"
+auto_switch = false
+
+[ui]
+mouse_capture = false
+prompt_new_tab_name = false
+tab_bar_right = [
+  { type = "zoom" },
+  { type = "command", command = 'dir=${HERDR_SOCKET_PATH%/*}; case "$dir" in */sessions/*) basename "$dir" ;; *) echo default ;; esac', interval_seconds = 60, timeout_seconds = 2 },
+  { type = "command", command = 'printf "%s@%s\n" "$(id -un)" "$(hostname)"', interval_seconds = 60, timeout_seconds = 2 },
+]
+tab_bar_right_separator = " · "
+
+[ui.toast]
+delivery = "herdr"

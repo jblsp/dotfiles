@@ -1,0 +1,24 @@
+{%- if os() == "macos" -%}
+{%- set waterfox_path = "/Applications/Waterfox.app/Contents/MacOS" -%}
+{%- set profiles_path = env.HOME ~ "/Library/Application Support/Waterfox/profiles.ini" -%}
+{%- else -%}
+{%- set waterfox_path = "/usr/lib64/waterfox" -%}
+{%- set profiles_path = env.HOME ~ "/.waterfox/profiles.ini" -%}
+{%- endif -%}
+{%- set helper = 'python3 "' ~ vars.dotfiles_root ~ '/scripts/mozilla-install-hash.py"' -%}
+{# Waterfox assigns StoreID locally; preserve it instead of syncing it. #}
+{%- set store_id = exec(command=helper ~ ' --store-id ' ~ (profiles_path | quote)) -%}
+[General]
+StartWithLastProfile=1
+Version=2
+
+[Profile0]
+Name=joe
+IsRelative=1
+Path=profiles/joe
+{% if store_id %}StoreID={{ store_id }}
+{% endif %}ShowSelector=0
+
+[Install{{ exec(command=helper ~ ' "' ~ waterfox_path ~ '"') }}]
+Default=profiles/joe
+Locked=1

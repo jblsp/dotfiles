@@ -1,0 +1,19 @@
+[[mgr.prepend_keymap]]
+on = "<C-h>"
+run = "help"
+desc = "Open help"
+
+[[mgr.prepend_keymap]]
+on = ["c", "m"]
+run = "plugin chmod"
+desc = "Chmod on selected files"
+
+[[mgr.prepend_keymap]]
+on = ["M", "m"]
+run = "plugin mount"
+desc = "Open mount menu"
+
+[[mgr.prepend_keymap]]
+on = ["M", "s"]
+run = "plugin sshfs -- menu"
+desc = "Open SSHFS menu"
