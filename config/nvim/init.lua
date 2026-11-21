@@ -16,6 +16,7 @@ g.colors_name = "tokyonight"
 g.have_nerd_font = not vim.env.TERM == "linux"
 g.mapleader = k("<space>")
 g.maplocalleader = k("\\")
+g.packhandler_configs = "joe.pack-configs"
 
 -- Options
 o.confirm = true -- Confirm to save changes when exiting modified buffer
