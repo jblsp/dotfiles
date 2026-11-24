@@ -1,5 +1,6 @@
 // browser
 user_pref("browser.nova.enabled", false);
+user_pref("browser.startup.page", 1);
 user_pref("browser.theme.waterfox.browserStyle", "proton");
 user_pref("browser.warnOnQuit", false);
 user_pref("signon.rememberSignons", false);
