@@ -24,11 +24,11 @@
       "version": ">=0.0.0"
     },
     "friendly-snippets": {
-      "rev": "b4d01b0fdf3c9a549961c2f9ffe8dc09be166219",
+      "rev": "7a1c9f7897a4eb078b157a04c7af81e5869215b1",
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
     "fzf-lua": {
-      "rev": "5beb1bf72b0810da6ccee50f6087c2f005aeb737",
+      "rev": "a3b5e6bebcc604d0286fffa1c4eb05b066a2a198",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
@@ -36,17 +36,13 @@
       "src": "https://github.com/lewis6991/gitsigns.nvim",
       "version": ">=0.0.0"
     },
-    "mason.nvim": {
-      "rev": "2a6940af80375532e5e9e7c1f2fc6319a1b7a69d",
-      "src": "https://github.com/mason-org/mason.nvim"
-    },
     "mini.ai": {
       "rev": "d73c36349aa7b0bab5f77ad71701a1d42211a1df",
       "src": "https://github.com/nvim-mini/mini.ai",
       "version": ">=0.0.0"
     },
     "mini.icons": {
-      "rev": "9e4c1645ce2b78afd6191b6be2c38bc0f998dd48",
+      "rev": "5d58117d176c133f4cb5585ec8cb3450881c89a0",
       "src": "https://github.com/nvim-mini/mini.icons"
     },
     "mini.move": {
@@ -69,22 +65,17 @@
       "src": "https://codeberg.org/mfussenegger/nvim-jdtls"
     },
     "nvim-lspconfig": {
-      "rev": "4d363f93c3581b9212a24f7a830d7590b3f050af",
+      "rev": "4648fd8ba5c678d7e2db75ae44ffac269bb589d8",
       "src": "https://github.com/neovim/nvim-lspconfig",
       "version": ">=0.0.0"
     },
     "nvim-treesitter": {
-      "rev": "29212d826054bb2948fa9d3a99eca9bf6a050eb2",
+      "rev": "52773f0d13a0c11d0c3ef33c14ab6ecc1c17148b",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-context": {
       "rev": "8decd73460d26ef0a0befb745d022dd1fc2c38b8",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-context"
-    },
-    "oil.nvim": {
-      "rev": "17c0a8faaf48298a0c0cfb0d757c0eaee4ff7a32",
-      "src": "https://github.com/stevearc/oil.nvim",
-      "version": ">=0.0.0"
     },
     "quicker.nvim": {
       "rev": "4a6883cb13fe097a20a046eb55f6dffd239276e3",

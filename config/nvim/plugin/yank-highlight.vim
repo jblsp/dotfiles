@@ -1,2 +1,2 @@
-autocmd TextYankPost * silent! lua vim.hl.on_yank {higroup='Visual', timeout=300}
+autocmd TextYankPost * silent! lua vim.hl.hl_op {higroup='Visual', timeout=300}
 

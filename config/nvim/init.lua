@@ -1,5 +1,5 @@
 local clipboard = require("joe.clipboard")
-local extui = require("vim._core.ui2")
+local ui2 = require("vim._core.ui2")
 
 local packhandler = require("joe.packhandler")
 local sudowrite = require("joe.sudowrite")
@@ -13,7 +13,7 @@ local o = vim.o
 
 -- Globals
 g.colors_name = "tokyonight"
-g.have_nerd_font = not vim.env.TERM == "linux"
+g.have_nerd_font = vim.env.TERM ~= "linux"
 g.mapleader = k("<space>")
 g.maplocalleader = k("\\")
 g.packhandler_configs = "joe.pack-configs"
@@ -31,6 +31,7 @@ o.mousemodel = "extend"
 o.number = true -- Line numbers
 o.relativenumber = true
 o.scrolloff = 8
+o.scrolloffpad = 1
 o.signcolumn = "yes" -- Always enable sign column
 o.smartcase = true -- Case sensitive searching if \C or one or more capital letters in search
 o.smartindent = true
@@ -74,7 +75,7 @@ lsp.config("jdtls", {
 })
 
 -- extui
-extui.enable({})
+ui2.enable({})
 
 -- Optional built-in plugins
 vim.cmd.packadd("nvim.undotree")
@@ -83,40 +84,6 @@ vim.cmd.packadd("nvim.tohtml")
 
 -- Commands:
 vim.api.nvim_create_user_command("Sudowrite", sudowrite.write, { desc = "Write buffer as sudo" })
-
-vim.api.nvim_create_user_command("PackUpdate", function(args)
-  if args.args == "" then
-    vim.pack.update()
-  else
-    vim.pack.update(vim.split(args.args, " "))
-  end
-end, { desc = "Update vim.pack plugin(s)" })
-
-vim.api.nvim_create_user_command("PackList", function()
-  vim.pack.update(nil, { offline = true })
-end, { desc = "List installed vim.pack plugins" })
-
-vim.api.nvim_create_user_command("PackSync", function(args)
-  if args.args == "" then
-    vim.pack.update(nil, { target = "lockfile" })
-  else
-    vim.pack.update(vim.split(args.args, " "), { target = "lockfile" })
-  end
-end, { desc = "Sync vim.pack plugins to lockfile" })
-
-vim.api.nvim_create_user_command("PackClean", function()
-  local inactive = vim
-    .iter(vim.pack.get())
-    :filter(function(x)
-      return not x.active
-    end)
-    :map(function(x)
-      return x.spec.name
-    end)
-    :totable()
-
-  vim.pack.del(inactive)
-end, { desc = "Delete inactive vim.pack plugins" })
 
 -- Keymaps:
 
@@ -164,25 +131,15 @@ set("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result
 set("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })
 
 -- Open explorer
-set("n", "<leader>e", function()
-  -- oil nvim
-  local ok, oil = pcall(require, "oil")
-  if ok then
-    oil.open()
-    return
-  end
-
-  -- open without plugin explorer
-  local path = vim.api.nvim_buf_get_name(0)
-  local dir
-  if path ~= "" and vim.uv.fs_stat(path) then
-    dir = vim.fs.dirname(path)
-  else
-    dir = vim.fn.getcwd()
-  end
-  vim.cmd.edit(dir)
-end, { desc = "Explore directory of current buffer", silent = true })
-set("n", "<leader>E", "<cmd>e .<cr>", { desc = "Explore current working directory" })
+set("n", "<leader>e", "<cmd>e %:p:h<cr>", { desc = "Explore current file's directory" })
+set("n", "<leader>E", function()
+  local in_explorer = vim.bo.filetype == "directory"
+  vim.cmd.edit({
+    args = { in_explorer and vim.fn.getcwd(0) or vim.fn.getcwd() },
+    magic = { file = false, bar = false },
+    mods = { keepalt = in_explorer },
+  })
+end, { desc = "Explore current working directory" })
 
 -- Quickfix List
 set("n", "<leader>qd", function()
@@ -206,7 +163,6 @@ packhandler.setup({
   { "gh:lewis6991/gitsigns.nvim", ver = "*" },
   -- { "gh:mason-org/mason.nvim", enabled = not vim.tbl_contains({ "nixos" }, util.get_os_identifier()) },
   { "gh:neovim/nvim-lspconfig", ver = "*" },
-  { "gh:nvim-mini/mini.ai", ver = "*", call_setup = true },
   { "gh:nvim-mini/mini.icons", call_setup = true },
   { "gh:nvim-mini/mini.move", ver = "*", call_setup = true },
   { "gh:nvim-mini/mini.splitjoin", ver = "*", call_setup = true },
@@ -217,7 +173,6 @@ packhandler.setup({
   { "gh:saghen/blink.cmp", ver = "1.*" },
   { "gh:saghen/blink.indent", ver = "2.*" },
   { "gh:stevearc/conform.nvim" },
-  { "gh:stevearc/oil.nvim", ver = "*" },
   { "gh:stevearc/quicker.nvim", call_setup = true },
   { "gh:tpope/vim-endwise" },
 })
