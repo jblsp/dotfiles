@@ -1,5 +1,9 @@
 # Agent Guidelines
 
+## Configuration
+
+This repository contains configuration that is personalized to the repository author. Tailor changes to his preferences and workflow. In general, keep machine- and environment-specific settings local and untracked.
+
 ## Code Separation
 
 Any repository related code should go in `scripts/`. `bin/` is reserved for general-purpose utilities added to PATH, which are typically unrealated to this repository. Content in `scripts/` should not be added to PATH.
