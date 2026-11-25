@@ -1,0 +1,5 @@
+[tui]
+status_line = ["model-with-reasoning", "current-dir", "thread-name", "approval-mode", "context-used", "five-hour-limit"]
+
+[features]
+hooks = true

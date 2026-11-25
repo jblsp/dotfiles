@@ -33,6 +33,7 @@ python3 "{{ vars.dotfiles_root }}/scripts/gecko-addons.py"
 [dotfiles]
 # configuration
 "~/.config/bottom" = { source = "config/bottom" }
+"~/.config/codex/config.toml/shared" = { source = "config/codex/config.toml", merge = true }
 "~/.config/ghostty" = { source = "config/ghostty" }
 "~/.config/git" = { source = "config/git", mode = "symlink-each", exclude = ["*.tera"] }
 "~/.config/git/config" = { source = "config/git/config.tera", mode = "template" }
