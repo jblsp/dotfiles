@@ -45,6 +45,7 @@ python3 "{{ vars.dotfiles_root }}/scripts/gecko-addons.py"
 "~/.config/npm" = { source = "config/npm" }
 "~/.config/nvim" = { source = "config/nvim" }
 "~/.config/opencode" = { source = "config/opencode", mode = "symlink-each" }
+"~/.config/rex/init.lua" = { source = "config/rex/init.lua", mode = "symlink" }
 "~/.config/tmux" = { source = "config/tmux" }
 "~/.config/yazi" = { source = "config/yazi", mode = "symlink-each" }
 "~/.config/zsh/.zsh_plugins.txt" = { source = "config/zsh/zsh_plugins.txt", mode = "symlink" }
